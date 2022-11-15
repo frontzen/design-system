@@ -1,0 +1,67 @@
+import { Meta, ColorPalette, ColorItem } from '@storybook/addon-docs';
+import {
+  blue,
+  background,
+  border,
+  coolGrey,
+  grey,
+  warmGrey,
+  purple,
+  turquoise,
+  teal,
+  green,
+  magenta,
+  red,
+  orange,
+  yellow,
+} from '.';
+
+<Meta title="Core/Colors" />
+
+# Color Palette
+
+Given a HUE (red, pink, etc.) and a SHADE (10, 20, etc.) you can import the color like this:
+
+```js
+import { red } from '@my-frontzen/design-system';
+const color = red[40];
+```
+
+## Gray
+
+<ColorPalette>
+  <ColorItem title="Warm Gray" colors={warmGrey} />
+  <ColorItem title="Gray" colors={grey} />
+  <ColorItem title="Cool Gray" colors={coolGrey} />
+</ColorPalette>
+
+## Cool Colors
+
+<ColorPalette>
+  <ColorItem title="Purple" colors={purple} />
+  <ColorItem title="Blue" colors={blue} />
+  <ColorItem title="Turquoise" colors={turquoise} />
+  <ColorItem title="Teal" colors={teal} />
+  <ColorItem title="Green" colors={green} />
+</ColorPalette>
+
+## Warm Colors
+
+<ColorPalette>
+  <ColorItem title="Magenta" colors={magenta} />
+  <ColorItem title="Red" colors={red} />
+  <ColorItem title="Orange" colors={orange} />
+  <ColorItem title="Yellow" colors={yellow} />
+</ColorPalette>
+
+## Background Colors
+
+<ColorPalette>
+  <ColorItem title="Background" colors={background} />
+</ColorPalette>
+
+## Border Colors
+
+<ColorPalette>
+  <ColorItem title="Border" colors={border} />
+</ColorPalette>
