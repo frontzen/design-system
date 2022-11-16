@@ -2902,9 +2902,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nrwl/nx-cloud@latest":
-  version: 14.2.0
-  resolution: "@nrwl/nx-cloud@npm:14.2.0"
+"@nrwl/nx-cloud@npm:14.3.0":
+  version: 14.3.0
+  resolution: "@nrwl/nx-cloud@npm:14.3.0"
   dependencies:
     axios: ^0.21.1
     chalk: 4.1.0
@@ -2913,7 +2913,7 @@ __metadata:
     tar: 6.1.11
   bin:
     nx-cloud: bin/nx-cloud.js
-  checksum: 124803ff2dc2c78073b2a2d77e918bbf5018acba8211f490a4dee0d0dcd16fb30b09a65372c47f3ce8b41ce0e343c55a47c7ef84400fc141f76c1bea7c0681e8
+  checksum: 290e7ff832cd436c73f46e49367e88491c219a015c7eab7f81fe03ce7acecd3fb1c64c94bb3e53e85beba152f542f82852be29cdbfe5b0675386f299a47194f0
   languageName: node
   linkType: hard
 
@@ -11447,7 +11447,7 @@ __metadata:
     "@nrwl/eslint-plugin-nx": 14.3.6
     "@nrwl/jest": 14.3.6
     "@nrwl/linter": 14.3.6
-    "@nrwl/nx-cloud": latest
+    "@nrwl/nx-cloud": 14.3.0
     "@nrwl/react": 14.3.6
     "@nrwl/storybook": 14.3.6
     "@nrwl/web": 14.3.6
