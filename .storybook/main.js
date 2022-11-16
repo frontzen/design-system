@@ -1,25 +1,21 @@
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const path = require('path');
+const { defineConfig, mergeConfig } = require('vite');
+const { default: tsconfigPaths } = require('vite-tsconfig-paths');
 
 module.exports = {
-  stories: [],
-  addons: ['@storybook/addon-essentials'],
-  staticDirs: [path.resolve(__dirname, './public')],
-  previewHead: (head) => `
-    ${head}
-    <link rel="stylesheet" href="/fonts/fontiran.css" />
-  `,
-  webpackFinal: async (config) => {
-    config.plugins?.push(
-      new CopyWebpackPlugin({
-        patterns: [
-          {
-            from: path.resolve(__dirname, './public/fonts'),
-            to: 'fonts',
-          },
-        ],
+  stories: ['../(apps|libs)/**/*.stories.@(ts|tsx|js|jsx|mdx)'],
+  addons: ['@storybook/addon-essentials', '@storybook/preset-create-react-app'],
+  typescript: {
+    check: true, // type-check stories during Storybook build
+  },
+  core: {
+    builder: '@storybook/builder-vite',
+  },
+  async viteFinal(config, options) {
+    return mergeConfig(
+      config,
+      defineConfig({
+        plugins: [tsconfigPaths()],
       }),
     );
-    return config;
   },
 };

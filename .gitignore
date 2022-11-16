@@ -43,6 +43,7 @@ yarn-error.log
 testem.log
 /typings
 build-storybook.log
+/storybook-static
 
 # System Files
 .DS_Store

@@ -5,17 +5,17 @@ Frontzen Design System provides React UI components based on [MUI](https://mui.c
 ## 📦 Install
 
 ```bash
-npm install @my-frontzen/design-system
+npm install @front.zen/design-system
 ```
 
 ```bash
-yarn add @my-frontzen/design-system
+yarn add @front.zen/design-system
 ```
 
 ## 🔨 Usage
 
 ```jsx
-import { createTheme, ThemeProvider, Button } from '@my-frontzen/design-system';
+import { createTheme, ThemeProvider, Button } from '@front.zen/design-system';
 
 const theme = createTheme();
 

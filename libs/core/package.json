@@ -1,5 +1,5 @@
 {
-  "name": "@my-frontzen/design-system",
+  "name": "@front.zen/design-system",
   "version": "0.0.1",
   "peerDependencies": {
     "react": ">=17.0.0",
