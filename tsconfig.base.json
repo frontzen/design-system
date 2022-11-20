@@ -13,11 +13,7 @@
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@my-frontzen/design-system": ["libs/core/src/index.ts"],
-      "@my-frontzen/storybook": ["libs/storybook/src/index.ts"]
-    }
+    "baseUrl": "."
   },
   "exclude": ["node_modules", "tmp"]
 }

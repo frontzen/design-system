@@ -1,21 +1,14 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "npmScope": "my-frontzen",
+  "npmScope": "front.zen",
   "affected": {
     "defaultBase": "main"
-  },
-  "implicitDependencies": {
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
-    ".eslintrc.json": "*"
   },
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "cacheableOperations": ["build", "lint", "test", "type-check"],
         "accessToken": "YjY4ZTk1ZWUtNzA0My00ZjNkLTk4MGMtMzY3OWE5Nzc4MGM0fHJlYWQtd3JpdGU="
       }
     }
@@ -23,22 +16,6 @@
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"]
-    }
-  },
-  "generators": {
-    "@nrwl/react": {
-      "application": {
-        "style": "css",
-        "linter": "eslint",
-        "babel": true
-      },
-      "component": {
-        "style": "css"
-      },
-      "library": {
-        "style": "css",
-        "linter": "eslint"
-      }
     }
   },
   "defaultProject": "docs"

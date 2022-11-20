@@ -1,5 +1,5 @@
+import { createTheme } from '@front.zen/design-system';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import { createTheme } from '@my-frontzen/design-system';
 
 /**
  * Add ThemeProvider as a global decorator
