@@ -13,10 +13,17 @@
     "build:copy": "node ../../scripts/copyFiles.mjs"
   },
   "dependencies": {
-    "@emotion/react": "^11.9.3",
-    "@emotion/styled": "^11.9.3",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.8.4",
-    "@mui/material": "^5.9.0"
+    "@mui/lab": "^5.0.0-alpha.110",
+    "@mui/material": "^5.10.16",
+    "@mui/system": "^5.10.16"
+  },
+  "exports": {
+    ".": {
+      "default": "./src"
+    }
   },
   "module": "./src/index.ts",
   "main": "./src/index.ts",

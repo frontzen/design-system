@@ -7,6 +7,6 @@
     "start-storybook": "start-storybook -c . -p 4400"
   },
   "dependencies": {
-    "@front.zen/design-system": "^0.*"
+    "@front.zen/design-system": "*"
   }
 }
