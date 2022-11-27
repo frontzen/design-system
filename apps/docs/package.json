@@ -6,9 +6,6 @@
     "dev": "yarn run -T vite",
     "build": "yarn run -T vite build",
     "test": "yarn run -T vitest --run",
-    "lint": "yarn run -T workspace:lint \"**/*.{js,jsx,ts,tsx}\"",
-    "format": "yarn run -T workspace:format \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
-    "format:check": "yarn run -T workspace:format:check \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "type-check": "yarn run -T tsc"
   }
 }

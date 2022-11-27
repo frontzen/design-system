@@ -7,12 +7,9 @@
   },
   "scripts": {
     "build": "yarn run -T vite build",
-    "dev": "yarn run -T vite build --mode=development --watch",
+    "dev": "yarn build --mode=development --watch",
     "test": "yarn run -T vitest --run",
-    "type-check": "yarn run -T tsc",
-    "format": "yarn run -T workspace:format \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
-    "format:check": "yarn run -T workspace:format:check \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
-    "lint": "yarn run -T workspace:lint \"**/*.{js,jsx,ts,tsx}\""
+    "type-check": "yarn run -T tsc"
   },
   "dependencies": {
     "@emotion/react": "^11.9.3",
@@ -20,10 +17,7 @@
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.9.0"
   },
-  "exports": {
-    ".": {
-      "default": "./dist"
-    }
-  },
+  "main": "./dist/index.common.js",
+  "module": "./dist/index.module.js",
   "types": "./dist/index.d.ts"
 }

@@ -5,15 +5,13 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
-    "lint": {
-      "inputs": ["./package.json"],
+    "//#format:all": {
       "outputs": []
     },
-    "format": {
-      "inputs": ["./package.json"],
+    "//#format:check:all": {
       "outputs": []
     },
-    "format:check": {
+    "//#lint:all": {
       "outputs": []
     },
     "type-check": {
@@ -29,7 +27,8 @@
       "outputs": ["storybook-static/**"]
     },
     "dev": {
-      "outputs": []
+      "outputs": [],
+      "cache": false
     }
   }
 }

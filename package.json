@@ -12,14 +12,14 @@
   "scripts": {
     "postinstall": "husky install",
     "storybook": "start-storybook -p 4400",
-    "lint": "turbo run lint",
-    "dev": "turbo run dev",
+    "format:all": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "format:check:all": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "lint:all": "eslint --max-warnings=0",
+    "format": "turbo run format:all",
+    "format:check": "turbo run format:check:all",
+    "lint": "turbo run lint:all",
+    "dev": "turbo run dev --parallel",
     "build-storybook": "turbo run build-storybook --",
-    "workspace:format": "prettier --write ",
-    "workspace:format:check": "prettier --check ",
-    "workspace:lint": "eslint --max-warnings=0",
-    "format": "turbo run format",
-    "format:check": "turbo run format:check",
     "type-check": "turbo run type-check",
     "build": "turbo run build",
     "test": "turbo run test"
@@ -64,13 +64,5 @@
     "vite-plugin-dts": "^1.7.1",
     "vite-tsconfig-paths": "^3.6.0",
     "vitest": "^0.25.2"
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,css,scss,md,yml}": "prettier --write"
   }
 }
