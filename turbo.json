@@ -6,9 +6,11 @@
       "outputs": ["dist/**"]
     },
     "lint": {
+      "inputs": ["./package.json"],
       "outputs": []
     },
     "format": {
+      "inputs": ["./package.json"],
       "outputs": []
     },
     "format:check": {

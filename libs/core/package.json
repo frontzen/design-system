@@ -10,9 +10,9 @@
     "dev": "yarn run -T vite build --mode=development --watch",
     "test": "yarn run -T vitest --run",
     "type-check": "yarn run -T tsc",
-    "format": "prettier --ignore-path ../../.prettierignore --config ../../.prettierrc --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
-    "format:check": "prettier --ignore-path ../../.prettierignore --config ../../.prettierrc --check \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
-    "lint": "eslint --max-warnings=0 \"**/*.{js,jsx,ts,tsx}\""
+    "format": "yarn run -T workspace:format \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "format:check": "yarn run -T workspace:format:check \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "lint": "yarn run -T workspace:lint \"**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
     "@emotion/react": "^11.9.3",
@@ -22,8 +22,8 @@
   },
   "exports": {
     ".": {
-      "default": "./src"
+      "default": "./dist"
     }
   },
-  "types": "./src/index.ts"
+  "types": "./dist/index.d.ts"
 }
