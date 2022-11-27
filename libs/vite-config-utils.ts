@@ -3,6 +3,7 @@ import path from 'path';
 import { defineConfig, mergeConfig, UserConfigExport } from 'vite';
 import dts from 'vite-plugin-dts';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import 'vitest'; // for supporting typescript
 
 const srcEntry = path.resolve(process.cwd(), 'src/index.ts');
 const testSetup = path.resolve(process.cwd(), './test.setup.ts');

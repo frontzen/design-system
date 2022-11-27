@@ -5,6 +5,15 @@
     "react": ">=17.0.0",
     "react-dom": ">=17.0.0"
   },
+  "scripts": {
+    "build": "yarn run -T vite build",
+    "dev": "yarn run -T vite build --mode=development --watch",
+    "test": "yarn run -T vitest --run",
+    "type-check": "yarn run -T tsc",
+    "format": "prettier --ignore-path ../../.prettierignore --config ../../.prettierrc --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "format:check": "prettier --ignore-path ../../.prettierignore --config ../../.prettierrc --check \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "lint": "eslint --max-warnings=0 \"**/*.{js,jsx,ts,tsx}\""
+  },
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
@@ -15,5 +24,6 @@
     ".": {
       "default": "./src"
     }
-  }
+  },
+  "types": "./src/index.ts"
 }

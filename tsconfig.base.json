@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "jsx": "react-jsx",
     "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
@@ -13,7 +14,8 @@
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "noEmit": true
   },
   "exclude": ["node_modules", "tmp"]
 }
