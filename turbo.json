@@ -29,6 +29,10 @@
     "dev": {
       "outputs": [],
       "cache": false
+    },
+    "start-storybook": {
+      "dependsOn": ["build"],
+      "outputs": []
     }
   }
 }

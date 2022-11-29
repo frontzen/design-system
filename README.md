@@ -1,6 +1,6 @@
 <h1 align="center" >Frontzen Design System</h1>
 
-Frontzen Design System provides React UI components based on [MUI](https://mui.com). Click [HERE](https://main--62d39f56a426a9878a3e1f3d.chromatic.com) to see the storybooks.
+Frontzen Design System provides React UI components based on [MUI](https://mui.com). Click [HERE](https://63735b95ebfbcb4de6ddaa4d-dqcakcspwn.chromatic.com) to see the storybooks.
 
 ## 📦 Install
 
@@ -28,7 +28,7 @@ const App = () => (
 
 ## ⌨️ Development
 
-This repo is powered by [Nx](https://nx.dev). You can use Nx commands to work with this repo. We recommend using [Nx vscode extention](https://nx.dev/using-nx/console#nx-console-for-vscode) for better experience.
+This repo is powered by [TurboRepo](https://turbo.build/repo). You can use TurboRepo commands to work with this repo.
 
 To run all storybooks locally:
 
