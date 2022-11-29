@@ -5,15 +5,19 @@
     "react": ">=17.0.0",
     "react-dom": ">=17.0.0"
   },
+  "scripts": {
+    "build": "yarn run -T vite build",
+    "dev": "yarn build --mode=development --watch",
+    "test": "yarn run -T vitest --run",
+    "type-check": "yarn run -T tsc"
+  },
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.9.0"
   },
-  "exports": {
-    ".": {
-      "default": "./src"
-    }
-  }
+  "main": "./dist/index.common.js",
+  "module": "./dist/index.module.js",
+  "types": "./dist/index.d.ts"
 }

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "//#format:all": {
+      "outputs": []
+    },
+    "//#format:check:all": {
+      "outputs": []
+    },
+    "//#lint:all": {
+      "outputs": []
+    },
+    "type-check": {
+      "dependsOn": ["build"],
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": ["build"],
+      "outputs": []
+    },
+    "build-storybook": {
+      "dependsOn": ["build"],
+      "outputs": ["storybook-static/**"]
+    },
+    "dev": {
+      "outputs": [],
+      "cache": false
+    }
+  }
+}

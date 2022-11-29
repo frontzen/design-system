@@ -1,0 +1,11 @@
+{
+  "name": "storybook-app",
+  "version": "0.0.0",
+  "main": "main.js",
+  "scripts": {
+    "build-storybook": "build-storybook -c ."
+  },
+  "dependencies": {
+    "@front.zen/design-system": "^0.*"
+  }
+}
