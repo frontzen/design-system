@@ -14,7 +14,7 @@
     "storybook": "turbo run start-storybook",
     "format:all": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "format:check:all": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
-    "lint:all": "eslint --max-warnings=0",
+    "lint:all": "eslint --max-warnings=0 \"**.*.{js,jsx,ts,tsx}\"",
     "format": "turbo run format:all",
     "format:check": "turbo run format:check:all",
     "lint": "turbo run lint:all",
