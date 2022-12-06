@@ -1,4 +1,4 @@
-import { LocalizationProviderProps } from '../LocalizationProvider';
+import { LocalizationProviderProps } from 'src/LocalizationProvider';
 
 export interface PickersComponentsPropsList {
   ZenLocalizationProvider: LocalizationProviderProps<any>;
