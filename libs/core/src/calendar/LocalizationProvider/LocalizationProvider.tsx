@@ -43,7 +43,7 @@ export function LocalizationProvider<TDate>(inProps: LocalizationProviderProps<T
     // We don't want to pass the `localeText` prop to the theme, that way it will always return the theme value,
     // We will then merge this theme value with our value manually
     props: otherInProps,
-    name: 'LocalizationProvider',
+    name: 'ZenLocalizationProvider',
   });
 
   const { children, calendarOptions, localeText: themeLocaleText } = props;
