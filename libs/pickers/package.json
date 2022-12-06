@@ -1,6 +1,6 @@
 {
-  "name": "@front.zen/design-system",
-  "version": "0.0.1",
+  "name": "@front.zen/pickers",
+  "version": "0.0.0",
   "peerDependencies": {
     "react": ">=17.0.0",
     "react-dom": ">=17.0.0"
@@ -12,12 +12,17 @@
     "type-check": "yarn run -T tsc"
   },
   "dependencies": {
+    "@date-io/core": "^2.16.0",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@mui/icons-material": "^5.8.4",
-    "@mui/material": "^5.9.0"
+    "@mui/material": "^5.9.0",
+    "ramda": "^0.28.0"
   },
   "main": "./dist/index.common.js",
   "module": "./dist/index.module.js",
-  "types": "./dist/index.d.ts"
+  "types": "./dist/index.d.ts",
+  "devDependencies": {
+    "@types/ramda": "^0.28.20"
+  }
 }
