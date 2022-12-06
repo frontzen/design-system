@@ -2323,6 +2323,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@date-io/core@npm:^2.16.0":
+  version: 2.16.0
+  resolution: "@date-io/core@npm:2.16.0"
+  checksum: 336d0dd90fd0848116472cfb0e694e85860b2916952304201bb4d3a23d453d44589d346494584faba0fc05751cc38f1880889ce48cd982377aac2bfb20469b8a
+  languageName: node
+  linkType: hard
+
 "@discoveryjs/json-ext@npm:^0.5.3":
   version: 0.5.7
   resolution: "@discoveryjs/json-ext@npm:0.5.7"
@@ -2537,11 +2544,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@front.zen/design-system@workspace:libs/core"
   dependencies:
+    "@date-io/core": ^2.16.0
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
     "@mui/icons-material": ^5.8.4
     "@mui/lab": ^5.0.0-alpha.110
     "@mui/material": ^5.10.16
+    "@types/ramda": ^0.28.20
+    ramda: ^0.28.0
   peerDependencies:
     react: ">=17.0.0"
     react-dom: ">=17.0.0"
@@ -4974,6 +4984,15 @@ __metadata:
   version: 6.9.7
   resolution: "@types/qs@npm:6.9.7"
   checksum: 7fd6f9c25053e9b5bb6bc9f9f76c1d89e6c04f7707a7ba0e44cc01f17ef5284adb82f230f542c2d5557d69407c9a40f0f3515e8319afd14e1e16b5543ac6cdba
+  languageName: node
+  linkType: hard
+
+"@types/ramda@npm:^0.28.20":
+  version: 0.28.20
+  resolution: "@types/ramda@npm:0.28.20"
+  dependencies:
+    ts-toolbelt: ^6.15.1
+  checksum: 02c1e958a09724079acd975aefd2e9ae1327097f941c661ca596e2a8e16df3bd0f0755a16ab378eeb562d8624d7614a3159de2a0129e7d8522a2d79699390818
   languageName: node
   linkType: hard
 
@@ -18337,6 +18356,13 @@ __metadata:
     typescript:
       optional: true
   checksum: c2a698b85d521298fe6f2435fbf2d3dc5834b423ea25abd321805ead3f399dbeedce7ca09492d7eb005b9d2c009c6b9587055bc3ab273dc6b9e40eefd7edb5b2
+  languageName: node
+  linkType: hard
+
+"ts-toolbelt@npm:^6.15.1":
+  version: 6.15.5
+  resolution: "ts-toolbelt@npm:6.15.5"
+  checksum: 24ad00cfd9ce735c76c873a9b1347eac475b94e39ebbdf100c9019dce88dd5f4babed52884cf82bb456a38c28edd0099ab6f704b84b2e5e034852b618472c1f3
   languageName: node
   linkType: hard
 
