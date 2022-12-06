@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { PickersAdapterContext } from '../LocalizationProvider';
-import { PickersAdapterContextValue } from '../LocalizationProvider/LocalizationProvider';
+import { PickersAdapterContext, PickersAdapterContextValue } from 'src/LocalizationProvider';
 
 export const useLocalizationContext = <TDate>() => {
   const localization = React.useContext(PickersAdapterContext);

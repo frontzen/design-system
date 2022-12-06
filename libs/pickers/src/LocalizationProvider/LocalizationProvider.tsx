@@ -2,7 +2,7 @@ import { IUtils } from '@date-io/core/IUtils';
 import { useThemeProps } from '@mui/material/styles';
 import { indexBy, pluck, prop } from 'ramda';
 import * as React from 'react';
-import { enUSLocaleText as DEFAULT_LOCALE_TEXT, PickersInputLocaleText, PickersLocaleText } from '../locales';
+import { enUSLocaleText as DEFAULT_LOCALE_TEXT, PickersInputLocaleText, PickersLocaleText } from 'src/locales';
 
 // @ts-ignore TDate in our codebase does not have the `ExtendableDateType` constraint.
 export type PickersAdapter<TDate> = IUtils<TDate>;
