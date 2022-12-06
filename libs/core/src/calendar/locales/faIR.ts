@@ -1,6 +1,6 @@
 import { PickersLocaleText } from './types';
 
-export const faIRDefaultLocaleText: PickersLocaleText = {
+export const faIRLocaleText: PickersLocaleText = {
   cancelButtonLabel: 'خروج',
   confirmButtonLabel: 'تأیید',
   clearButtonLabel: 'بازنشانی',

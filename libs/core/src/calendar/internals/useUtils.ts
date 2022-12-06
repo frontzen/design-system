@@ -18,7 +18,6 @@ export const useLocalizationContext = <TDate>() => {
 };
 
 export const useUtils = <T>() => useLocalizationContext<T>().utils;
-export const useDefaultDates = <T>() => useLocalizationContext<T>().defaultDates;
 export const useLocaleText = <T>() => useLocalizationContext<T>().localeText;
 
 export const useNow = <TDate>(): TDate => {

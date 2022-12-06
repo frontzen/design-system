@@ -1,32 +1,24 @@
-import { DateIOFormats, IUtils } from '@date-io/core/IUtils';
+import { IUtils } from '@date-io/core/IUtils';
 import { useThemeProps } from '@mui/material/styles';
 import { indexBy, pluck, prop } from 'ramda';
 import * as React from 'react';
-import { enUSDefaultLocaleText as DEFAULT_LOCALE_TEXT, PickersInputLocaleText, PickersLocaleText } from '../locales';
+import { enUSLocaleText as DEFAULT_LOCALE_TEXT, PickersInputLocaleText, PickersLocaleText } from '../locales';
 
 // @ts-ignore TDate in our codebase does not have the `ExtendableDateType` constraint.
 export type PickersAdapter<TDate> = IUtils<TDate>;
 
 export type CalendarAdapterObject<TDate> = {
   calendar: string;
-  /** DateIO adapter class function */
-  adapter: new (...args: any) => PickersAdapter<TDate>;
-  /** Locale for the date library you are using */
-  adapterLocale?: string | object;
+  /** DateIO adapter instance */
+  adapter: PickersAdapter<TDate>;
 };
 
 export interface PickersAdapterContextValue<TDate> {
-  defaultDates: {
-    minDate: TDate;
-    maxDate: TDate;
-  };
-
   utils: PickersAdapter<TDate>;
   localeText: PickersLocaleText;
   calendars: string[];
   currentCalendar: string;
   changeCalendar: (value: string) => void;
-  defaultMultiCalendar: boolean;
 }
 
 export const PickersAdapterContext = React.createContext<PickersAdapterContextValue<any> | null>(null);
@@ -38,15 +30,10 @@ export interface LocalizationProviderProps<TDate> {
    * first calendar in the array would be the default calendar
    */
   calendarOptions: CalendarAdapterObject<TDate>[];
-  /** Formats that are used for any child pickers */
-  dateFormats?: Partial<DateIOFormats>;
   /**
    * Locale for components texts
    */
   localeText?: PickersInputLocaleText;
-  /** Default `multiCalendar` to be used for all date & date-time pickers in the children tree
-   *  unless mentioned on the component itself */
-  defaultMultiCalendar?: boolean;
 }
 
 export function LocalizationProvider<TDate>(inProps: LocalizationProviderProps<TDate>) {
@@ -59,7 +46,7 @@ export function LocalizationProvider<TDate>(inProps: LocalizationProviderProps<T
     name: 'LocalizationProvider',
   });
 
-  const { children, calendarOptions, dateFormats, defaultMultiCalendar = false, localeText: themeLocaleText } = props;
+  const { children, calendarOptions, localeText: themeLocaleText } = props;
 
   const [calendars, calendarsWithAdapters] = React.useMemo(
     () => [pluck('calendar', calendarOptions), indexBy(prop('calendar'), calendarOptions)],
@@ -74,28 +61,16 @@ export function LocalizationProvider<TDate>(inProps: LocalizationProviderProps<T
     [themeLocaleText, inLocaleText],
   );
 
-  const utils = React.useMemo(() => {
-    const { adapter: Adapter, adapterLocale } = calendarsWithAdapters[currentCalendar];
-
-    return new Adapter({ locale: adapterLocale, formats: dateFormats });
-  }, [currentCalendar, calendarsWithAdapters, dateFormats]);
-
-  const defaultDates: PickersAdapterContextValue<TDate>['defaultDates'] = React.useMemo(
-    () => ({ minDate: utils.date('1900-01-01T00:00:00.000')!, maxDate: utils.date('2099-12-31T00:00:00.000')! }),
-    [utils],
-  );
-
-  const contextValue: PickersAdapterContextValue<TDate> = React.useMemo(() => {
-    return {
-      utils,
-      defaultDates,
+  const contextValue: PickersAdapterContextValue<TDate> = React.useMemo(
+    () => ({
+      utils: calendarsWithAdapters[currentCalendar].adapter,
       localeText,
       calendars,
       currentCalendar,
       changeCalendar: setCurrentCalendar,
-      defaultMultiCalendar,
-    };
-  }, [defaultDates, utils, localeText, calendars, currentCalendar, defaultMultiCalendar]);
+    }),
+    [localeText, calendars, currentCalendar, calendarsWithAdapters],
+  );
 
   return <PickersAdapterContext.Provider value={contextValue}>{children}</PickersAdapterContext.Provider>;
 }

@@ -1,6 +1,6 @@
 import { PickersLocaleText } from './types';
 
-export const enUSDefaultLocaleText: PickersLocaleText = {
+export const enUSLocaleText: PickersLocaleText = {
   cancelButtonLabel: 'Cancel',
   confirmButtonLabel: 'Confirm',
   clearButtonLabel: 'Clear',

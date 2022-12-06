@@ -1,4 +1,4 @@
-export interface PickersComponentAgnosticLocaleText {
+export interface PickersComponentCommonLocaleText {
   // Action bar
   cancelButtonLabel: string;
   clearButtonLabel: string;
@@ -9,6 +9,6 @@ export interface PickersComponentAgnosticLocaleText {
   calendarLabels: Record<string, string>;
 }
 
-export interface PickersLocaleText extends PickersComponentAgnosticLocaleText {}
+export interface PickersLocaleText extends PickersComponentCommonLocaleText {}
 
 export type PickersInputLocaleText = Partial<PickersLocaleText>;
