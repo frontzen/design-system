@@ -2,7 +2,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { render } from '@testing-library/react';
 import { act, renderHook } from '@testing-library/react-hooks';
 import * as React from 'react';
-import { useLocalizationContext } from 'src/internals/useUtils';
+import { useLocalizationContext } from 'src/internals/hooks/useUtils';
 import { vi } from 'vitest';
 import {
   LocalizationProvider,
