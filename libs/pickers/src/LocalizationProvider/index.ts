@@ -1,2 +1,2 @@
 export { LocalizationProvider, PickersAdapterContext } from './LocalizationProvider';
-export type { LocalizationProviderProps, PickersAdapterContextValue } from './LocalizationProvider';
+export type { LocalizationProviderProps, PickersAdapter, PickersAdapterContextValue } from './LocalizationProvider';

@@ -25,3 +25,8 @@ export interface BaseDateValidationProps<TDate> extends FutureAndPastValidationP
    */
   minDate?: TDate;
 }
+
+/**
+ * Common validation error types applicable to both date and time validation
+ */
+export type CommonDateTimeValidationError = 'invalidDate' | 'disableFuture' | 'disablePast' | null;
