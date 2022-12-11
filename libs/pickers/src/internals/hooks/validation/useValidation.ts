@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { PickersAdapter } from 'src/LocalizationProvider';
 import { useUtils } from '../useUtils';
+import { validateDate } from './useDateValidation';
+
+type ValidateMode = 'date' | 'time' | 'datetime';
 
 export interface ValidationCommonProps<TError, TValue> {
   /**
@@ -27,25 +30,31 @@ export type Validator<TValue, TDate, TError, TValidationProps> = (params: {
   props: Omit<TValidationProps, 'value' | 'onError'>;
 }) => TError;
 
+const validateFns = {
+  date: validateDate,
+  time: (() => {}) as any,
+  datetime: (() => {}) as any,
+} satisfies Record<ValidateMode, Validator<any, any, any, any>>;
+
 export function useValidation<TValue, TDate, TError, TValidationProps extends {}>(
   props: ValidationProps<TError, TValue, TValidationProps>,
-  validate: Validator<TValue, TDate, TError, TValidationProps>,
-  isSameError: (a: TError, b: TError | null) => boolean,
+  mode: ValidateMode,
   defaultErrorState: TError,
 ): TError {
   const { value, onError } = props;
   const utils = useUtils<TDate>();
   const previousValidationErrorRef = React.useRef<TError | null>(defaultErrorState);
 
+  const validate = validateFns[mode];
   const validationError = validate({ utils, value, props });
 
   React.useEffect(() => {
-    if (onError && !isSameError(validationError, previousValidationErrorRef.current)) {
+    if (onError && validationError !== previousValidationErrorRef.current) {
       onError(validationError, value);
     }
 
     previousValidationErrorRef.current = validationError;
-  }, [isSameError, onError, previousValidationErrorRef, validationError, value]);
+  }, [onError, previousValidationErrorRef, validationError, value]);
 
   return validationError;
 }

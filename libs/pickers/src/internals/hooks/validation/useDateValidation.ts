@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useUtils } from '../useUtils';
 import { BaseDateValidationProps, CommonDateTimeValidationError } from './models';
-import { useValidation, ValidationProps, Validator } from './useValidation';
+import { Validator } from './useValidation';
 
 export interface DateComponentValidationProps<TDate> extends Required<BaseDateValidationProps<TDate>> {}
 
@@ -16,25 +16,12 @@ export const validateDate: Validator<any | null, any, DateValidationError, BaseD
 
   const now = utils.date()!;
 
-  switch (true) {
-    case !utils.isValid(value):
-      return 'invalidDate';
-
-    case Boolean(props.disablePast && utils.isBeforeDay(value, now)):
-      return 'disablePast';
-
-    case Boolean(props.disableFuture && utils.isAfterDay(value, now)):
-      return 'disableFuture';
-
-    case Boolean(props.minDate && utils.isBeforeDay(value, props.minDate)):
-      return 'minDate';
-
-    case Boolean(props.maxDate && utils.isAfterDay(value, props.maxDate)):
-      return 'maxDate';
-
-    default:
-      return null;
-  }
+  if (!utils.isValid(value)) return 'invalidDate';
+  else if (Boolean(props.disablePast && utils.isBeforeDay(value, now))) return 'disablePast';
+  else if (Boolean(props.disableFuture && utils.isAfterDay(value, now))) return 'disableFuture';
+  else if (Boolean(props.minDate && utils.isBeforeDay(value, props.minDate))) return 'minDate';
+  else if (Boolean(props.maxDate && utils.isAfterDay(value, props.maxDate))) return 'maxDate';
+  else return null;
 };
 
 export const useIsDateDisabled = <TDate>({
@@ -51,9 +38,3 @@ export const useIsDateDisabled = <TDate>({
     [utils, disablePast, disableFuture, minDate, maxDate],
   );
 };
-
-export const isSameDateError = (a: DateValidationError, b: DateValidationError) => a === b;
-
-export const useDateValidation = <TDate>(
-  props: ValidationProps<DateValidationError, TDate | null, DateComponentValidationProps<TDate>>,
-): DateValidationError => useValidation(props, validateDate, isSameDateError, null);

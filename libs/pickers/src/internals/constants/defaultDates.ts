@@ -1,4 +1,2 @@
-export const DEFAULT_DATES_ISO_STRING: Record<'minDate' | 'maxDate', string> = {
-  minDate: '1900-01-01T00:00:00.000',
-  maxDate: '2099-12-31T00:00:00.000',
-};
+export const MIN_DEFAULT_DATE_ISO_STRING = '1900-01-01T00:00:00.000';
+export const MAX_DEFAULT_DATE_ISO_STRING = '2099-12-31T00:00:00.000';

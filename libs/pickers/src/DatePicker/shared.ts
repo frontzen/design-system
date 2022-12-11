@@ -1,7 +1,6 @@
-import { DEFAULT_DATES_ISO_STRING } from 'src/internals/constants/defaultDates';
+import { MAX_DEFAULT_DATE_ISO_STRING, MIN_DEFAULT_DATE_ISO_STRING } from 'src/internals/constants/defaultDates';
 import { BaseDateValidationProps } from 'src/internals/hooks/validation/models';
 import { DateView, DefaultizedProps } from 'src/internals/models';
-import { replaceWhenInvalid } from 'src/internals/utils/date-utils';
 import { PickersAdapter } from 'src/LocalizationProvider/LocalizationProvider';
 
 export interface BaseDatePickerProps<TDate> extends BaseDateValidationProps<TDate> {
@@ -23,17 +22,26 @@ export interface BaseDatePickerProps<TDate> extends BaseDateValidationProps<TDat
   views?: readonly DateView[];
 }
 
-export function getDatePickerDefaultizedProps<TDate>(
+export const getDatePickerDefaultizedProps = <TDate>(
   props: BaseDatePickerProps<TDate>,
   utils: PickersAdapter<TDate>,
-): DefaultizedProps<BaseDatePickerProps<TDate>, 'openTo' | 'views' | keyof BaseDateValidationProps<TDate>> {
+): DefaultizedProps<BaseDatePickerProps<TDate>, 'openTo' | 'views' | keyof BaseDateValidationProps<TDate>> => {
+  if (!utils.isValid(props.minDate) || !utils.isValid(props.maxDate)) {
+    throw new Error(
+      [
+        'FrontZen: one of minDate or maxDate props is invalid.',
+        'Pass valid and parsable date to the mentioned props.',
+      ].join('\n'),
+    );
+  }
+
   return {
     openTo: 'day',
     disableFuture: false,
     disablePast: false,
     views: ['year', 'day'],
     ...props,
-    minDate: replaceWhenInvalid(utils, props.minDate, utils.date(DEFAULT_DATES_ISO_STRING.minDate)!),
-    maxDate: replaceWhenInvalid(utils, props.maxDate, utils.date(DEFAULT_DATES_ISO_STRING.maxDate)!),
+    minDate: props.minDate || utils.date(MIN_DEFAULT_DATE_ISO_STRING)!,
+    maxDate: props.maxDate || utils.date(MAX_DEFAULT_DATE_ISO_STRING)!,
   };
-}
+};
