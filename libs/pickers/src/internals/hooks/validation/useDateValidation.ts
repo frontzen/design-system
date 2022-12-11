@@ -17,11 +17,12 @@ export const validateDate: Validator<any | null, any, DateValidationError, BaseD
   const now = utils.date()!;
 
   if (!utils.isValid(value)) return 'invalidDate';
-  else if (Boolean(props.disablePast && utils.isBeforeDay(value, now))) return 'disablePast';
-  else if (Boolean(props.disableFuture && utils.isAfterDay(value, now))) return 'disableFuture';
-  else if (Boolean(props.minDate && utils.isBeforeDay(value, props.minDate))) return 'minDate';
-  else if (Boolean(props.maxDate && utils.isAfterDay(value, props.maxDate))) return 'maxDate';
-  else return null;
+  if (Boolean(props.disablePast && utils.isBeforeDay(value, now))) return 'disablePast';
+  if (Boolean(props.disableFuture && utils.isAfterDay(value, now))) return 'disableFuture';
+  if (Boolean(props.minDate && utils.isBeforeDay(value, props.minDate))) return 'minDate';
+  if (Boolean(props.maxDate && utils.isAfterDay(value, props.maxDate))) return 'maxDate';
+
+  return null;
 };
 
 export const useIsDateDisabled = <TDate>({
