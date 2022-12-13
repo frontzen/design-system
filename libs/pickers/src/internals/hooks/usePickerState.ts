@@ -5,14 +5,9 @@ import { DateOrTimeView } from '../models';
 import { useOpenState } from './useOpenState';
 import { useViews } from './useViews';
 
-export interface PickerStateValueManager<TValue, TDate, TError> {
+export interface PickerStateValueManager<TValue, TDate> {
   /**
    * Determines if two values are equal.
-   * @template TDate, TValue
-   * @param {MuiPickersAdapter<TDate>} utils The adapter.
-   * @param {TValue} valueLeft The first value to compare.
-   * @param {TValue} valueRight The second value to compare.
-   * @returns {boolean} A boolean indicating if the two values are equal.
    */
   areValuesEqual: (utils: PickersAdapter<TDate>, valueLeft: TValue, valueRight: TValue) => boolean;
   /**
@@ -20,41 +15,13 @@ export interface PickerStateValueManager<TValue, TDate, TError> {
    */
   emptyValue: TValue;
   /**
-   * Method returning the value to set when clicking the "Today" button
-   * @template TDate, TValue
-   * @param {MuiPickersAdapter<TDate>} utils The adapter.
-   * @returns {TValue} The value to set when clicking the "Today" button.
-   */
-  getTodayValue: (utils: PickersAdapter<TDate>) => TValue;
-  /**
    * Method parsing the input value to replace all invalid dates by `null`.
-   * @template TDate, TValue
-   * @param {MuiPickersAdapter<TDate>} utils The adapter.
-   * @param {TValue} value The value to parse.
-   * @returns {TValue} The value without invalid date.
    */
   cleanValue: (utils: PickersAdapter<TDate>, value: TValue) => TValue;
   /**
    * Generates the new value, given the previous value and the new proposed value.
-   * @template TDate, TValue
-   * @param {MuiPickersAdapter<TDate>} utils The adapter.
-   * @param {TValue} lastValidDateValue The last valid value.
-   * @param {TValue} value The proposed value.
-   * @returns {TValue} The new value.
    */
   valueReducer?: (utils: PickersAdapter<TDate>, lastValidDateValue: TValue, value: TValue) => TValue;
-  /**
-   * Compare two errors to know if they are equal.
-   * @template TError
-   * @param {TError} error The new error
-   * @param {TError | null} prevError The previous error
-   * @returns {boolean} `true` if the new error is different from the previous one.
-   */
-  isSameError: (error: TError, prevError: TError | null) => boolean;
-  /**
-   * The value identifying no error, used to initialise the error state.
-   */
-  defaultErrorState: TError;
 }
 
 interface DateStateAction<DraftValue> {
@@ -101,12 +68,12 @@ export interface PickerStateProps<TValue, View extends DateOrTimeView> {
    * Callback fired when the popup requests to be closed.
    * Use in controlled mode (see open).
    */
-  onClose?: () => void;
+  onClose?: VoidFunction;
   /**
    * Callback fired when the popup requests to be opened.
    * Use in controlled mode (see open).
    */
-  onOpen?: () => void;
+  onOpen?: VoidFunction;
   /**
    * The value of the picker.
    */
@@ -117,19 +84,18 @@ interface PickerStateInputProps<TValue> {
   onChange: (value: TValue, keyboardInputValue?: string) => void;
   open: boolean;
   value: TValue;
-  openPicker: () => void;
+  openPicker: VoidFunction;
 }
 
 export interface PickerStatePickerProps<TValue> {
   value: TValue;
-  onDateChange: (newDate: TValue) => void;
+  onValueChange: (newDate: TValue) => void;
 }
 
 export interface PickerStateWrapperProps {
-  onConfirm: () => void;
-  onClear: () => void;
-  onDismiss: () => void;
-  onSetToday: () => void;
+  onConfirm: VoidFunction;
+  onClear: VoidFunction;
+  onDismiss: VoidFunction;
   open: boolean;
 }
 
@@ -139,9 +105,9 @@ interface PickerState<TValue> {
   wrapperProps: PickerStateWrapperProps;
 }
 
-export const usePickerState = <TValue, TDate, TError, TView extends DateOrTimeView>(
+export const usePickerState = <TValue, TDate, TView extends DateOrTimeView>(
   props: PickerStateProps<TValue, TView>,
-  valueManager: PickerStateValueManager<TValue, TDate, TError>,
+  valueManager: PickerStateValueManager<TValue, TDate>,
 ): PickerState<TValue> => {
   const { onConfirm, onChange, value: rawValue, closeOnConfirm, open, onOpen, onClose, ...useViewProps } = props;
 
@@ -185,17 +151,14 @@ export const usePickerState = <TValue, TDate, TError, TView extends DateOrTimeVi
       onDismiss: () => {
         setIsOpen(false);
       },
-      onSetToday: () => {
-        setDate({ value: valueManager.getTodayValue(utils) });
-      },
     }),
-    [setDate, isOpen, utils, draftState, valueManager, setIsOpen, closeOnConfirm],
+    [setDate, isOpen, draftState, valueManager, setIsOpen, closeOnConfirm],
   );
 
   const pickerProps = React.useMemo<PickerStatePickerProps<TValue>>(
     () => ({
       value: draftState,
-      onDateChange: setDraftState,
+      onValueChange: setDraftState,
       useViewsResult: {
         ...useViewsRest,
         nextView,
@@ -209,10 +172,10 @@ export const usePickerState = <TValue, TDate, TError, TView extends DateOrTimeVi
     () => ({
       onChange,
       open: isOpen,
-      value: rawValue,
+      value: draftState,
       openPicker: () => setIsOpen(true),
     }),
-    [onChange, isOpen, setIsOpen, rawValue],
+    [onChange, isOpen, setIsOpen, draftState],
   );
 
   const pickerState: PickerState<TValue> = { pickerProps, inputProps, wrapperProps };

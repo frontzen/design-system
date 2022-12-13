@@ -2,10 +2,11 @@ import * as React from 'react';
 
 export interface OpenStateProps {
   open?: boolean;
-  onOpen?: () => void;
-  onClose?: () => void;
+  onOpen?: VoidFunction;
+  onClose?: VoidFunction;
 }
 
+//TODO: transfer this hook to front.zen/utils
 export const useOpenState = ({ open, onOpen, onClose }: OpenStateProps) => {
   const isControllingOpenProp = React.useRef(typeof open === 'boolean').current;
   const [openState, setIsOpenState] = React.useState(false);
