@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { useUtils } from 'src/internals/hooks/useUtils';
 import { PickersAdapter } from 'src/LocalizationProvider';
-import { DateOrTimeView } from '../models';
+import { useViews } from '../providers/PickerViewsProvider';
 import { useOpenState } from './useOpenState';
-import { useViews } from './useViews';
 
 export interface PickerStateValueManager<TValue, TDate> {
   /**
@@ -28,21 +27,11 @@ interface DateStateAction<DraftValue> {
   value: DraftValue;
   callOnChange?: boolean;
   closePicker?: boolean;
-  openNextView?: boolean;
 }
 
 export type PickerSelectionState = 'partial' | 'finish';
 
-export interface PickerStateProps<TValue, View extends DateOrTimeView> {
-  openTo?: View;
-  view: View | undefined;
-  views: readonly View[];
-  /**
-   * Callback fired when view is changed
-   * @template View
-   * @param {View} newView The new view
-   */
-  onViewChange?: (newView: View) => void;
+export interface PickerStateProps<TValue> {
   /**
    * If `true` the popup or dialog will immediately close after submitting full date.
    */
@@ -105,15 +94,17 @@ interface PickerState<TValue> {
   wrapperProps: PickerStateWrapperProps;
 }
 
-export const usePickerState = <TValue, TDate, TView extends DateOrTimeView>(
-  props: PickerStateProps<TValue, TView>,
+export const usePickerState = <TValue, TDate>(
+  props: PickerStateProps<TValue>,
   valueManager: PickerStateValueManager<TValue, TDate>,
 ): PickerState<TValue> => {
-  const { onConfirm, onChange, value: rawValue, closeOnConfirm, open, onOpen, onClose, ...useViewProps } = props;
+  const { onConfirm, onChange, value: rawValue, closeOnConfirm, open, onOpen, onClose } = props;
 
   const utils = useUtils<TDate>();
   const { isOpen, setIsOpen } = useOpenState({ open, onClose, onOpen });
-  const { nextView, openNext, ...useViewsRest } = useViews(useViewProps);
+
+  // PickerViewsProvider should always be used on top of usePickerState usage
+  const { openNext } = useViews();
 
   const value = React.useMemo(() => valueManager.cleanValue(utils, rawValue), [valueManager, utils, rawValue]);
 
@@ -124,10 +115,9 @@ export const usePickerState = <TValue, TDate, TView extends DateOrTimeView>(
       setDraftState(params.value);
 
       if (params.callOnChange && !valueManager.areValuesEqual(utils, params.value, value)) onChange(params.value);
-      if (params.openNextView) openNext();
-      if (params.closePicker && !nextView) setIsOpen(false);
+      if (params.closePicker) setIsOpen(false);
     },
-    [onChange, setIsOpen, utils, valueManager, value, nextView, openNext],
+    [onChange, setIsOpen, utils, valueManager, value],
   );
 
   React.useEffect(() => {
@@ -146,39 +136,36 @@ export const usePickerState = <TValue, TDate, TView extends DateOrTimeView>(
         });
       },
       onConfirm: () => {
-        setDate({ value: draftState, callOnChange: true, openNextView: true, closePicker: closeOnConfirm });
+        setDate({ value: draftState, callOnChange: true, closePicker: closeOnConfirm });
+        onConfirm?.(draftState);
       },
       onDismiss: () => {
         setIsOpen(false);
       },
     }),
-    [setDate, isOpen, draftState, valueManager, setIsOpen, closeOnConfirm],
+    [setDate, isOpen, draftState, valueManager, setIsOpen, closeOnConfirm, onConfirm],
   );
 
   const pickerProps = React.useMemo<PickerStatePickerProps<TValue>>(
     () => ({
       value: draftState,
-      onValueChange: setDraftState,
-      useViewsResult: {
-        ...useViewsRest,
-        nextView,
-        openNext,
+      onValueChange: (value) => {
+        setDraftState(value);
+        openNext();
       },
     }),
-    [draftState, setDraftState, openNext, nextView, useViewsRest],
+    [draftState, setDraftState, openNext],
   );
 
   const inputProps = React.useMemo<PickerStateInputProps<TValue>>(
     () => ({
       onChange,
       open: isOpen,
-      value: draftState,
+      value,
       openPicker: () => setIsOpen(true),
     }),
-    [onChange, isOpen, setIsOpen, draftState],
+    [onChange, isOpen, setIsOpen, value],
   );
 
-  const pickerState: PickerState<TValue> = { pickerProps, inputProps, wrapperProps };
-
-  return pickerState;
+  return { pickerProps, inputProps, wrapperProps };
 };
