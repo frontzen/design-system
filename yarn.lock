@@ -2527,6 +2527,7 @@ __metadata:
     "@emotion/styled": ^11.9.3
     "@mui/icons-material": ^5.8.4
     "@mui/material": ^5.9.0
+    "@types/ramda": ^0.28.20
   peerDependencies:
     react: ">=17.0.0"
     react-dom: ">=17.0.0"
