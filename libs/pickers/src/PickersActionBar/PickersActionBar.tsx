@@ -8,11 +8,10 @@ export interface PickersActionBarProps extends DialogActionsProps {
   /**
    * Ordered array of actions to display.
    * If empty, does not display that action bar.
-   * @default `['cancel', 'accept']` for mobile and `[]` for desktop
    */
   actions?: PickersActionBarAction[];
-  onConfirm: () => void;
-  onClear: () => void;
+  onConfirm: VoidFunction;
+  onClear: VoidFunction;
 }
 
 export function PickersActionBar(props: PickersActionBarProps) {
@@ -28,7 +27,7 @@ export function PickersActionBar(props: PickersActionBarProps) {
     switch (actionType) {
       case 'clear':
         return (
-          <Button data-mui-test="clear-action-button" onClick={onClear} key={actionType}>
+          <Button onClick={onClear} key={actionType}>
             {localeText.clearButtonLabel}
           </Button>
         );

@@ -23,7 +23,7 @@ export interface PickersSlotsComponentsProps {
   /**
    * Props passed down to the action bar component.
    */
-  actionBar?: Omit<PickersActionBarProps, 'onAccept' | 'onClear' | 'onCancel' | 'onSetToday'>;
+  actionBar?: Omit<PickersActionBarProps, 'onConfirm' | 'onClear'>;
   /**
    * Props passed down to the paper content component.
    * Can't be used without a custom PaperContent component since the default one is React.Fragment.
