@@ -44,7 +44,6 @@ export function DesktopWrapper(props: DesktopWrapperProps) {
     <>
       <KeyboardDateInputComponent {...DateInputProps} inputRef={inputRef} />
       <PickersPopper
-        role="dialog"
         open={open}
         anchorEl={ownInputRef.current}
         onDismiss={onDismiss}

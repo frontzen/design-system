@@ -78,16 +78,14 @@ const useUtilityClasses = (ownerState: PickerPopperProps) => {
 };
 
 export interface PickerPopperProps extends PickerStateWrapperProps {
-  role: 'tooltip' | 'dialog';
   anchorEl: MuiPopperProps['anchorEl'];
   open: MuiPopperProps['open'];
   containerRef?: React.Ref<HTMLDivElement>;
+  onBlur?: VoidFunction;
   children?: React.ReactNode;
-  onBlur?: () => void;
   components?: PickersPopperSlotsComponent;
   componentsProps?: PickersPopperSlotsComponentsProps;
   classes?: Partial<PickersPopperClasses>;
-  shouldRestoreFocus?: () => boolean;
 }
 
 const PickersPopperRoot = styled(MuiPopper, {
@@ -119,7 +117,6 @@ export function PickersPopper(inProps: PickerPopperProps) {
     onClear,
     onConfirm,
     open,
-    role,
     components,
     componentsProps,
   } = props;
@@ -156,7 +153,7 @@ export function PickersPopper(inProps: PickerPopperProps) {
     externalSlotProps: componentsProps?.popper,
     additionalProps: {
       transition: true,
-      role,
+      role: 'dialog',
       open,
       anchorEl,
       onKeyDown: handleKeyDown,
@@ -195,26 +192,18 @@ export function PickersPopper(inProps: PickerPopperProps) {
   return (
     <Popper {...popperProps}>
       {({ TransitionProps, placement }) => (
-        <TrapFocus
-          open={open}
-          disableAutoFocus
-          // pickers are managing focus position manually
-          // without this prop the focus is returned to the button before `aria-label` is updated
-          // which would force screen readers to read too old label
-          disableRestoreFocus
-          disableEnforceFocus={role === 'tooltip'}
-          isEnabled={() => true}
-          {...componentsProps?.desktopTrapFocus}
-        >
+        <TrapFocus open={open} disableAutoFocus disableRestoreFocus {...componentsProps?.desktopTrapFocus}>
           <Transition {...TransitionProps} {...componentsProps?.desktopTransition}>
-            <ClickAwayListener onClickAway={onBlur ?? onDismiss} touchEvent="onTouchStart">
-              <Paper {...paperProps} ownerState={{ ...props, placement }} ref={containerRef}>
-                <PaperContent {...componentsProps?.paperContent}>
-                  {children}
-                  <ActionBar {...actionBarProps} />
-                </PaperContent>
-              </Paper>
-            </ClickAwayListener>
+            <div>
+              <ClickAwayListener onClickAway={onBlur ?? onDismiss} touchEvent="onTouchStart">
+                <Paper {...paperProps} ownerState={{ ...props, placement }} ref={containerRef}>
+                  <PaperContent {...componentsProps?.paperContent}>
+                    {children}
+                    <ActionBar {...actionBarProps} />
+                  </PaperContent>
+                </Paper>
+              </ClickAwayListener>
+            </div>
           </Transition>
         </TrapFocus>
       )}
