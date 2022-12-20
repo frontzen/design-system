@@ -15,7 +15,7 @@ import MuiTrapFocus, { TrapFocusProps as MuiTrapFocusProps } from '@mui/material
 import { unstable_composeClasses as composeClasses } from '@mui/utils';
 import * as React from 'react';
 import { PickerStateWrapperProps } from 'src/internals/hooks/usePickerState';
-import { PickersActionBar } from 'src/PickersActionBar';
+import { PickersActionBar, PickersActionBarAction } from 'src/PickersActionBar';
 import { getPickersPopperUtilityClass, PickersPopperClasses } from './pickersPopperClasses';
 import { PickersSlotsComponent, PickersSlotsComponentsProps } from './wrappers/WrapperProps';
 
@@ -184,7 +184,7 @@ export function PickersPopper(inProps: PickerPopperProps) {
     additionalProps: {
       onConfirm,
       onClear,
-      actions: [],
+      actions: ['confirm', 'clear'] as PickersActionBarAction[],
     },
     ownerState: {},
   });
