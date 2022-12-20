@@ -17,12 +17,15 @@
     "@emotion/styled": "^11.9.3",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.9.0",
-    "ramda": "^0.28.0"
+    "ramda": "^0.28.0",
+    "rifm": "^0.12.1"
   },
   "main": "./dist/index.common.js",
   "module": "./dist/index.module.js",
   "types": "./dist/index.d.ts",
   "devDependencies": {
-    "@types/ramda": "^0.28.20"
+    "@date-io/date-fns": "^2.16.0",
+    "@types/ramda": "^0.28.20",
+    "date-fns": "^2.29.3"
   }
 }

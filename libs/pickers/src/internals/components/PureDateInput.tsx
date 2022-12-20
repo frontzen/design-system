@@ -1,7 +1,8 @@
 import { IconButtonProps } from '@mui/material/IconButton';
 import { InputAdornmentProps } from '@mui/material/InputAdornment';
-import { TextFieldProps as MuiTextFieldProps } from '@mui/material/TextField';
-import { PickersAdapter } from 'src/LocalizationProvider';
+import { TextFieldProps as MuiTextFieldPropsType } from '@mui/material/TextField';
+
+export type MuiTextFieldProps = MuiTextFieldPropsType | Omit<MuiTextFieldPropsType, 'variant'>;
 
 export interface DateInputSlotsComponent {
   /**
@@ -34,15 +35,6 @@ export interface DateInputProps<TDate> {
    * @default false
    */
   disableOpenPicker?: boolean;
-  /**
-   * Get aria-label text for control that opens picker dialog. Aria-label text must include selected date. @DateIOType
-   * @template TDate
-   * @param {TDate | null} date The date from which we want to add an aria-text.
-   * @param {MuiPickersAdapter<TDate>} utils The utils to manipulate the date.
-   * @returns {string} The aria-text to render inside the dialog.
-   * @default (date, utils) => `Choose date, selected date is ${utils.format(date, 'fullDate')}`
-   */
-  getOpenDialogAriaText?: (date: TDate | null, utils: PickersAdapter<TDate>) => string;
   // ?? TODO when it will be possible to display "empty" date in datepicker use it instead of ignoring invalid inputs.
   ignoreInvalidInputs?: boolean;
   /**
@@ -89,5 +81,5 @@ export interface DateInputProps<TDate> {
    */
   rifmFormatter?: (str: string) => string;
   TextFieldProps?: Partial<MuiTextFieldProps>;
-  validationError?: boolean;
+  validationError?: string;
 }
