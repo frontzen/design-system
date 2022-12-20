@@ -1,7 +1,10 @@
+import { loadingButtonClasses } from '@mui/lab';
+import '@mui/lab/themeAugmentation';
 import { alpha, createTheme as createMuiTheme, Theme, ThemeOptions } from '@mui/material';
+import { buttonBoxShadowAlpha, buttonDisableAlpha } from '../button/constants';
 import { background, common, defaultPalette } from '../colors';
-import { buttonBoxShadowAlpha, buttonDisableAlpha } from './../button/constants';
-import { getColorFromThemeWithColorProps } from './../utils';
+import { DotLoader } from '../DotLoader';
+import { getColorFromThemeWithColorProps } from '../utils';
 
 /**
  * Add more colors to text palette which are defined by Frontzen Design System
@@ -24,10 +27,6 @@ declare module '@mui/material/styles' {
     md: false;
     lg: false;
     xl: false;
-    mobile: true; // adds the `mobile` breakpoint
-    tablet: true;
-    laptop: true;
-    desktop: true;
   }
 }
 
@@ -46,6 +45,9 @@ declare module '@mui/material/Typography' {
 declare module '@mui/material/Fab' {
   interface FabPropsColorOverrides {
     default: false;
+  }
+  interface FabPropsVariantOverrides {
+    outlined: true;
   }
 }
 
@@ -102,7 +104,7 @@ const defaultOptions: ThemeOptions = {
     button: {
       fontWeight: 400,
       fontSize: '1rem', // 16px
-      lineHeight: 1.5,
+      lineHeight: '1.25rem',
     },
     body1: {
       fontWeight: 200,
@@ -139,7 +141,7 @@ const defaultOptions: ThemeOptions = {
             boxShadow: 'none',
             borderRadius: 100000,
           },
-          '&&:hover:not(&:active)': {
+          '&&:hover:not(:active)': {
             boxShadow: 'none',
           },
         },
@@ -154,11 +156,60 @@ const defaultOptions: ThemeOptions = {
               buttonBoxShadowAlpha,
             )}`,
           },
+          '&.MuiFab-outlined': {
+            border:
+              ownerState.size === 'small'
+                ? `1px solid ${getColorFromThemeWithColorProps(theme, ownerState)}`
+                : `2px solid ${getColorFromThemeWithColorProps(theme, ownerState)}`,
+            background: theme.palette.common.white,
+            color: getColorFromThemeWithColorProps(theme, ownerState),
+            '&:hover': {
+              border:
+                ownerState.size === 'small'
+                  ? `1px solid ${getColorFromThemeWithColorProps(theme, ownerState, 'dark')}`
+                  : `2px solid ${getColorFromThemeWithColorProps(theme, ownerState, 'dark')}`,
+              color: getColorFromThemeWithColorProps(theme, ownerState, 'dark'),
+            },
+            '&.Mui-disabled': {
+              borderColor: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
+              color: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
+              background: theme.palette.common.white,
+            },
+          },
+          minWidth: 'unset',
+          minHeight: 'unset',
           '&.Mui-disabled': {
             backgroundColor: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
             color: getColorFromThemeWithColorProps(theme, ownerState, 'contrastText'),
           },
+          '&.MuiFab-sizeSmall': {
+            padding: theme.spacing(0.5), //4
+            height: 28,
+            width: 28,
+            '&& >*:nth-of-type(1)': {
+              fontSize: theme.typography.button.fontSize, //16px
+            },
+          },
+          '&.MuiFab-sizeMedium': {
+            padding: theme.spacing(1), //8
+            height: 36,
+            width: 36,
+            '&& >*:nth-of-type(1)': {
+              fontSize: `calc(${theme.typography.button.fontSize} + 0.25rem)`, //20px
+            },
+          },
+          '&.MuiFab-sizeLarge': {
+            padding: theme.spacing(2), //16
+            height: 52,
+            width: 52,
+            '&& >*:nth-of-type(1)': {
+              fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
+            },
+          },
         }),
+      },
+      defaultProps: {
+        color: 'primary',
       },
     },
     MuiButton: {
@@ -196,54 +247,123 @@ const defaultOptions: ThemeOptions = {
           },
 
           '&.MuiButton-sizeLarge': {
-            padding: theme.spacing(2, 3.5), //16 28
+            padding:
+              ownerState.endIcon || ownerState.startIcon
+                ? ownerState.variant === 'contained'
+                  ? `calc(${theme.spacing(2)} - 2px) ${theme.spacing(3.5)}` /*14 28*/
+                  : `calc(${theme.spacing(2)} - 4px) calc(${theme.spacing(3.5)} - 2px)` //12 26
+                : ownerState.variant === 'contained'
+                ? theme.spacing(2, 3.5) /*16 28*/
+                : `calc(${theme.spacing(2)} - 2px) calc(${theme.spacing(3.5)} - 2px)`, //14 26
+
             fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
             fontWeight: theme.typography.fontWeightBold,
-            '.MuiButton-startIcon.MuiButton-iconSizeLarge': {
-              marginRight: theme.spacing(3),
+            '.MuiLoadingButton-loadingIndicator': {
+              '& >*:nth-of-type(1)': {
+                fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
+              },
             },
-            '.MuiButton-endIcon.MuiButton-iconSizeLarge': {
+            '.MuiButton-startIcon': {
+              marginRight: theme.spacing(3),
+              '& >*:nth-of-type(1)': {
+                fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
+              },
+            },
+            '.MuiButton-endIcon': {
               marginLeft: theme.spacing(3),
+              '& >*:nth-of-type(1)': {
+                fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
+              },
             },
           },
           '&.MuiButton-sizeMedium': {
-            padding: theme.spacing(1, 3), //8 24
-            fontSize: theme.typography.button.fontSize, //16
-            '.MuiButton-startIcon.MuiButton-iconSizeMedium': {
-              marginRight: theme.spacing(2),
+            padding:
+              ownerState.variant === 'contained'
+                ? theme.spacing(1, 3) /*8 24 */
+                : `calc(${theme.spacing(1)} - 2px) calc(${theme.spacing(3)} - 2px)`, //6 22
+            '.MuiLoadingButton-loadingIndicator': {
+              '& >*:nth-of-type(1)': {
+                fontSize: `calc(${theme.typography.button.fontSize} + 0.25rem)`, // 20px
+              },
             },
-            '.MuiButton-endIcon.MuiButton-iconSizeMedium': {
+            fontSize: theme.typography.button.fontSize, //16
+            '.MuiButton-startIcon': {
+              marginRight: theme.spacing(2),
+              '& >*:nth-of-type(1)': {
+                fontSize: `calc(${theme.typography.button.fontSize} + 0.25rem)`, // 20px
+              },
+            },
+            '.MuiButton-endIcon': {
               marginLeft: theme.spacing(2),
+              '& >*:nth-of-type(1)': {
+                fontSize: `calc(${theme.typography.button.fontSize} + 0.25rem )`, // 20px
+              },
             },
           },
           '&.MuiButton-sizeSmall': {
-            padding: theme.spacing(0.5, 2), //4 16
+            padding:
+              ownerState.variant === 'contained'
+                ? theme.spacing(0.5, 2) /*4 16 */
+                : `calc(${theme.spacing(0.5)} - 1px) calc(${theme.spacing(2)} - 1px)`, // 3 15
             fontSize: `calc(${theme.typography.button.fontSize} - 0.25rem)`, //12px
-            '.MuiButton-startIcon.MuiButton-iconSizeMedium': {
-              marginRight: theme.spacing(2),
+            '.MuiLoadingButton-loadingIndicator': {
+              '& >*:nth-of-type(1)': {
+                fontSize: theme.typography.button.fontSize, // 16px
+              },
             },
-            '.MuiButton-endIcon.MuiButton-iconSizeMedium': {
+            '.MuiButton-startIcon': {
+              marginRight: theme.spacing(2),
+              '& >*:nth-of-type(1)': {
+                fontSize: theme.typography.button.fontSize, // 16px
+              },
+            },
+            '.MuiButton-endIcon': {
               marginLeft: theme.spacing(2),
+              '& >*:nth-of-type(1)': {
+                fontSize: theme.typography.button.fontSize, // 16px
+              },
             },
           },
         }),
       },
     },
+    MuiLoadingButton: {
+      styleOverrides: {
+        root: ({ theme, ownerState }) => ({
+          ...(ownerState.loadingPosition === 'center' && {
+            //these classes are used to override default material behavior
+            [`&&.${loadingButtonClasses.loading}`]: {
+              // it's for hiding text
+              color: 'transparent',
+            },
+            [`.${loadingButtonClasses.loadingIndicator}`]: {
+              // it's for setting loadingIndicator color
+              color: alpha(
+                getColorFromThemeWithColorProps(
+                  theme,
+                  ownerState,
+                  ownerState.variant === 'outlined' ? 'main' : 'contrastText',
+                ),
+                ownerState.variant === 'outlined' ? buttonDisableAlpha : 1,
+              ),
+            },
+          }),
+        }),
+      },
+      defaultProps: {
+        loadingIndicator: <DotLoader />,
+        loadingPosition: 'center',
+      },
+    },
+
     MuiSvgIcon: {
       styleOverrides: {
-        root: ({ theme }) => ({
+        root: {
           //icon size should change on fontsize prop
-          '&.MuiSvgIcon-root.MuiSvgIcon-fontSizeLarge': {
-            fontSize: '1.5rem', //24px
-            fontWeight: theme.typography.fontWeightBold,
-          },
-          '&.MuiSvgIcon-root.MuiSvgIcon-fontSizeSmall': {
-            fontSize: '0.75rem', //12px
-          },
           '&.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium': {
             fontSize: '1rem', // 16px
           },
-        }),
+        },
       },
     },
   },

@@ -14,7 +14,7 @@ describe('createTheme', () => {
 
     for (const [key, expected] of Object.entries(expectedSemantic)) {
       if (isSemantic(key)) {
-        expect(palette[key].main).toBe(expected);
+        expect(palette[key].main).toBe(expected.main);
       }
     }
   });
@@ -35,7 +35,7 @@ describe('createTheme', () => {
 
       for (const [key, expected] of Object.entries(expectedSemantic)) {
         if (isSemantic(key) && key !== name) {
-          expect(palette[key].main).toBe(expected);
+          expect(palette[key].main).toBe(expected.main);
         }
       }
     },

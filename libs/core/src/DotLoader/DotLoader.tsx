@@ -1,35 +1,29 @@
-import { styled, SvgIcon, SvgIconProps } from '@mui/material';
-import { css, keyframes } from '@mui/system';
-
+import { keyframes } from '@emotion/react';
+import styled from '@emotion/styled';
+import { SvgIcon, SvgIconProps } from '@mui/material';
 const loadKeyFrames = keyframes`
-0%{
+  0% {
     opacity: 0;
   }
-  50%{
+  50% {
     opacity: 1;
   }
-  100%{
+  100% {
     opacity: 0;
   }
 `;
 
-const CircleOne = styled('circle')(
-  () => css`
-    ${loadKeyFrames} 1s infinite
-  `,
-);
-const CircleTwo = styled('circle')(
-  () => css`
-    animation: ${loadKeyFrames} 1s infinite;
-    animation-delay: 0.2s;
-  `,
-);
-const CircleThree = styled('circle')(
-  () => css`
-    animation: ${loadKeyFrames} 1s infinite;
-    animation-delay: 0.4s;
-  `,
-);
+const CircleOne = styled.circle`
+  animation: ${loadKeyFrames} 1s infinite;
+`;
+const CircleTwo = styled.circle`
+  animation: ${loadKeyFrames} 1s infinite;
+  animation-delay: 0.2s;
+`;
+const CircleThree = styled.circle`
+  animation: ${loadKeyFrames} 1s infinite;
+  animation-delay: 0.4s;
+`;
 export const DotLoader = (props: SvgIconProps) => {
   return (
     <SvgIcon {...props} viewBox="0 0 132 58" version="1.1">
