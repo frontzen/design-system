@@ -83,3 +83,17 @@ export interface DateInputProps<TDate> {
   TextFieldProps?: Partial<MuiTextFieldProps>;
   validationError?: string;
 }
+
+export type ExportedDateInputProps<TDate> = Omit<
+  DateInputProps<TDate>,
+  | 'inputFormat'
+  | 'inputValue'
+  | 'onBlur'
+  | 'onChange'
+  | 'open'
+  | 'openPicker'
+  | 'value'
+  | 'TextFieldProps'
+  | 'validationError'
+  | 'components'
+>;

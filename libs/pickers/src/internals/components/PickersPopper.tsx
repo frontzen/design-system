@@ -193,7 +193,7 @@ export function PickersPopper(inProps: PickerPopperProps) {
     <Popper {...popperProps}>
       {({ TransitionProps, placement }) => (
         <TrapFocus open={open} disableAutoFocus disableRestoreFocus {...componentsProps?.desktopTrapFocus}>
-          <Transition {...TransitionProps} {...componentsProps?.desktopTransition}>
+          <Transition {...TransitionProps} {...componentsProps?.desktopTransition} tabIndex={-1}>
             <div>
               <ClickAwayListener onClickAway={onBlur ?? onDismiss} touchEvent="onTouchStart">
                 <Paper {...paperProps} ownerState={{ ...props, placement }} ref={containerRef}>
