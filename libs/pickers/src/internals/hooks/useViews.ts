@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { DateOrTimeView } from '../models';
 
-interface PickerViewsProps<TView extends DateOrTimeView> {
-  children?: React.ReactNode;
+export interface UseViewsProps<TView extends DateOrTimeView> {
   views: readonly TView[];
   openTo?: TView;
   /**
@@ -13,18 +12,16 @@ interface PickerViewsProps<TView extends DateOrTimeView> {
   onViewChange?: (newView: TView) => void;
 }
 
-interface PickerViewsContextType<TView extends DateOrTimeView> {
-  openView: TView;
+export interface UseViewsResult<TView> {
   nextView: TView | null;
   previousView: TView | null;
-  openNext: VoidFunction;
+  openNextView: VoidFunction;
+  openView: TView;
   setOpenView: (newView: TView) => void;
 }
 
-const PickerViewsContext = React.createContext<PickerViewsContextType<any> | null>(null);
-
-export function PickerViewsProvider<TView extends DateOrTimeView>(props: PickerViewsProps<TView>) {
-  const { children, views, openTo, onViewChange } = props;
+export const useViews = <TView extends DateOrTimeView>(props: UseViewsProps<TView>): UseViewsResult<TView> => {
+  const { views, openTo, onViewChange } = props;
 
   const [openView, setOpenView] = React.useState(openTo && views.includes(openTo) ? openTo : views[0]);
 
@@ -40,17 +37,15 @@ export function PickerViewsProvider<TView extends DateOrTimeView>(props: PickerV
     [setOpenView, onViewChange],
   );
 
-  const openNext = React.useCallback(() => {
+  const openNextView = React.useCallback(() => {
     nextView && changeView(nextView);
   }, [nextView, changeView]);
 
-  return (
-    <PickerViewsContext.Provider value={{ nextView, previousView, openNext, openView, setOpenView: changeView }}>
-      {children}
-    </PickerViewsContext.Provider>
-  );
-}
-
-export function useViews<TView extends DateOrTimeView>(): PickerViewsContextType<TView> {
-  return React.useContext(PickerViewsContext)!;
-}
+  return {
+    nextView,
+    previousView,
+    openNextView,
+    openView,
+    setOpenView: changeView,
+  };
+};

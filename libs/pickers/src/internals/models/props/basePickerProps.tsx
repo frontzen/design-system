@@ -1,6 +1,9 @@
 import { PickerStateProps } from 'src/internals/hooks/usePickerState';
+import { UseViewsProps } from 'src/internals/hooks/useViews';
 
-export interface BasePickerProps<TValue> extends PickerStateProps<TValue> {
+export type PickerVariant = 'popover' | 'modal';
+
+export interface BasePickerProps<TValue> extends Omit<PickerStateProps<TValue, any>, keyof UseViewsProps<any>> {
   /**
    * className applied to the root component.
    */
@@ -19,4 +22,9 @@ export interface BasePickerProps<TValue> extends PickerStateProps<TValue> {
    * @default false
    */
   readOnly?: boolean;
+  /**
+   * Variant of picker
+   * @default "popover"
+   */
+  variant?: PickerVariant;
 }

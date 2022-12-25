@@ -4,7 +4,6 @@ import { DIALOG_WIDTH, VIEW_HEIGHT } from 'src/internals/constants/dimensions';
 import { PickerStatePickerProps } from 'src/internals/hooks/usePickerState';
 import { DateOrTimeView, DateView, TimeView } from 'src/internals/models';
 import { BasePickerProps } from 'src/internals/models/props/basePickerProps';
-import { useViews } from 'src/internals/providers/PickerViewsProvider';
 import { DateInputPropsLike } from '../wrappers/WrapperProps';
 import { CalendarOrClockPickerClasses, getCalendarOrClockPickerUtilityClass } from './CalendarOrClockPickerClasses';
 
@@ -13,7 +12,7 @@ export interface CalendarOrClockPickerSlotsComponent {}
 export interface CalendarOrClockPickerSlotsComponentsProps {}
 
 export interface ExportedCalendarOrClockPickerProps<TDate>
-  extends Omit<BasePickerProps<TDate | null>, 'value' | 'onChange' | 'localeText'> {
+  extends Omit<BasePickerProps<TDate | null>, 'value' | 'onChange'> {
   /**
    * Overrideable components.
    * @default {}
@@ -26,15 +25,15 @@ export interface ExportedCalendarOrClockPickerProps<TDate>
   componentsProps?: CalendarOrClockPickerSlotsComponentsProps;
 }
 
-export interface CalendarOrClockPickerProps<TDate>
+export interface CalendarOrClockPickerProps<TDate, TView extends DateOrTimeView>
   extends ExportedCalendarOrClockPickerProps<TDate>,
-    PickerStatePickerProps<TDate | null> {
+    PickerStatePickerProps<TDate | null, TView> {
   autoFocus?: boolean;
   DateInputProps: DateInputPropsLike;
   classes?: Partial<CalendarOrClockPickerClasses>;
 }
 
-const useUtilityClasses = (ownerState: CalendarOrClockPickerProps<any>) => {
+const useUtilityClasses = (ownerState: CalendarOrClockPickerProps<any, any>) => {
   const { classes } = ownerState;
   const slots = { root: ['root'] };
 
@@ -64,12 +63,14 @@ const isDatePickerView = (view: DateOrTimeView): view is DateView =>
 
 const isTimePickerView = (view: DateOrTimeView): view is TimeView => view === 'time';
 
-export function CalendarOrClockPicker<TDate>(inProps: CalendarOrClockPickerProps<TDate>) {
+export function CalendarOrClockPicker<TDate, TView extends DateOrTimeView>(
+  inProps: CalendarOrClockPickerProps<TDate, TView>,
+) {
   const props = useThemeProps({ props: inProps, name: 'ZenCalendarOrClockPicker' });
 
-  const classes = useUtilityClasses(props);
+  const { openView } = props;
 
-  const { openView } = useViews();
+  const classes = useUtilityClasses(props);
 
   return (
     <PickerRoot className={classes.root}>

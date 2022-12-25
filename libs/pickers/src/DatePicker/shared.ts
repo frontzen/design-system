@@ -4,7 +4,7 @@ import { BaseDateValidationProps } from 'src/internals/hooks/validation/models';
 import { DateValidationError } from 'src/internals/hooks/validation/useDateValidation';
 import { ValidationCommonProps } from 'src/internals/hooks/validation/useValidation';
 import { DateView, DefaultizedProps } from 'src/internals/models';
-import { BasePickerProps } from 'src/internals/models/props/basePickerProps';
+import { BasePickerProps, PickerVariant } from 'src/internals/models/props/basePickerProps';
 import { PickersAdapter } from 'src/LocalizationProvider/LocalizationProvider';
 
 export interface BaseDatePickerProps<TDate>
@@ -33,7 +33,11 @@ export interface BaseDatePickerProps<TDate>
 export const getDatePickerDefaultizedProps = <TDate, Props extends BaseDatePickerProps<TDate>>(
   props: Props,
   utils: PickersAdapter<TDate>,
-): DefaultizedProps<Props, 'openTo' | 'views' | keyof BaseDateValidationProps<TDate>, { inputFormat: string }> => {
+): DefaultizedProps<
+  Props,
+  'openTo' | 'views' | keyof BaseDateValidationProps<TDate>,
+  { inputFormat: string; variant: PickerVariant }
+> => {
   if (!utils.isValid(props.minDate) || !utils.isValid(props.maxDate)) {
     throw new Error(
       [
@@ -49,6 +53,7 @@ export const getDatePickerDefaultizedProps = <TDate, Props extends BaseDatePicke
     disablePast: false,
     views: ['year', 'day'],
     inputFormat: utils.formats.keyboardDate,
+    variant: 'popover',
     ...props,
     minDate: props.minDate || utils.date(MIN_DEFAULT_DATE_ISO_STRING)!,
     maxDate: props.maxDate || utils.date(MAX_DEFAULT_DATE_ISO_STRING)!,

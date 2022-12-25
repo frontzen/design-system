@@ -5,11 +5,11 @@ import { PickersPopper, PickersPopperSlotsComponent, PickersPopperSlotsComponent
 import { DateInputSlotsComponent } from '../PureDateInput';
 import { DateInputPropsLike } from './WrapperProps';
 
-export interface DesktopWrapperSlotsComponent extends PickersPopperSlotsComponent, DateInputSlotsComponent {}
+export interface PopoverWrapperSlotsComponent extends PickersPopperSlotsComponent, DateInputSlotsComponent {}
 
-export interface DesktopWrapperSlotsComponentsProps extends PickersPopperSlotsComponentsProps {}
+export interface PopoverWrapperSlotsComponentsProps extends PickersPopperSlotsComponentsProps {}
 
-export interface DesktopWrapperProps extends PickerStateWrapperProps {
+export interface PopoverWrapperProps extends PickerStateWrapperProps {
   children?: React.ReactNode;
   DateInputProps: DateInputPropsLike & { ref?: React.Ref<HTMLDivElement> };
   KeyboardDateInputComponent: React.JSXElementConstructor<DateInputPropsLike & { ref?: React.Ref<HTMLDivElement> }>;
@@ -17,15 +17,15 @@ export interface DesktopWrapperProps extends PickerStateWrapperProps {
    * Overrideable components.
    * @default {}
    */
-  components?: DesktopWrapperSlotsComponent;
+  components?: PopoverWrapperSlotsComponent;
   /**
    * The props used for each component slot.
    * @default {}
    */
-  componentsProps?: DesktopWrapperSlotsComponentsProps;
+  componentsProps?: PopoverWrapperSlotsComponentsProps;
 }
 
-export function DesktopWrapper(props: DesktopWrapperProps) {
+export function PopoverWrapper(props: PopoverWrapperProps) {
   const {
     children,
     DateInputProps,
