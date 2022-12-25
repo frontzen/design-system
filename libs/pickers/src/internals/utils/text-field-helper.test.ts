@@ -67,7 +67,7 @@ describe('text-field-helper', () => {
   ].forEach(({ mask, format, isValid }, index) => {
     it(`checkMaskIsValidFormat returns ${isValid} for mask #${index} '${mask}' and format ${format}`, () => {
       const consoleWarnSpy = vi.spyOn(console, 'warn');
-      const output = checkMaskIsValidForCurrentFormat(mask, format, /[\dap]/gi, adapterToUse);
+      const output = checkMaskIsValidForCurrentFormat(mask, format, adapterToUse, /[\dap]/gi);
 
       expect(output).toBe(isValid);
       if (!isValid) expect(consoleWarnSpy).toBeCalled();

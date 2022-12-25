@@ -4,11 +4,12 @@ export const getDisplayDate = <TDate>(utils: PickersAdapter<TDate>, date: TDate 
   return date === null || !utils.isValid(date) ? '' : utils.formatByString(date!, inputFormat);
 };
 
+const DEFAULT_REGEX = /[\d]/gi;
 const MASK_USER_INPUT_SYMBOL = '_';
 const staticDateWith2DigitTokens = '2019-11-21T22:30:00.000';
 const staticDateWith1DigitTokens = '2019-01-01T09:00:00.000';
 
-export function inferFormatPatterns(format: string, acceptRegex: RegExp, utils: PickersAdapter<any>) {
+export function inferFormatPatterns(format: string, utils: PickersAdapter<any>, acceptRegex: RegExp = DEFAULT_REGEX) {
   const with1Digits = utils
     .formatByString(utils.date(staticDateWith1DigitTokens)!, format)
     .replace(acceptRegex, MASK_USER_INPUT_SYMBOL);
@@ -23,12 +24,12 @@ export function inferFormatPatterns(format: string, acceptRegex: RegExp, utils: 
 export function getMaskFromCurrentFormat(
   mask: string | undefined,
   format: string,
-  acceptRegex: RegExp,
   utils: PickersAdapter<any>,
+  acceptRegex: RegExp = DEFAULT_REGEX,
 ) {
   if (mask) return mask;
 
-  const { with1Digits, with2Digits } = inferFormatPatterns(format, acceptRegex, utils);
+  const { with1Digits, with2Digits } = inferFormatPatterns(format, utils, acceptRegex);
 
   if (with1Digits === with2Digits) return with1Digits;
 
@@ -47,12 +48,12 @@ export function getMaskFromCurrentFormat(
 export function checkMaskIsValidForCurrentFormat(
   mask: string,
   format: string,
-  acceptRegex: RegExp,
   utils: PickersAdapter<any>,
+  acceptRegex: RegExp = DEFAULT_REGEX,
 ) {
   if (!mask) return false;
 
-  const { with1Digits, with2Digits } = inferFormatPatterns(format, acceptRegex, utils);
+  const { with1Digits, with2Digits } = inferFormatPatterns(format, utils, acceptRegex);
 
   const isMaskValid = with1Digits === with2Digits && mask === with1Digits;
 
@@ -86,30 +87,32 @@ export function checkMaskIsValidForCurrentFormat(
   return isMaskValid;
 }
 
-export const maskedDateFormatter = (mask: string, acceptRegexp: RegExp) => (value: string) => {
-  let outputCharIndex = 0;
-  return value
-    .split('')
-    .map((char, inputCharIndex) => {
-      acceptRegexp.lastIndex = 0;
+export const maskedDateFormatter =
+  (mask: string, acceptRegexp: RegExp = DEFAULT_REGEX) =>
+  (value: string) => {
+    let outputCharIndex = 0;
+    return value
+      .split('')
+      .map((char, inputCharIndex) => {
+        acceptRegexp.lastIndex = 0;
 
-      if (outputCharIndex > mask.length - 1) return '';
+        if (outputCharIndex > mask.length - 1) return '';
 
-      const maskChar = mask[outputCharIndex];
-      const nextMaskChar = mask[outputCharIndex + 1];
+        const maskChar = mask[outputCharIndex];
+        const nextMaskChar = mask[outputCharIndex + 1];
 
-      const acceptedChar = acceptRegexp.test(char) ? char : '';
-      const formattedChar = maskChar === MASK_USER_INPUT_SYMBOL ? acceptedChar : maskChar + acceptedChar;
+        const acceptedChar = acceptRegexp.test(char) ? char : '';
+        const formattedChar = maskChar === MASK_USER_INPUT_SYMBOL ? acceptedChar : maskChar + acceptedChar;
 
-      outputCharIndex += formattedChar.length;
+        outputCharIndex += formattedChar.length;
 
-      const isLastCharacter = inputCharIndex === value.length - 1;
-      if (isLastCharacter && nextMaskChar && nextMaskChar !== MASK_USER_INPUT_SYMBOL) {
-        // when cursor at the end of mask part (e.g. month) prerender next symbol "21" -> "21/"
-        return formattedChar ? formattedChar + nextMaskChar : '';
-      }
+        const isLastCharacter = inputCharIndex === value.length - 1;
+        if (isLastCharacter && nextMaskChar && nextMaskChar !== MASK_USER_INPUT_SYMBOL) {
+          // when cursor at the end of mask part (e.g. month) prerender next symbol "21" -> "21/"
+          return formattedChar ? formattedChar + nextMaskChar : '';
+        }
 
-      return formattedChar;
-    })
-    .join('');
-};
+        return formattedChar;
+      })
+      .join('');
+  };

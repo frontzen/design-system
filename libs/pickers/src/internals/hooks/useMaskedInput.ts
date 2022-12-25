@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useRifm } from 'rifm';
-import { DateInputProps, MuiTextFieldProps } from '../components/PureDateInput';
+import { DateInputProps, MuiTextFieldProps } from 'src/internals/components/PureDateInput';
 import {
   checkMaskIsValidForCurrentFormat,
   getDisplayDate,
   getMaskFromCurrentFormat,
   maskedDateFormatter,
-} from '../utils/text-field-helper';
+} from 'src/internals/utils/text-field-helper';
 import { useUtils } from './useUtils';
 
 type MaskedInputProps<TDate> = Omit<
@@ -24,7 +24,7 @@ type MaskedInputProps<TDate> = Omit<
 
 export const useMaskedInput = <TDate extends unknown>(props: MaskedInputProps<TDate>): MuiTextFieldProps => {
   const {
-    acceptRegex = /[\d]/gi,
+    acceptRegex,
     disabled,
     disableMaskedInput,
     ignoreInvalidInputs,
@@ -46,21 +46,17 @@ export const useMaskedInput = <TDate extends unknown>(props: MaskedInputProps<TD
 
   const { shouldUseMaskedInput, maskToUse } = React.useMemo(() => {
     // formatting of dates is a quite slow thing, so do not make useless .format calls
-    if (disableMaskedInput) {
-      return { shouldUseMaskedInput: false, maskToUse: '' };
-    }
-    const computedMaskToUse = getMaskFromCurrentFormat(mask, inputFormat, acceptRegex, utils);
+    if (disableMaskedInput) return { shouldUseMaskedInput: false, maskToUse: '' };
+
+    const computedMaskToUse = getMaskFromCurrentFormat(mask, inputFormat, utils, acceptRegex);
 
     return {
-      shouldUseMaskedInput: checkMaskIsValidForCurrentFormat(computedMaskToUse, inputFormat, acceptRegex, utils),
+      shouldUseMaskedInput: checkMaskIsValidForCurrentFormat(computedMaskToUse, inputFormat, utils, acceptRegex),
       maskToUse: computedMaskToUse,
     };
   }, [acceptRegex, disableMaskedInput, inputFormat, mask, utils]);
 
-  const formatter = React.useMemo(
-    () => (shouldUseMaskedInput && maskToUse ? maskedDateFormatter(maskToUse, acceptRegex) : (st: string) => st),
-    [acceptRegex, maskToUse, shouldUseMaskedInput],
-  );
+  const formatter = React.useMemo(() => maskedDateFormatter(maskToUse, acceptRegex), [acceptRegex, maskToUse]);
 
   // Track the value of the input
   const [innerInputValue, setInnerInputValue] = React.useState<TDate | null>(value);
@@ -102,13 +98,11 @@ export const useMaskedInput = <TDate extends unknown>(props: MaskedInputProps<TD
   }, [utils, value, inputFormat, innerInputValue]);
 
   const handleChange = (text: string) => {
-    const finalString = text === '' || text === mask ? '' : text;
+    const finalString = text === mask ? '' : text;
     setInnerDisplayedInputValue(finalString);
 
     const date = finalString === null ? null : utils.parse(finalString, inputFormat);
-    if (ignoreInvalidInputs && !utils.isValid(date)) {
-      return;
-    }
+    if (ignoreInvalidInputs && !utils.isValid(date)) return;
 
     setInnerInputValue(date);
     onChange(date, finalString || undefined);

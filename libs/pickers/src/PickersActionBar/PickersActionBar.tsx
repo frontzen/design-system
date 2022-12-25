@@ -1,6 +1,6 @@
 import Button from '@mui/material/Button';
 import DialogActions, { DialogActionsProps } from '@mui/material/DialogActions';
-import { useLocaleText } from '../internals/hooks/useUtils';
+import { useLocaleText } from 'src/internals/hooks/useUtils';
 
 export type PickersActionBarAction = 'clear' | 'confirm';
 

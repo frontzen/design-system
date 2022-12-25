@@ -1,8 +1,8 @@
 import { Calendar as CalendarIcon } from '@front.zen/design-system';
 import { IconButton, InputAdornment } from '@mui/material';
 import * as React from 'react';
-import { useMaskedInput } from '../hooks/useMaskedInput';
-import { useLocaleText, useUtils } from '../hooks/useUtils';
+import { useMaskedInput } from 'src/internals/hooks/useMaskedInput';
+import { useLocaleText, useUtils } from 'src/internals/hooks/useUtils';
 import { DateInputProps } from './PureDateInput';
 
 export const KeyboardDateInput = React.forwardRef(function KeyboardDateInput<TDate>(
