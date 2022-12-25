@@ -1,4 +1,6 @@
-export interface PickersComponentCommonLocaleText {
+import { PickersAdapter } from 'src/LocalizationProvider';
+
+export interface PickersComponentCommonLocaleText<TDate> {
   // Action bar
   cancelButtonLabel: string;
   clearButtonLabel: string;
@@ -7,8 +9,12 @@ export interface PickersComponentCommonLocaleText {
 
   // MutliCalendar switch lables
   calendarLabels: Record<string, string>;
+
+  // Open picker labels
+  openDatePickerDialogue: (date: TDate | null, utils: PickersAdapter<TDate>) => string;
+  openTimePickerDialogue: (date: TDate | null, utils: PickersAdapter<TDate>) => string;
 }
 
-export interface PickersLocaleText extends PickersComponentCommonLocaleText {}
+export interface PickersLocaleText<TDate> extends PickersComponentCommonLocaleText<TDate> {}
 
-export type PickersInputLocaleText = Partial<PickersLocaleText>;
+export type PickersInputLocaleText<TDate> = Partial<PickersLocaleText<TDate>>;

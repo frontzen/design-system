@@ -15,7 +15,7 @@ export type CalendarAdapterObject<TDate> = {
 
 export interface PickersAdapterContextValue<TDate> {
   utils: PickersAdapter<TDate>;
-  localeText: PickersLocaleText;
+  localeText: PickersLocaleText<TDate>;
   calendars: string[];
   currentCalendar: string;
   changeCalendar: (value: string) => void;
@@ -33,7 +33,7 @@ export interface LocalizationProviderProps<TDate> {
   /**
    * Locale for components texts
    */
-  localeText?: PickersInputLocaleText;
+  localeText?: PickersInputLocaleText<TDate>;
 }
 
 export function LocalizationProvider<TDate>(inProps: LocalizationProviderProps<TDate>) {
