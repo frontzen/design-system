@@ -6,6 +6,11 @@ export interface PickerComponents<Theme> {
     styleOverrides?: ComponentsOverrides<Theme>['ZenLocalizationProvider'];
     variants?: ComponentsVariants['ZenLocalizationProvider'];
   };
+  ZenPickersPopper?: {
+    defaultProps?: ComponentsProps['ZenPickersPopper'];
+    styleOverrides?: ComponentsOverrides<Theme>['ZenPickersPopper'];
+    variants?: ComponentsVariants['ZenPickersPopper'];
+  };
 }
 
 declare module '@mui/material/styles' {
