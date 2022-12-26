@@ -12,11 +12,9 @@ import {
 import { styled } from '@mui/material/styles';
 import { TransitionProps as MuiTransitionProps } from '@mui/material/transitions';
 import MuiTrapFocus, { TrapFocusProps as MuiTrapFocusProps } from '@mui/material/Unstable_TrapFocus';
-import { unstable_composeClasses as composeClasses } from '@mui/utils';
 import * as React from 'react';
 import { PickerStateWrapperProps } from 'src/internals/hooks/usePickerState';
 import { PickersActionBar, PickersActionBarAction } from 'src/PickersActionBar';
-import { getPickersPopperUtilityClass, PickersPopperClasses } from './pickersPopperClasses';
 import { PickersSlotsComponent, PickersSlotsComponentsProps } from './wrappers/WrapperProps';
 
 export interface PickersPopperSlotsComponent extends Pick<PickersSlotsComponent, 'ActionBar' | 'PaperContent'> {
@@ -66,17 +64,6 @@ export interface PickersPopperSlotsComponentsProps
   popper?: SlotComponentProps<typeof MuiPopper, {}, PickerPopperProps>;
 }
 
-const useUtilityClasses = (ownerState: PickerPopperProps) => {
-  const { classes } = ownerState;
-
-  const slots = {
-    root: ['root'],
-    paper: ['paper'],
-  };
-
-  return composeClasses(slots, getPickersPopperUtilityClass, classes);
-};
-
 export interface PickerPopperProps extends PickerStateWrapperProps {
   anchorEl: MuiPopperProps['anchorEl'];
   open: MuiPopperProps['open'];
@@ -85,7 +72,6 @@ export interface PickerPopperProps extends PickerStateWrapperProps {
   children?: React.ReactNode;
   components?: PickersPopperSlotsComponent;
   componentsProps?: PickersPopperSlotsComponentsProps;
-  classes?: Partial<PickersPopperClasses>;
 }
 
 const PickersPopperRoot = styled(MuiPopper, {
@@ -135,8 +121,6 @@ export function PickersPopper(inProps: PickerPopperProps) {
     };
   }, [onDismiss, open]);
 
-  const classes = useUtilityClasses(props);
-
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Escape') {
       // stop the propagation to avoid closing parent modal
@@ -158,7 +142,6 @@ export function PickersPopper(inProps: PickerPopperProps) {
       anchorEl,
       onKeyDown: handleKeyDown,
     },
-    className: classes.root,
     ownerState: props,
   });
 
@@ -173,7 +156,6 @@ export function PickersPopper(inProps: PickerPopperProps) {
       tabIndex: -1,
       elevation: 8,
     },
-    className: classes.paper,
     ownerState: {} as any, // Is overridden below to use `placement
   });
 

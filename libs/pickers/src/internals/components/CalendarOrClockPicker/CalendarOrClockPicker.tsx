@@ -1,11 +1,9 @@
 import { styled, useThemeProps } from '@mui/material/styles';
-import { unstable_composeClasses as composeClasses } from '@mui/utils';
 import { DIALOG_WIDTH, VIEW_HEIGHT } from 'src/internals/constants/dimensions';
 import { PickerStatePickerProps } from 'src/internals/hooks/usePickerState';
 import { DateOrTimeView, DateView, TimeView } from 'src/internals/models';
 import { BasePickerProps } from 'src/internals/models/props/basePickerProps';
 import { DateInputPropsLike } from '../wrappers/WrapperProps';
-import { CalendarOrClockPickerClasses, getCalendarOrClockPickerUtilityClass } from './CalendarOrClockPickerClasses';
 
 export interface CalendarOrClockPickerSlotsComponent {}
 
@@ -30,15 +28,7 @@ export interface CalendarOrClockPickerProps<TDate, TView extends DateOrTimeView>
     PickerStatePickerProps<TDate | null, TView> {
   autoFocus?: boolean;
   DateInputProps: DateInputPropsLike;
-  classes?: Partial<CalendarOrClockPickerClasses>;
 }
-
-const useUtilityClasses = (ownerState: CalendarOrClockPickerProps<any, any>) => {
-  const { classes } = ownerState;
-  const slots = { root: ['root'] };
-
-  return composeClasses(slots, getCalendarOrClockPickerUtilityClass, classes);
-};
 
 const PickerRoot = styled('div', {
   name: 'ZenCalendarOrClockPicker',
@@ -70,10 +60,8 @@ export function CalendarOrClockPicker<TDate, TView extends DateOrTimeView>(
 
   const { openView } = props;
 
-  const classes = useUtilityClasses(props);
-
   return (
-    <PickerRoot className={classes.root}>
+    <PickerRoot>
       <PickerViewRoot>
         {isDatePickerView(openView) && <></>}
 
