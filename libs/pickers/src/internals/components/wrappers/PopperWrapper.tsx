@@ -5,31 +5,31 @@ import { PickersPopper, PickersPopperSlotsComponent, PickersPopperSlotsComponent
 import { DateInputSlotsComponent } from '../PureDateInput';
 import { DateInputPropsLike } from './WrapperProps';
 
-export interface DesktopWrapperSlotsComponent extends PickersPopperSlotsComponent, DateInputSlotsComponent {}
+export interface PopperWrapperSlotsComponent extends PickersPopperSlotsComponent, DateInputSlotsComponent {}
 
-export interface DesktopWrapperSlotsComponentsProps extends PickersPopperSlotsComponentsProps {}
+export interface PopperWrapperSlotsComponentsProps extends PickersPopperSlotsComponentsProps {}
 
-export interface DesktopWrapperProps extends PickerStateWrapperProps {
+export interface PopperWrapperProps extends PickerStateWrapperProps {
   children?: React.ReactNode;
   DateInputProps: DateInputPropsLike & { ref?: React.Ref<HTMLDivElement> };
-  KeyboardDateInputComponent: React.JSXElementConstructor<DateInputPropsLike & { ref?: React.Ref<HTMLDivElement> }>;
+  DateInputComponent: React.JSXElementConstructor<DateInputPropsLike & { ref?: React.Ref<HTMLDivElement> }>;
   /**
    * Overrideable components.
    * @default {}
    */
-  components?: DesktopWrapperSlotsComponent;
+  components?: PopperWrapperSlotsComponent;
   /**
    * The props used for each component slot.
    * @default {}
    */
-  componentsProps?: DesktopWrapperSlotsComponentsProps;
+  componentsProps?: PopperWrapperSlotsComponentsProps;
 }
 
-export function DesktopWrapper(props: DesktopWrapperProps) {
+export function PopperWrapper(props: PopperWrapperProps) {
   const {
     children,
     DateInputProps,
-    KeyboardDateInputComponent,
+    DateInputComponent,
     onClear,
     onDismiss,
     onConfirm,
@@ -42,7 +42,7 @@ export function DesktopWrapper(props: DesktopWrapperProps) {
 
   return (
     <>
-      <KeyboardDateInputComponent {...DateInputProps} inputRef={inputRef} />
+      <DateInputComponent {...DateInputProps} inputRef={inputRef} />
       <PickersPopper
         open={open}
         anchorEl={ownInputRef.current}

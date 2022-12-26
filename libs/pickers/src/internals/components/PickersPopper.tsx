@@ -7,36 +7,29 @@ import {
   Popper as MuiPopper,
   PopperPlacementType,
   PopperProps as MuiPopperProps,
+  Unstable_TrapFocus as MuiTrapFocus,
   useThemeProps,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { TransitionProps as MuiTransitionProps } from '@mui/material/transitions';
-import MuiTrapFocus, { TrapFocusProps as MuiTrapFocusProps } from '@mui/material/Unstable_TrapFocus';
-import { unstable_composeClasses as composeClasses } from '@mui/utils';
 import * as React from 'react';
 import { PickerStateWrapperProps } from 'src/internals/hooks/usePickerState';
 import { PickersActionBar, PickersActionBarAction } from 'src/PickersActionBar';
-import { getPickersPopperUtilityClass, PickersPopperClasses } from './pickersPopperClasses';
 import { PickersSlotsComponent, PickersSlotsComponentsProps } from './wrappers/WrapperProps';
 
 export interface PickersPopperSlotsComponent extends Pick<PickersSlotsComponent, 'ActionBar' | 'PaperContent'> {
   /**
-   * Custom component for the paper rendered inside the desktop picker's Popper.
+   * Custom component for the paper rendered inside the picker's Popper.
    * @default PickersPopperPaper
    */
-  DesktopPaper?: React.JSXElementConstructor<MuiPaperProps>;
+  PopperPaper?: React.JSXElementConstructor<MuiPaperProps>;
   /**
-   * Custom component for the desktop popper [Transition](https://mui.com/material-ui/transitions).
+   * Custom component for the popper [Transition](https://mui.com/material-ui/transitions).
    * @default Grow from @mui/material
    */
-  DesktopTransition?: React.JSXElementConstructor<MuiTransitionProps>;
+  PopperTransition?: React.JSXElementConstructor<MuiTransitionProps>;
   /**
-   * Custom component for trapping the focus inside the views on desktop.
-   * @default TrapFocus from @mui/material
-   */
-  DesktopTrapFocus?: React.ElementType<MuiTrapFocusProps>;
-  /**
-   * Custom component for the popper inside which the views are rendered on desktop.
+   * Custom component for the popper inside which the views are rendered on Popper.
    * @default Popper from @mui/material
    */
   Popper?: React.ElementType<MuiPopperProps>;
@@ -45,37 +38,22 @@ export interface PickersPopperSlotsComponent extends Pick<PickersSlotsComponent,
 export interface PickersPopperSlotsComponentsProps
   extends Pick<PickersSlotsComponentsProps, 'actionBar' | 'paperContent'> {
   /**
-   * Props passed down to the desktop [Paper](https://mui.com/material-ui/api/paper/) component.
+   * Props passed down to the Popper [Paper](https://mui.com/material-ui/api/paper/) component.
    */
-  desktopPaper?: SlotComponentProps<
+  popperPaper?: SlotComponentProps<
     typeof MuiPaper,
     {},
     PickerPopperProps & { placement: PopperPlacementType | undefined }
   >;
   /**
-   * Props passed down to the desktop [Transition](https://mui.com/material-ui/transitions/) component.
+   * Props passed down to the Popper [Transition](https://mui.com/material-ui/transitions/) component.
    */
-  desktopTransition?: Partial<MuiTransitionProps>;
-  /**
-   * Props passed down to the [TrapFocus](https://mui.com/base/react-focus-trap/) component on desktop.
-   */
-  desktopTrapFocus?: Partial<MuiTrapFocusProps>;
+  popperTransition?: Partial<MuiTransitionProps>;
   /**
    * Props passed down to [Popper](https://mui.com/material-ui/api/popper/) component.
    */
   popper?: SlotComponentProps<typeof MuiPopper, {}, PickerPopperProps>;
 }
-
-const useUtilityClasses = (ownerState: PickerPopperProps) => {
-  const { classes } = ownerState;
-
-  const slots = {
-    root: ['root'],
-    paper: ['paper'],
-  };
-
-  return composeClasses(slots, getPickersPopperUtilityClass, classes);
-};
 
 export interface PickerPopperProps extends PickerStateWrapperProps {
   anchorEl: MuiPopperProps['anchorEl'];
@@ -85,7 +63,6 @@ export interface PickerPopperProps extends PickerStateWrapperProps {
   children?: React.ReactNode;
   components?: PickersPopperSlotsComponent;
   componentsProps?: PickersPopperSlotsComponentsProps;
-  classes?: Partial<PickersPopperClasses>;
 }
 
 const PickersPopperRoot = styled(MuiPopper, {
@@ -135,8 +112,6 @@ export function PickersPopper(inProps: PickerPopperProps) {
     };
   }, [onDismiss, open]);
 
-  const classes = useUtilityClasses(props);
-
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Escape') {
       // stop the propagation to avoid closing parent modal
@@ -158,22 +133,19 @@ export function PickersPopper(inProps: PickerPopperProps) {
       anchorEl,
       onKeyDown: handleKeyDown,
     },
-    className: classes.root,
     ownerState: props,
   });
 
-  const TrapFocus = components?.DesktopTrapFocus ?? MuiTrapFocus;
-  const Transition = components?.DesktopTransition ?? Grow;
+  const Transition = components?.PopperTransition ?? Grow;
 
-  const Paper = components?.DesktopPaper ?? PickersPopperPaper;
+  const Paper = components?.PopperPaper ?? PickersPopperPaper;
   const paperProps: MuiPaperProps = useSlotProps({
     elementType: Paper,
-    externalSlotProps: componentsProps?.desktopPaper,
+    externalSlotProps: componentsProps?.popperPaper,
     additionalProps: {
       tabIndex: -1,
       elevation: 8,
     },
-    className: classes.paper,
     ownerState: {} as any, // Is overridden below to use `placement
   });
 
@@ -192,8 +164,8 @@ export function PickersPopper(inProps: PickerPopperProps) {
   return (
     <Popper {...popperProps}>
       {({ TransitionProps, placement }) => (
-        <TrapFocus open={open} disableAutoFocus disableRestoreFocus {...componentsProps?.desktopTrapFocus}>
-          <Transition {...TransitionProps} {...componentsProps?.desktopTransition}>
+        <MuiTrapFocus open={open} disableAutoFocus disableRestoreFocus>
+          <Transition {...TransitionProps} {...componentsProps?.popperTransition} tabIndex={-1}>
             <div>
               <ClickAwayListener onClickAway={onBlur ?? onDismiss} touchEvent="onTouchStart">
                 <Paper {...paperProps} ownerState={{ ...props, placement }} ref={containerRef}>
@@ -205,7 +177,7 @@ export function PickersPopper(inProps: PickerPopperProps) {
               </ClickAwayListener>
             </div>
           </Transition>
-        </TrapFocus>
+        </MuiTrapFocus>
       )}
     </Popper>
   );

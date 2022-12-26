@@ -1,31 +1,18 @@
 import { MAX_DEFAULT_DATE_ISO_STRING, MIN_DEFAULT_DATE_ISO_STRING } from 'src/internals/constants/defaultDates';
 import { BaseDateValidationProps } from 'src/internals/hooks/validation/models';
-import { DateView, DefaultizedProps } from 'src/internals/models';
+import { DefaultizedProps } from 'src/internals/models';
+import { PickerVariant } from 'src/internals/models/props/basePickerProps';
 import { PickersAdapter } from 'src/LocalizationProvider/LocalizationProvider';
-
-export interface BaseDatePickerProps<TDate> extends BaseDateValidationProps<TDate> {
-  /**
-   * Callback fired on view change.
-   * @param {DateView} view The new view.
-   */
-  onViewChange?: (view: DateView) => void;
-  /**
-   * First view to show.
-   * Must be a valid option from `views` list
-   * @default 'day'
-   */
-  openTo?: DateView;
-  /**
-   * Array of views to show.
-   * @default ['year', 'day']
-   */
-  views?: readonly DateView[];
-}
+import { DatePickerProps } from './DatePicker';
 
 export const getDatePickerDefaultizedProps = <TDate>(
-  props: BaseDatePickerProps<TDate>,
+  props: DatePickerProps<TDate>,
   utils: PickersAdapter<TDate>,
-): DefaultizedProps<BaseDatePickerProps<TDate>, 'openTo' | 'views' | keyof BaseDateValidationProps<TDate>> => {
+): DefaultizedProps<
+  DatePickerProps<TDate>,
+  'openTo' | 'views' | keyof BaseDateValidationProps<TDate>,
+  { inputFormat: string; variant: PickerVariant }
+> => {
   if (!utils.isValid(props.minDate) || !utils.isValid(props.maxDate)) {
     throw new Error(
       [
@@ -40,6 +27,8 @@ export const getDatePickerDefaultizedProps = <TDate>(
     disableFuture: false,
     disablePast: false,
     views: ['year', 'day'],
+    inputFormat: utils.formats.keyboardDate,
+    variant: 'popper',
     ...props,
     minDate: props.minDate || utils.date(MIN_DEFAULT_DATE_ISO_STRING)!,
     maxDate: props.maxDate || utils.date(MAX_DEFAULT_DATE_ISO_STRING)!,
