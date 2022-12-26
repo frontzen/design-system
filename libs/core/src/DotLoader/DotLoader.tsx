@@ -17,12 +17,10 @@ const CircleOne = styled.circle`
   animation: ${loadKeyFrames} 1s infinite;
 `;
 const CircleTwo = styled.circle`
-  animation: ${loadKeyFrames} 1s infinite;
-  animation-delay: 0.2s;
+  animation: ${loadKeyFrames} 1s 0.2s infinite;
 `;
 const CircleThree = styled.circle`
-  animation: ${loadKeyFrames} 1s infinite;
-  animation-delay: 0.4s;
+  animation: ${loadKeyFrames} 1s 0.4s infinite;
 `;
 export const DotLoader = (props: SvgIconProps) => {
   return (
