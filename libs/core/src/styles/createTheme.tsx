@@ -1,0 +1,374 @@
+import { loadingButtonClasses } from '@mui/lab';
+import '@mui/lab/themeAugmentation';
+import { alpha, createTheme as createMuiTheme, Theme, ThemeOptions } from '@mui/material';
+import { buttonBoxShadowAlpha, buttonDisableAlpha } from '../button/constants';
+import { background, common, defaultPalette } from '../colors';
+import { DotLoader } from '../DotLoader';
+import { getColorFromThemeWithColorProps } from '../utils';
+
+/**
+ * Add more colors to text palette which are defined by Frontzen Design System
+ */
+declare module '@mui/material/styles' {
+  interface TypeText {
+    light: string;
+    placeholder: string;
+    link: string;
+  }
+  interface PaletteOptions {
+    disabled?: string;
+  }
+  interface Palette {
+    disabled?: string;
+  }
+  interface BreakpointOverrides {
+    xs: false; // removes the `xs` breakpoint
+    sm: false;
+    md: false;
+    lg: false;
+    xl: false;
+  }
+}
+
+/**
+ * Update the Typography's variant prop options
+ * and disable the variants which are not used in Frontzen Design System
+ */
+declare module '@mui/material/Typography' {
+  interface TypographyPropsVariantOverrides {
+    h6: false;
+    subtitle2: false;
+    caption: false;
+    overline: false;
+  }
+}
+declare module '@mui/material/Fab' {
+  interface FabPropsColorOverrides {
+    default: false;
+  }
+  interface FabPropsVariantOverrides {
+    outlined: true;
+  }
+}
+
+const defaultOptions: ThemeOptions = {
+  palette: {
+    primary: defaultPalette.primary,
+    secondary: defaultPalette.secondary,
+    error: defaultPalette.error,
+    success: defaultPalette.success,
+    warning: defaultPalette.warning,
+    // The Frontzen Design System dose not have the info color and it should be set on each project separately.
+    // info: { main: '' },
+    disabled: defaultPalette.disable,
+    common: { ...common }, // prevent mutable object.
+    background: {
+      paper: background.grey,
+      default: background.white,
+    },
+    text: { ...defaultPalette.text }, // prevent mutable object.
+  },
+
+  typography: {
+    fontFamily: 'iranyekan',
+    fontSize: 16,
+    fontWeightLight: 100,
+    fontWeightRegular: 200,
+    fontWeightMedium: 400,
+    fontWeightBold: 600,
+    h1: {
+      fontWeight: 600,
+      fontSize: '2.25rem', // 32px
+      lineHeight: 1.5,
+    },
+    h2: {
+      fontWeight: 600,
+      fontSize: '1.5rem', // 24px
+      lineHeight: 1.5,
+    },
+    h3: {
+      fontWeight: 200,
+      fontSize: '1.5rem', // 24px
+      lineHeight: 1.5,
+    },
+    h4: {
+      fontWeight: 600,
+      fontSize: '1.125rem', // 18px
+      lineHeight: 1.5,
+    },
+    h5: {
+      fontWeight: 600,
+      fontSize: '1rem', // 16px
+      lineHeight: 1.5,
+    },
+    button: {
+      fontWeight: 400,
+      fontSize: '1rem', // 16px
+      lineHeight: '1.25rem',
+    },
+    body1: {
+      fontWeight: 200,
+      fontSize: '1rem', // 16px
+      lineHeight: 1.75,
+    },
+    body2: {
+      fontWeight: 200,
+      fontSize: '0.875rem', // 14px
+      lineHeight: 1.75,
+    },
+    subtitle1: {
+      fontWeight: 400,
+      fontSize: '0.625rem', // 10px
+      lineHeight: 1.5,
+    },
+    // Disable h6, subtitle2, caption and overline variant
+    h6: undefined,
+    subtitle2: undefined,
+    caption: undefined,
+    overline: undefined,
+  },
+  components: {
+    MuiLink: {
+      defaultProps: {
+        variant: 'body2',
+        color: defaultPalette.text.link,
+      },
+    },
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          '&': {
+            boxShadow: 'none',
+            borderRadius: 100000,
+          },
+          '&&:hover:not(:active)': {
+            boxShadow: 'none',
+          },
+        },
+      },
+    },
+    MuiFab: {
+      styleOverrides: {
+        root: ({ theme, ownerState }) => ({
+          '&:active': {
+            boxShadow: `0px 0px 10px ${alpha(
+              getColorFromThemeWithColorProps(theme, ownerState),
+              buttonBoxShadowAlpha,
+            )}`,
+          },
+          '&.MuiFab-outlined': {
+            border:
+              ownerState.size === 'small'
+                ? `1px solid ${getColorFromThemeWithColorProps(theme, ownerState)}`
+                : `2px solid ${getColorFromThemeWithColorProps(theme, ownerState)}`,
+            background: theme.palette.common.white,
+            color: getColorFromThemeWithColorProps(theme, ownerState),
+            '&:hover': {
+              border:
+                ownerState.size === 'small'
+                  ? `1px solid ${getColorFromThemeWithColorProps(theme, ownerState, 'dark')}`
+                  : `2px solid ${getColorFromThemeWithColorProps(theme, ownerState, 'dark')}`,
+              color: getColorFromThemeWithColorProps(theme, ownerState, 'dark'),
+            },
+            '&.Mui-disabled': {
+              borderColor: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
+              color: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
+              background: theme.palette.common.white,
+            },
+          },
+          minWidth: 'unset',
+          minHeight: 'unset',
+          '&.Mui-disabled': {
+            backgroundColor: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
+            color: getColorFromThemeWithColorProps(theme, ownerState, 'contrastText'),
+          },
+          '&.MuiFab-sizeSmall': {
+            padding: theme.spacing(0.5), //4
+            height: 28,
+            width: 28,
+            '&& >*:nth-of-type(1)': {
+              fontSize: theme.typography.button.fontSize, //16px
+            },
+          },
+          '&.MuiFab-sizeMedium': {
+            padding: theme.spacing(1), //8
+            height: 36,
+            width: 36,
+            '&& >*:nth-of-type(1)': {
+              fontSize: `calc(${theme.typography.button.fontSize} + 0.25rem)`, //20px
+            },
+          },
+          '&.MuiFab-sizeLarge': {
+            padding: theme.spacing(2), //16
+            height: 52,
+            width: 52,
+            '&& >*:nth-of-type(1)': {
+              fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
+            },
+          },
+        }),
+      },
+      defaultProps: {
+        color: 'primary',
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: ({ theme, ownerState }) => ({
+          '&:active': {
+            boxShadow: `0px 0px 10px ${alpha(
+              getColorFromThemeWithColorProps(theme, ownerState),
+              buttonBoxShadowAlpha,
+            )}`,
+          },
+
+          '&.MuiButton-outlined': {
+            border:
+              ownerState.size === 'small'
+                ? `1px solid ${getColorFromThemeWithColorProps(theme, ownerState)}`
+                : `2px solid ${getColorFromThemeWithColorProps(theme, ownerState)}`,
+            '&:hover': {
+              border:
+                ownerState.size === 'small'
+                  ? `1px solid ${getColorFromThemeWithColorProps(theme, ownerState, 'dark')}`
+                  : `2px solid ${getColorFromThemeWithColorProps(theme, ownerState, 'dark')}`,
+              color: getColorFromThemeWithColorProps(theme, ownerState, 'dark'),
+            },
+            '&.Mui-disabled': {
+              borderColor: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
+              color: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
+            },
+          },
+          '&.MuiButton-contained': {
+            '&.Mui-disabled': {
+              backgroundColor: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
+              color: getColorFromThemeWithColorProps(theme, ownerState, 'contrastText'),
+            },
+          },
+
+          '&.MuiButton-sizeLarge': {
+            padding:
+              ownerState.endIcon || ownerState.startIcon
+                ? ownerState.variant === 'contained'
+                  ? `calc(${theme.spacing(2)} - 2px) ${theme.spacing(3.5)}` /*14 28*/
+                  : `calc(${theme.spacing(2)} - 4px) calc(${theme.spacing(3.5)} - 2px)` //12 26
+                : ownerState.variant === 'contained'
+                ? theme.spacing(2, 3.5) /*16 28*/
+                : `calc(${theme.spacing(2)} - 2px) calc(${theme.spacing(3.5)} - 2px)`, //14 26
+
+            fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
+            fontWeight: theme.typography.fontWeightBold,
+            '.MuiLoadingButton-loadingIndicator': {
+              '& >*:nth-of-type(1)': {
+                fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
+              },
+            },
+            '.MuiButton-startIcon': {
+              marginRight: theme.spacing(3),
+              '& >*:nth-of-type(1)': {
+                fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
+              },
+            },
+            '.MuiButton-endIcon': {
+              marginLeft: theme.spacing(3),
+              '& >*:nth-of-type(1)': {
+                fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
+              },
+            },
+          },
+          '&.MuiButton-sizeMedium': {
+            padding:
+              ownerState.variant === 'contained'
+                ? theme.spacing(1, 3) /*8 24 */
+                : `calc(${theme.spacing(1)} - 2px) calc(${theme.spacing(3)} - 2px)`, //6 22
+            '.MuiLoadingButton-loadingIndicator': {
+              '& >*:nth-of-type(1)': {
+                fontSize: `calc(${theme.typography.button.fontSize} + 0.25rem)`, // 20px
+              },
+            },
+            fontSize: theme.typography.button.fontSize, //16
+            '.MuiButton-startIcon': {
+              marginRight: theme.spacing(2),
+              '& >*:nth-of-type(1)': {
+                fontSize: `calc(${theme.typography.button.fontSize} + 0.25rem)`, // 20px
+              },
+            },
+            '.MuiButton-endIcon': {
+              marginLeft: theme.spacing(2),
+              '& >*:nth-of-type(1)': {
+                fontSize: `calc(${theme.typography.button.fontSize} + 0.25rem )`, // 20px
+              },
+            },
+          },
+          '&.MuiButton-sizeSmall': {
+            padding:
+              ownerState.variant === 'contained'
+                ? theme.spacing(0.5, 2) /*4 16 */
+                : `calc(${theme.spacing(0.5)} - 1px) calc(${theme.spacing(2)} - 1px)`, // 3 15
+            fontSize: `calc(${theme.typography.button.fontSize} - 0.25rem)`, //12px
+            '.MuiLoadingButton-loadingIndicator': {
+              '& >*:nth-of-type(1)': {
+                fontSize: theme.typography.button.fontSize, // 16px
+              },
+            },
+            '.MuiButton-startIcon': {
+              marginRight: theme.spacing(2),
+              '& >*:nth-of-type(1)': {
+                fontSize: theme.typography.button.fontSize, // 16px
+              },
+            },
+            '.MuiButton-endIcon': {
+              marginLeft: theme.spacing(2),
+              '& >*:nth-of-type(1)': {
+                fontSize: theme.typography.button.fontSize, // 16px
+              },
+            },
+          },
+        }),
+      },
+    },
+    MuiLoadingButton: {
+      styleOverrides: {
+        root: ({ theme, ownerState }) => ({
+          ...(ownerState.loadingPosition === 'center' && {
+            //these classes are used to override default material behavior
+            [`&&.${loadingButtonClasses.loading}`]: {
+              // it's for hiding text
+              color: 'transparent',
+            },
+            [`.${loadingButtonClasses.loadingIndicator}`]: {
+              // it's for setting loadingIndicator color
+              color: alpha(
+                getColorFromThemeWithColorProps(
+                  theme,
+                  ownerState,
+                  ownerState.variant === 'outlined' ? 'main' : 'contrastText',
+                ),
+                ownerState.variant === 'outlined' ? buttonDisableAlpha : 1,
+              ),
+            },
+          }),
+        }),
+      },
+      defaultProps: {
+        loadingIndicator: <DotLoader />,
+        loadingPosition: 'center',
+      },
+    },
+
+    MuiSvgIcon: {
+      styleOverrides: {
+        root: {
+          //icon size should change on fontsize prop
+          '&.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium': {
+            fontSize: '1rem', // 16px
+          },
+        },
+      },
+    },
+  },
+};
+
+export function createTheme(options: ThemeOptions = {}, ...args: object[]): Theme {
+  return createMuiTheme(defaultOptions, options, ...args);
+}
