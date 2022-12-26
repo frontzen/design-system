@@ -3,19 +3,19 @@ import * as React from 'react';
 import { CalendarOrClockPicker } from 'src/internals/components/CalendarOrClockPicker';
 import { KeyboardDateInput } from 'src/internals/components/KeyboardDateInput';
 import {
-  PopoverWrapper,
-  PopoverWrapperSlotsComponent,
-  PopoverWrapperSlotsComponentsProps,
-} from 'src/internals/components/wrappers/PopoverWrapper';
+  PopperWrapper,
+  PopperWrapperSlotsComponent,
+  PopperWrapperSlotsComponentsProps,
+} from 'src/internals/components/wrappers/PopperWrapper';
 import { usePickerState } from 'src/internals/hooks/usePickerState';
 import { useUtils } from 'src/internals/hooks/useUtils';
 import { useValidation } from 'src/internals/hooks/validation/useValidation';
 import { singleItemValueManager } from 'src/internals/utils/valueManagers';
 import { BaseDatePickerProps, getDatePickerDefaultizedProps } from './shared';
 
-export interface DatePickerSlotsComponent extends PopoverWrapperSlotsComponent {}
+export interface DatePickerSlotsComponent extends PopperWrapperSlotsComponent {}
 
-export interface DatePickerSlotsComponentsProps extends PopoverWrapperSlotsComponentsProps {}
+export interface DatePickerSlotsComponentsProps extends PopperWrapperSlotsComponentsProps {}
 
 export interface DatePickerProps<TDate> extends Omit<BaseDatePickerProps<TDate>, 'components' | 'componentsProps'> {
   /**
@@ -56,9 +56,9 @@ export const DatePicker = React.forwardRef(function DatePicker<TDate>(
   };
 
   const Wrapper =
-    variant === 'popover'
+    variant === 'popper'
       ? ({ children }: { children: React.ReactNode }) => (
-          <PopoverWrapper
+          <PopperWrapper
             {...wrapperProps}
             DateInputProps={AllDateInputProps}
             KeyboardDateInputComponent={KeyboardDateInput}
@@ -66,7 +66,7 @@ export const DatePicker = React.forwardRef(function DatePicker<TDate>(
             componentsProps={componentsProps}
           >
             {children}
-          </PopoverWrapper>
+          </PopperWrapper>
         )
       : () => <></>;
 
