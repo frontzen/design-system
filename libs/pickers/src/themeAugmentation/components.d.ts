@@ -1,18 +1,20 @@
 import { ComponentsProps } from '@mui/material/styles';
 
-export interface PickerComponents<Theme> {
+export interface PickerComponents {
   ZenLocalizationProvider?: {
     defaultProps?: ComponentsProps['ZenLocalizationProvider'];
-    styleOverrides?: ComponentsOverrides<Theme>['ZenLocalizationProvider'];
-    variants?: ComponentsVariants['ZenLocalizationProvider'];
   };
   ZenPickersPopper?: {
     defaultProps?: ComponentsProps['ZenPickersPopper'];
-    styleOverrides?: ComponentsOverrides<Theme>['ZenPickersPopper'];
-    variants?: ComponentsVariants['ZenPickersPopper'];
+  };
+  ZenCalendarOrClockPicker?: {
+    defaultProps?: ComponentsProps['ZenCalendarOrClockPicker'];
+  };
+  ZenDatePicker?: {
+    defaultProps?: ComponentsProps['ZenDatePicker'];
   };
 }
 
 declare module '@mui/material/styles' {
-  interface Components<Theme = unknown> extends PickerComponents<Theme> {}
+  interface Components extends PickerComponents {}
 }
