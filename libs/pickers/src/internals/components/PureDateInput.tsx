@@ -52,7 +52,6 @@ export interface DateInputProps<TDate> {
    * Custom mask. Can be used to override generate from format. (e.g. `__/__/____ __:__` or `__/__/____ __:__ _M`).
    */
   mask?: string;
-  // lib/src/wrappers/DesktopPopperWrapper.tsx:87
   onBlur?: () => void;
   onChange: (date: TDate | null, keyboardInputValue?: string) => void;
   open: boolean;

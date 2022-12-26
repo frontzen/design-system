@@ -12,7 +12,7 @@ export interface PopperWrapperSlotsComponentsProps extends PickersPopperSlotsCom
 export interface PopperWrapperProps extends PickerStateWrapperProps {
   children?: React.ReactNode;
   DateInputProps: DateInputPropsLike & { ref?: React.Ref<HTMLDivElement> };
-  KeyboardDateInputComponent: React.JSXElementConstructor<DateInputPropsLike & { ref?: React.Ref<HTMLDivElement> }>;
+  DateInputComponent: React.JSXElementConstructor<DateInputPropsLike & { ref?: React.Ref<HTMLDivElement> }>;
   /**
    * Overrideable components.
    * @default {}
@@ -29,7 +29,7 @@ export function PopperWrapper(props: PopperWrapperProps) {
   const {
     children,
     DateInputProps,
-    KeyboardDateInputComponent,
+    DateInputComponent,
     onClear,
     onDismiss,
     onConfirm,
@@ -42,7 +42,7 @@ export function PopperWrapper(props: PopperWrapperProps) {
 
   return (
     <>
-      <KeyboardDateInputComponent {...DateInputProps} inputRef={inputRef} />
+      <DateInputComponent {...DateInputProps} inputRef={inputRef} />
       <PickersPopper
         open={open}
         anchorEl={ownInputRef.current}

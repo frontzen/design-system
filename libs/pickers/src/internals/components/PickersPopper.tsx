@@ -21,22 +21,22 @@ import { PickersSlotsComponent, PickersSlotsComponentsProps } from './wrappers/W
 
 export interface PickersPopperSlotsComponent extends Pick<PickersSlotsComponent, 'ActionBar' | 'PaperContent'> {
   /**
-   * Custom component for the paper rendered inside the desktop picker's Popper.
+   * Custom component for the paper rendered inside the picker's Popper.
    * @default PickersPopperPaper
    */
-  DesktopPaper?: React.JSXElementConstructor<MuiPaperProps>;
+  PopperPaper?: React.JSXElementConstructor<MuiPaperProps>;
   /**
-   * Custom component for the desktop popper [Transition](https://mui.com/material-ui/transitions).
+   * Custom component for the popper [Transition](https://mui.com/material-ui/transitions).
    * @default Grow from @mui/material
    */
-  DesktopTransition?: React.JSXElementConstructor<MuiTransitionProps>;
+  PopperTransition?: React.JSXElementConstructor<MuiTransitionProps>;
   /**
-   * Custom component for trapping the focus inside the views on desktop.
+   * Custom component for trapping the focus inside the views on Popper.
    * @default TrapFocus from @mui/material
    */
-  DesktopTrapFocus?: React.ElementType<MuiTrapFocusProps>;
+  PopperTrapFocus?: React.ElementType<MuiTrapFocusProps>;
   /**
-   * Custom component for the popper inside which the views are rendered on desktop.
+   * Custom component for the popper inside which the views are rendered on Popper.
    * @default Popper from @mui/material
    */
   Popper?: React.ElementType<MuiPopperProps>;
@@ -45,21 +45,21 @@ export interface PickersPopperSlotsComponent extends Pick<PickersSlotsComponent,
 export interface PickersPopperSlotsComponentsProps
   extends Pick<PickersSlotsComponentsProps, 'actionBar' | 'paperContent'> {
   /**
-   * Props passed down to the desktop [Paper](https://mui.com/material-ui/api/paper/) component.
+   * Props passed down to the Popper [Paper](https://mui.com/material-ui/api/paper/) component.
    */
-  desktopPaper?: SlotComponentProps<
+  PopperPaper?: SlotComponentProps<
     typeof MuiPaper,
     {},
     PickerPopperProps & { placement: PopperPlacementType | undefined }
   >;
   /**
-   * Props passed down to the desktop [Transition](https://mui.com/material-ui/transitions/) component.
+   * Props passed down to the Popper [Transition](https://mui.com/material-ui/transitions/) component.
    */
-  desktopTransition?: Partial<MuiTransitionProps>;
+  PopperTransition?: Partial<MuiTransitionProps>;
   /**
-   * Props passed down to the [TrapFocus](https://mui.com/base/react-focus-trap/) component on desktop.
+   * Props passed down to the [TrapFocus](https://mui.com/base/react-focus-trap/) component on Popper.
    */
-  desktopTrapFocus?: Partial<MuiTrapFocusProps>;
+  PopperTrapFocus?: Partial<MuiTrapFocusProps>;
   /**
    * Props passed down to [Popper](https://mui.com/material-ui/api/popper/) component.
    */
@@ -162,13 +162,13 @@ export function PickersPopper(inProps: PickerPopperProps) {
     ownerState: props,
   });
 
-  const TrapFocus = components?.DesktopTrapFocus ?? MuiTrapFocus;
-  const Transition = components?.DesktopTransition ?? Grow;
+  const TrapFocus = components?.PopperTrapFocus ?? MuiTrapFocus;
+  const Transition = components?.PopperTransition ?? Grow;
 
-  const Paper = components?.DesktopPaper ?? PickersPopperPaper;
+  const Paper = components?.PopperPaper ?? PickersPopperPaper;
   const paperProps: MuiPaperProps = useSlotProps({
     elementType: Paper,
-    externalSlotProps: componentsProps?.desktopPaper,
+    externalSlotProps: componentsProps?.PopperPaper,
     additionalProps: {
       tabIndex: -1,
       elevation: 8,
@@ -192,8 +192,8 @@ export function PickersPopper(inProps: PickerPopperProps) {
   return (
     <Popper {...popperProps}>
       {({ TransitionProps, placement }) => (
-        <TrapFocus open={open} disableAutoFocus disableRestoreFocus {...componentsProps?.desktopTrapFocus}>
-          <Transition {...TransitionProps} {...componentsProps?.desktopTransition} tabIndex={-1}>
+        <TrapFocus open={open} disableAutoFocus disableRestoreFocus {...componentsProps?.PopperTrapFocus}>
+          <Transition {...TransitionProps} {...componentsProps?.PopperTransition} tabIndex={-1}>
             <div>
               <ClickAwayListener onClickAway={onBlur ?? onDismiss} touchEvent="onTouchStart">
                 <Paper {...paperProps} ownerState={{ ...props, placement }} ref={containerRef}>

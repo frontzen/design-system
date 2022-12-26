@@ -2,6 +2,7 @@ import { useThemeProps } from '@mui/material/styles';
 import * as React from 'react';
 import { CalendarOrClockPicker } from 'src/internals/components/CalendarOrClockPicker';
 import { KeyboardDateInput } from 'src/internals/components/KeyboardDateInput';
+import { ExportedDateInputProps } from 'src/internals/components/PureDateInput';
 import {
   PopperWrapper,
   PopperWrapperSlotsComponent,
@@ -9,15 +10,39 @@ import {
 } from 'src/internals/components/wrappers/PopperWrapper';
 import { usePickerState } from 'src/internals/hooks/usePickerState';
 import { useUtils } from 'src/internals/hooks/useUtils';
-import { useValidation } from 'src/internals/hooks/validation/useValidation';
+import { BaseDateValidationProps } from 'src/internals/hooks/validation/models';
+import { DateValidationError } from 'src/internals/hooks/validation/useDateValidation';
+import { useValidation, ValidationCommonProps } from 'src/internals/hooks/validation/useValidation';
+import { DateView } from 'src/internals/models';
+import { BasePickerProps, PickerVariant } from 'src/internals/models/props/basePickerProps';
 import { singleItemValueManager } from 'src/internals/utils/valueManagers';
-import { BaseDatePickerProps, getDatePickerDefaultizedProps } from './shared';
+import { getDatePickerDefaultizedProps } from './shared';
 
 export interface DatePickerSlotsComponent extends PopperWrapperSlotsComponent {}
 
 export interface DatePickerSlotsComponentsProps extends PopperWrapperSlotsComponentsProps {}
 
-export interface DatePickerProps<TDate> extends Omit<BaseDatePickerProps<TDate>, 'components' | 'componentsProps'> {
+export interface DatePickerProps<TDate>
+  extends ValidationCommonProps<DateValidationError, TDate | null>,
+    BasePickerProps<TDate | null>,
+    BaseDateValidationProps<TDate>,
+    ExportedDateInputProps<TDate> {
+  /**
+   * Callback fired on view change.
+   * @param {DateView} view The new view.
+   */
+  onViewChange?: (view: DateView) => void;
+  /**
+   * First view to show.
+   * Must be a valid option from `views` list
+   * @default 'day'
+   */
+  openTo?: DateView;
+  /**
+   * Array of views to show.
+   * @default ['year', 'day']
+   */
+  views?: readonly DateView[];
   /**
    * Overrideable components.
    * @default {}
@@ -30,6 +55,11 @@ export interface DatePickerProps<TDate> extends Omit<BaseDatePickerProps<TDate>,
   componentsProps?: DatePickerSlotsComponentsProps;
 }
 
+const WrapperDict = {
+  popper: PopperWrapper,
+  modal: React.Fragment,
+} satisfies Record<PickerVariant, React.ElementType>;
+
 type DatePickerComponent = <TDate>(props: DatePickerProps<TDate> & React.RefAttributes<HTMLDivElement>) => JSX.Element;
 
 export const DatePicker = React.forwardRef(function DatePicker<TDate>(
@@ -40,7 +70,7 @@ export const DatePicker = React.forwardRef(function DatePicker<TDate>(
 
   const utils = useUtils<TDate>();
 
-  const { variant, ...mergedProps } = getDatePickerDefaultizedProps<TDate, DatePickerProps<TDate>>(props, utils);
+  const { variant, ...mergedProps } = getDatePickerDefaultizedProps<TDate>(props, utils);
 
   const validationError = useValidation(mergedProps, 'date', null);
   const { pickerProps, inputProps, wrapperProps } = usePickerState(mergedProps, singleItemValueManager);
@@ -55,23 +85,16 @@ export const DatePicker = React.forwardRef(function DatePicker<TDate>(
     validationError,
   };
 
-  const Wrapper =
-    variant === 'popper'
-      ? ({ children }: { children: React.ReactNode }) => (
-          <PopperWrapper
-            {...wrapperProps}
-            DateInputProps={AllDateInputProps}
-            KeyboardDateInputComponent={KeyboardDateInput}
-            components={components}
-            componentsProps={componentsProps}
-          >
-            {children}
-          </PopperWrapper>
-        )
-      : () => <></>;
+  const Wrapper = WrapperDict[variant];
 
   return (
-    <Wrapper>
+    <Wrapper
+      {...wrapperProps}
+      DateInputProps={AllDateInputProps}
+      DateInputComponent={KeyboardDateInput}
+      components={components}
+      componentsProps={componentsProps}
+    >
       <CalendarOrClockPicker
         {...pickerProps}
         autoFocus
