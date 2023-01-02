@@ -1,97 +1,94 @@
-﻿/**
+/**
 *
-*	Name:			IRANYekan Font
-*	Version:			3.0
+*	Name:			IRANYekanX Fonts
+*	Version:			2.4
 *	Author:			Moslem Ebrahimi (moslemebrahimi.com)
-*	Created on:		Dec 20, 2018
-*	Updated on:		Dec 20, 2018
+*	Created on:		Aug 02, 2022
+*	Updated on:		Aug 02, 2022
 *	Website:			http://fontiran.com
 *	Copyright:		Commercial/Proprietary Software
 --------------------------------------------------------------------------------------
-فونت ایران یکان یک نرم افزار مالکیتی محسوب می شود. جهت آگاهی از قوانین استفاده از این فونت ها لطفا به وب سایت (فونت ایران دات کام) مراجعه نمایید
+فونت ایران یکان X  یک نرم افزار مالکیتی محسوب می شود. جهت آگاهی از قوانین استفاده از این فونت ها لطفا به وب سایت (فونت ایران دات کام) مراجعه نمایید
 --------------------------------------------------------------------------------------
-IRANYekan fonts are considered a proprietary software. To gain information about the laws regarding the use of these fonts, please visit www.fontiran.com 
+IRANYekanX fonts are considered a proprietary software. To gain information about the laws regarding the use of these fonts, please visit www.fontiran.com 
 --------------------------------------------------------------------------------------
-This set of fonts are used in this project under the license: WHGE5B
---------------------------------------------------------------------------------------
+This set of fonts are used in this project under the license: (QUS8G8)
+------------------------------------------------------------------------------------- fonts/-
 *	
 **/
-@font-face {
-  font-family: iranyekan;
-  font-style: normal;
-  font-weight: bold;
-  src: url('./eot/iranyekanwebbold.eot');
-  src: url('./eot/iranyekanwebbold.eot?#iefix') format('embedded-opentype'),
-    /* IE6-8 */ url('./woff/iranyekanwebbold.woff') format('woff'),
-    /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('./ttf/iranyekanwebbold.ttf') format('truetype');
-}
 
 @font-face {
-  font-family: iranyekan;
+  font-family: IRANYekanX;
   font-style: normal;
   font-weight: 100;
-  src: url('./eot/iranyekanwebthin.eot');
-  src: url('./eot/iranyekanwebthin.eot?#iefix') format('embedded-opentype'),
-    /* IE6-8 */ url('./woff/iranyekanwebthin.woff') format('woff'),
-    /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('./ttf/iranyekanwebthin.ttf') format('truetype');
+  src: url('woff/IRANYekanX-Thin.woff') format('woff'), url('woff2/IRANYekanX-Thin.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: iranyekan;
+  font-family: IRANYekanX;
+  font-style: normal;
+  font-weight: 200;
+  src: url('woff/IRANYekanX-UltraLight.woff') format('woff'), url('woff2/IRANYekanX-UltraLight.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: IRANYekanX;
   font-style: normal;
   font-weight: 300;
-  src: url('./eot/iranyekanweblight.eot');
-  src: url('./eot/iranyekanweblight.eot?#iefix') format('embedded-opentype'),
-    /* IE6-8 */ url('./woff/iranyekanweblight.woff') format('woff'),
-    /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('./ttf/iranyekanweblight.ttf') format('truetype');
+  src: url('woff/IRANYekanX-Light.woff') format('woff'), url('woff2/IRANYekanX-Light.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: iranyekan;
-  font-style: normal;
-  font-weight: normal;
-  src: url('./eot/iranyekanwebregular.eot');
-  src: url('./eot/iranyekanwebregular.eot?#iefix') format('embedded-opentype'),
-    /* IE6-8 */ url('./woff/iranyekanwebregular.woff') format('woff'),
-    /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('./ttf/iranyekanwebregular.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: iranyekan;
+  font-family: IRANYekanX;
   font-style: normal;
   font-weight: 500;
-  src: url('./eot/iranyekanwebmedium.eot');
-  src: url('./eot/iranyekanwebmedium.eot?#iefix') format('embedded-opentype'),
-    /* IE6-8 */ url('./woff/iranyekanwebmedium.woff') format('woff'),
-    /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('./ttf/iranyekanwebmedium.ttf') format('truetype');
+  src: url('woff/IRANYekanX-Medium.woff') format('woff'), url('woff2/IRANYekanX-Medium.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: iranyekan;
+  font-family: IRANYekanX;
+  font-style: normal;
+  font-weight: 600;
+  src: url('woff/IRANYekanX-DemiBold.woff') format('woff'), url('woff2/IRANYekanX-DemiBold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: IRANYekanX;
   font-style: normal;
   font-weight: 800;
-  src: url('./eot/iranyekanwebextrabold.eot');
-  src: url('./eot/iranyekanwebextrabold.eot?#iefix') format('embedded-opentype'),
-    /* IE6-8 */ url('./woff/iranyekanwebextrabold.woff') format('woff'),
-    /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('./ttf/iranyekanwebextrabold.ttf') format('truetype');
+  src: url('woff/IRANYekanX-ExtraBold.woff') format('woff'), url('woff2/IRANYekanX-ExtraBold.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: iranyekan;
+  font-family: IRANYekanX;
   font-style: normal;
   font-weight: 900;
-  src: url('./eot/iranyekanwebblack.eot');
-  src: url('./eot/iranyekanwebblack.eot?#iefix') format('embedded-opentype'),
-    /* IE6-8 */ url('./woff/iranyekanwebblack.woff') format('woff'),
-    /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('./ttf/iranyekanwebblack.ttf') format('truetype');
+  src: url('woff/IRANYekanX-Black.woff') format('woff'), url('woff2/IRANYekanX-Black.woff2') format('woff2');
+}
+@font-face {
+  font-family: IRANYekanX;
+  font-style: normal;
+  font-weight: 950;
+  src: url('woff/IRANYekanX-ExtraBlack.woff') format('woff'), url('woff2/IRANYekanX-ExtraBlack.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: iranyekan;
+  font-family: IRANYekanX;
   font-style: normal;
-  font-weight: 950;
-  src: url('./eot/iranyekanwebextrablack.eot');
-  src: url('./eot/iranyekanwebextrablack.eot?#iefix') format('embedded-opentype'),
-    /* IE6-8 */ url('./woff/iranyekanwebextrablack.woff') format('woff'),
-    /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('./ttf/iranyekanwebextrablack.ttf') format('truetype');
+  font-weight: 1000;
+  src: url('woff/IRANYekanX-Heavy.woff') format('woff'), url('woff2/IRANYekanX-Heavy.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: IRANYekanX;
+  font-style: normal;
+  font-weight: bold;
+  src: url('woff/IRANYekanX-Bold.woff') format('woff'), url('woff2/IRANYekanX-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: IRANYekanX;
+  font-style: normal;
+  font-weight: normal;
+  src: url('woff/IRANYekanX-Regular.woff') format('woff'), url('woff2/IRANYekanX-Regular.woff2') format('woff2');
 }
