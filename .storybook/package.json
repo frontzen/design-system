@@ -7,6 +7,7 @@
     "start-storybook": "start-storybook -c . -p 4400"
   },
   "dependencies": {
-    "@front.zen/design-system": "*"
+    "@front.zen/design-system": "*",
+    "stylis-plugin-rtl": "^2.1.1"
   }
 }
