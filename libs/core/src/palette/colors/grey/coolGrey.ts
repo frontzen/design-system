@@ -1,4 +1,6 @@
-export const coolGrey = {
+import { DesignSystemColor } from '../../types';
+
+export const coolGrey: DesignSystemColor = {
   50: '#F2F4F8',
   100: '#DDE1E6',
   200: '#C1C7CD',
@@ -9,4 +11,4 @@ export const coolGrey = {
   700: '#343A3F',
   800: '#21272A',
   900: '#121619',
-} as const;
+};

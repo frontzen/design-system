@@ -1,4 +1,6 @@
-export const teal = {
+import { DesignSystemColor } from '../../types';
+
+export const teal: DesignSystemColor = {
   50: '#D9FBFB',
   100: '#9EF0F0',
   200: '#3DDBD9',
@@ -9,4 +11,4 @@ export const teal = {
   700: '#004144',
   800: '#022B30',
   900: '#081A1C',
-} as const;
+};

@@ -1,4 +1,6 @@
-export const magenta = {
+import { DesignSystemColor } from '../../types';
+
+export const magenta: DesignSystemColor = {
   50: '#FFF0F7',
   100: '#FFD6E8',
   200: '#FFAFD2',
@@ -9,4 +11,4 @@ export const magenta = {
   700: '#740937',
   800: '#510224',
   900: '#2A0A18',
-} as const;
+};

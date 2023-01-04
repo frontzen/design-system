@@ -3,33 +3,50 @@ import '@mui/lab/themeAugmentation';
 import { alpha, createTheme as createMuiTheme, Theme, ThemeOptions } from '@mui/material';
 import { buttonBoxShadowAlpha, buttonDisableAlpha } from '../button/constants';
 import { muiCheckbox } from '../checkbox';
-import { background, common, defaultPalette } from '../colors';
 import { DotLoader } from '../DotLoader';
+import { muiFormHelperText } from '../formHelperText/muiFormHelperText';
+import { muiFormLabel } from '../formLabel/muiFormLabel';
+import { palette } from '../palette/palette';
+import { DesignSystemColor } from '../palette/types';
 import { muiRadio } from '../radio';
-import { muiSwitch } from '../switch';
+import { muiOutlinedInput } from '../textField/muiOutlinedInput';
 import { getColorFromThemeWithColorProps } from '../utils';
 
-/**
- * Add more colors to text palette which are defined by Frontzen Design System
- */
 declare module '@mui/material/styles' {
+  interface PaletteColor extends DesignSystemColor {}
+
+  interface Palette {
+    blue: DesignSystemColor;
+    green: DesignSystemColor;
+    purple: DesignSystemColor;
+    teal: DesignSystemColor;
+    turquoise: DesignSystemColor;
+    magenta: DesignSystemColor;
+    orange: DesignSystemColor;
+    red: DesignSystemColor;
+    yellow: DesignSystemColor;
+    coolGrey: DesignSystemColor;
+    warmGrey: DesignSystemColor;
+  }
+
+  interface PaletteOptions {
+    blue: DesignSystemColor;
+    green: DesignSystemColor;
+    purple: DesignSystemColor;
+    teal: DesignSystemColor;
+    turquoise: DesignSystemColor;
+    magenta: DesignSystemColor;
+    orange: DesignSystemColor;
+    red: DesignSystemColor;
+    yellow: DesignSystemColor;
+    coolGrey: DesignSystemColor;
+    warmGrey: DesignSystemColor;
+  }
+
   interface TypeText {
+    link: string;
     light: string;
     placeholder: string;
-    link: string;
-  }
-  interface PaletteOptions {
-    disabled?: string;
-  }
-  interface Palette {
-    disabled?: string;
-  }
-  interface BreakpointOverrides {
-    xs: false; // removes the `xs` breakpoint
-    sm: false;
-    md: false;
-    lg: false;
-    xl: false;
   }
 }
 
@@ -44,6 +61,7 @@ declare module '@mui/material/Typography' {
     overline: false;
   }
 }
+
 declare module '@mui/material/Fab' {
   interface FabPropsColorOverrides {
     default: false;
@@ -54,22 +72,7 @@ declare module '@mui/material/Fab' {
 }
 
 const defaultOptions: ThemeOptions = {
-  palette: {
-    primary: defaultPalette.primary,
-    secondary: defaultPalette.secondary,
-    error: defaultPalette.error,
-    success: defaultPalette.success,
-    warning: defaultPalette.warning,
-    // The Frontzen Design System dose not have the info color and it should be set on each project separately.
-    // info: { main: '' },
-    disabled: defaultPalette.disable,
-    common: { ...common }, // prevent mutable object.
-    background: {
-      paper: background.grey,
-      default: background.white,
-    },
-    text: { ...defaultPalette.text }, // prevent mutable object.
-  },
+  palette,
 
   typography: {
     fontFamily: 'IRANYekanX, roboto',
@@ -136,7 +139,14 @@ const defaultOptions: ThemeOptions = {
     subtitle2: undefined,
     overline: undefined,
   },
+
   components: {
+    MuiRadio: muiRadio,
+    MuiCheckbox: muiCheckbox,
+    MuiFormLabel: muiFormLabel,
+    MuiOutlinedInput: muiOutlinedInput,
+    MuiFormHelperText: muiFormHelperText,
+
     MuiCssBaseline: {
       styleOverrides: {
         body: {
@@ -144,12 +154,14 @@ const defaultOptions: ThemeOptions = {
         },
       },
     },
+
     MuiLink: {
       defaultProps: {
         variant: 'body2',
-        color: defaultPalette.text.link,
+        color: palette.text?.link,
       },
     },
+
     MuiButtonBase: {
       styleOverrides: {
         root: {
@@ -163,6 +175,7 @@ const defaultOptions: ThemeOptions = {
         },
       },
     },
+
     MuiFab: {
       styleOverrides: {
         root: ({ theme, ownerState }) => ({
@@ -228,6 +241,7 @@ const defaultOptions: ThemeOptions = {
         color: 'primary',
       },
     },
+
     MuiButton: {
       styleOverrides: {
         root: ({ theme, ownerState }) => ({
@@ -237,7 +251,6 @@ const defaultOptions: ThemeOptions = {
               buttonBoxShadowAlpha,
             )}`,
           },
-
           '&.MuiButton-outlined': {
             border:
               ownerState.size === 'small'
@@ -261,7 +274,6 @@ const defaultOptions: ThemeOptions = {
               color: getColorFromThemeWithColorProps(theme, ownerState, 'contrastText'),
             },
           },
-
           '&.MuiButton-sizeLarge': {
             padding:
               ownerState.endIcon || ownerState.startIcon
@@ -343,6 +355,7 @@ const defaultOptions: ThemeOptions = {
         }),
       },
     },
+
     MuiLoadingButton: {
       styleOverrides: {
         root: ({ theme, ownerState }) => ({
@@ -371,6 +384,7 @@ const defaultOptions: ThemeOptions = {
         loadingPosition: 'center',
       },
     },
+
     MuiSvgIcon: {
       styleOverrides: {
         fontSizeSmall: {
@@ -384,9 +398,6 @@ const defaultOptions: ThemeOptions = {
         },
       },
     },
-    MuiCheckbox: muiCheckbox,
-    MuiRadio: muiRadio,
-    MuiSwitch: muiSwitch,
   },
 };
 

@@ -1,5 +1,4 @@
 import { Components, Theme } from '@mui/material';
-import { coolGrey } from '../colors';
 import { getColorFromThemeWithColorProps } from '../utils';
 import { Selected } from './icons/Selected';
 import { UnSelected } from './icons/Unselected';
@@ -23,12 +22,12 @@ export const muiRadio: Components<Omit<Theme, 'components'>>['MuiRadio'] = {
     root: ({ theme, ownerState }) => ({
       padding: 0,
       '& rect': {
-        stroke: coolGrey[300],
+        stroke: theme.palette.coolGrey[300],
       },
       '&.Mui-disabled': {
         '& rect:nth-of-type(1)': {
-          fill: coolGrey[50],
-          stroke: coolGrey[100],
+          fill: theme.palette.coolGrey[50],
+          stroke: theme.palette.coolGrey[100],
         },
       },
       '&:hover': {
@@ -48,11 +47,11 @@ export const muiRadio: Components<Omit<Theme, 'components'>>['MuiRadio'] = {
         },
         '&.Mui-disabled': {
           '& rect:nth-of-type(1)': {
-            fill: coolGrey[100],
+            fill: theme.palette.coolGrey[100],
             stroke: 'transparent',
           },
           '& rect:nth-of-type(2)': {
-            fill: coolGrey[300],
+            fill: theme.palette.coolGrey[300],
           },
         },
       },

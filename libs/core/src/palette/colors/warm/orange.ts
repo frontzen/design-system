@@ -1,4 +1,6 @@
-export const orange = {
+import { DesignSystemColor } from '../../types';
+
+export const orange: DesignSystemColor = {
   50: '#FFF2E8',
   100: '#FFD9BE',
   200: '#FFB784',
@@ -9,4 +11,4 @@ export const orange = {
   700: '#5E2900',
   800: '#3E1A00',
   900: '#231000',
-} as const;
+};
