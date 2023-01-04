@@ -1,9 +1,6 @@
 name: validate
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
 
 jobs:
@@ -29,3 +26,4 @@ jobs:
       - run: yarn format:check
       - run: yarn test
       - run: yarn build
+      - run: git diff --exit-code
