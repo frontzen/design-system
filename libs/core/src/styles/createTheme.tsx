@@ -2,6 +2,7 @@ import { loadingButtonClasses } from '@mui/lab';
 import '@mui/lab/themeAugmentation';
 import { alpha, createTheme as createMuiTheme, Theme, ThemeOptions } from '@mui/material';
 import { buttonBoxShadowAlpha, buttonDisableAlpha } from '../button/constants';
+import { checkbox } from '../checkbox';
 import { background, common, defaultPalette } from '../colors';
 import { DotLoader } from '../DotLoader';
 import { getColorFromThemeWithColorProps } from '../utils';
@@ -355,17 +356,20 @@ const defaultOptions: ThemeOptions = {
         loadingPosition: 'center',
       },
     },
-
     MuiSvgIcon: {
       styleOverrides: {
-        root: {
-          //icon size should change on fontsize prop
-          '&.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium': {
-            fontSize: '1rem', // 16px
-          },
+        fontSizeSmall: {
+          fontSize: '1rem',
+        },
+        fontSizeMedium: {
+          fontSize: '1.25rem',
+        },
+        fontSizeLarge: {
+          fontSize: '1.5rem',
         },
       },
     },
+    MuiCheckbox: checkbox,
   },
 };
 
