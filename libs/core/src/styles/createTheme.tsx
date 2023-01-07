@@ -3,7 +3,7 @@ import '@mui/lab/themeAugmentation';
 import { alpha, createTheme as createMuiTheme, Theme, ThemeOptions } from '@mui/material';
 import { buttonBoxShadowAlpha, buttonDisableAlpha } from '../button/constants';
 import { muiCheckbox } from '../checkbox';
-import { background, common, defaultPalette } from '../colors';
+import { background, common, coolGrey, defaultPalette } from '../colors';
 import { DotLoader } from '../DotLoader';
 import { muiRadio } from '../radio';
 import { muiSwitch } from '../switch';
@@ -41,6 +41,7 @@ declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     h6: false;
     subtitle2: false;
+    caption: false;
     overline: false;
   }
 }
@@ -50,6 +51,12 @@ declare module '@mui/material/Fab' {
   }
   interface FabPropsVariantOverrides {
     outlined: true;
+    text: true;
+  }
+}
+declare module '@mui/material/IconButton' {
+  interface IconButtonPropsColorOverrides {
+    default: false;
   }
 }
 
@@ -163,7 +170,7 @@ const defaultOptions: ThemeOptions = {
         },
       },
     },
-    MuiFab: {
+    MuiIconButton: {
       styleOverrides: {
         root: ({ theme, ownerState }) => ({
           '&:active': {
@@ -171,7 +178,56 @@ const defaultOptions: ThemeOptions = {
               getColorFromThemeWithColorProps(theme, ownerState),
               buttonBoxShadowAlpha,
             )}`,
+            transition: theme.transitions.create(['background-color', 'box-shadow', 'border-color', 'color'], {
+              duration: theme.transitions.duration.short,
+            }),
           },
+          '&:hover': {
+            background: coolGrey[50],
+          },
+          '&.Mui-disabled': {
+            color: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
+          },
+          '&.MuiIconButton-sizeSmall': {
+            padding: theme.spacing(0.5), //4
+            height: 28,
+            width: 28,
+            '&& >*:nth-of-type(1)': {
+              fontSize: theme.typography.button.fontSize, //16px
+            },
+          },
+          '&.MuiIconButton-sizeMedium': {
+            padding: theme.spacing(1), //8
+            height: 36,
+            width: 36,
+            '&& >*:nth-of-type(1)': {
+              fontSize: `calc(${theme.typography.button.fontSize} + 0.25rem)`, //20px
+            },
+          },
+          '&.MuiIconButton-sizeLarge': {
+            padding: theme.spacing(2), //16
+            height: 52,
+            width: 52,
+            '&& >*:nth-of-type(1)': {
+              fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
+            },
+          },
+        }),
+      },
+    },
+    MuiFab: {
+      styleOverrides: {
+        root: ({ theme, ownerState }) => ({
+          transition: theme.transitions.create(['background-color', 'box-shadow', 'border-color', 'color'], {
+            duration: theme.transitions.duration.short,
+          }),
+          '&:active': {
+            boxShadow: `0px 0px 10px ${alpha(
+              getColorFromThemeWithColorProps(theme, ownerState),
+              buttonBoxShadowAlpha,
+            )}`,
+          },
+          // '&.MuiFab-text' : {},
           '&.MuiFab-outlined': {
             border:
               ownerState.size === 'small'
@@ -237,6 +293,14 @@ const defaultOptions: ThemeOptions = {
               buttonBoxShadowAlpha,
             )}`,
           },
+          '&.MuiButton-text': {
+            '&:hover': {
+              background: coolGrey[50],
+            },
+            '&.Mui-disabled': {
+              color: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
+            },
+          },
 
           '&.MuiButton-outlined': {
             border:
@@ -265,10 +329,10 @@ const defaultOptions: ThemeOptions = {
           '&.MuiButton-sizeLarge': {
             padding:
               ownerState.endIcon || ownerState.startIcon
-                ? ownerState.variant === 'contained'
+                ? ownerState.variant !== 'outlined'
                   ? `calc(${theme.spacing(2)} - 2px) ${theme.spacing(3.5)}` /*14 28*/
                   : `calc(${theme.spacing(2)} - 4px) calc(${theme.spacing(3.5)} - 2px)` //12 26
-                : ownerState.variant === 'contained'
+                : ownerState.variant !== 'outlined'
                 ? theme.spacing(2, 3.5) /*16 28*/
                 : `calc(${theme.spacing(2)} - 2px) calc(${theme.spacing(3.5)} - 2px)`, //14 26
 
@@ -294,7 +358,7 @@ const defaultOptions: ThemeOptions = {
           },
           '&.MuiButton-sizeMedium': {
             padding:
-              ownerState.variant === 'contained'
+              ownerState.variant !== 'outlined'
                 ? theme.spacing(1, 3) /*8 24 */
                 : `calc(${theme.spacing(1)} - 2px) calc(${theme.spacing(3)} - 2px)`, //6 22
             '.MuiLoadingButton-loadingIndicator': {
@@ -318,7 +382,7 @@ const defaultOptions: ThemeOptions = {
           },
           '&.MuiButton-sizeSmall': {
             padding:
-              ownerState.variant === 'contained'
+              ownerState.variant !== 'outlined'
                 ? theme.spacing(0.5, 2) /*4 16 */
                 : `calc(${theme.spacing(0.5)} - 1px) calc(${theme.spacing(2)} - 1px)`, // 3 15
             fontSize: `calc(${theme.typography.button.fontSize} - 0.25rem)`, //12px
@@ -358,9 +422,9 @@ const defaultOptions: ThemeOptions = {
                 getColorFromThemeWithColorProps(
                   theme,
                   ownerState,
-                  ownerState.variant === 'outlined' ? 'main' : 'contrastText',
+                  ownerState.variant !== 'contained' ? 'main' : 'contrastText',
                 ),
-                ownerState.variant === 'outlined' ? buttonDisableAlpha : 1,
+                ownerState.variant !== 'contained' ? buttonDisableAlpha : 1,
               ),
             },
           }),
