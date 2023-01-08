@@ -159,15 +159,24 @@ const defaultOptions: ThemeOptions = {
     },
     MuiButtonBase: {
       styleOverrides: {
-        root: {
+        root: ({ theme }) => ({
           '&': {
             boxShadow: 'none',
             borderRadius: 100000,
           },
-          '&&:hover:not(:active)': {
+          '&:hover:not(:active)': {
             boxShadow: 'none',
           },
-        },
+          '&& [class*="fontSizeLarge"]': {
+            fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
+          },
+          '&& [class*=fontSizeSmall]': {
+            fontSize: theme.typography.button.fontSize, // 16px
+          },
+          '&& [class*=fontSizeMedium]': {
+            fontSize: `calc(${theme.typography.button.fontSize} + 0.25rem)`, // 20px
+          },
+        }),
       },
     },
     MuiIconButton: {
@@ -192,25 +201,16 @@ const defaultOptions: ThemeOptions = {
             padding: theme.spacing(0.5), //4
             height: 28,
             width: 28,
-            '&& >*:nth-of-type(1)': {
-              fontSize: theme.typography.button.fontSize, //16px
-            },
           },
           '&.MuiIconButton-sizeMedium': {
             padding: theme.spacing(1), //8
             height: 36,
             width: 36,
-            '&& >*:nth-of-type(1)': {
-              fontSize: `calc(${theme.typography.button.fontSize} + 0.25rem)`, //20px
-            },
           },
           '&.MuiIconButton-sizeLarge': {
             padding: theme.spacing(2), //16
             height: 52,
             width: 52,
-            '&& >*:nth-of-type(1)': {
-              fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
-            },
           },
         }),
       },
@@ -227,7 +227,6 @@ const defaultOptions: ThemeOptions = {
               buttonBoxShadowAlpha,
             )}`,
           },
-          // '&.MuiFab-text' : {},
           '&.MuiFab-outlined': {
             border:
               ownerState.size === 'small'
@@ -258,25 +257,16 @@ const defaultOptions: ThemeOptions = {
             padding: theme.spacing(0.5), //4
             height: 28,
             width: 28,
-            '&& >*:nth-of-type(1)': {
-              fontSize: theme.typography.button.fontSize, //16px
-            },
           },
           '&.MuiFab-sizeMedium': {
             padding: theme.spacing(1), //8
             height: 36,
             width: 36,
-            '&& >*:nth-of-type(1)': {
-              fontSize: `calc(${theme.typography.button.fontSize} + 0.25rem)`, //20px
-            },
           },
           '&.MuiFab-sizeLarge': {
             padding: theme.spacing(2), //16
             height: 52,
             width: 52,
-            '&& >*:nth-of-type(1)': {
-              fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
-            },
           },
         }),
       },
@@ -338,22 +328,12 @@ const defaultOptions: ThemeOptions = {
 
             fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
             fontWeight: theme.typography.fontWeightBold,
-            '.MuiLoadingButton-loadingIndicator': {
-              '& >*:nth-of-type(1)': {
-                fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
-              },
-            },
+            '.MuiLoadingButton-loadingIndicator': {},
             '.MuiButton-startIcon': {
               marginRight: theme.spacing(3),
-              '& >*:nth-of-type(1)': {
-                fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
-              },
             },
             '.MuiButton-endIcon': {
               marginLeft: theme.spacing(3),
-              '& >*:nth-of-type(1)': {
-                fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
-              },
             },
           },
           '&.MuiButton-sizeMedium': {
@@ -361,23 +341,13 @@ const defaultOptions: ThemeOptions = {
               ownerState.variant !== 'outlined'
                 ? theme.spacing(1, 3) /*8 24 */
                 : `calc(${theme.spacing(1)} - 2px) calc(${theme.spacing(3)} - 2px)`, //6 22
-            '.MuiLoadingButton-loadingIndicator': {
-              '& >*:nth-of-type(1)': {
-                fontSize: `calc(${theme.typography.button.fontSize} + 0.25rem)`, // 20px
-              },
-            },
+            '.MuiLoadingButton-loadingIndicator': {},
             fontSize: theme.typography.button.fontSize, //16
             '.MuiButton-startIcon': {
               marginRight: theme.spacing(2),
-              '& >*:nth-of-type(1)': {
-                fontSize: `calc(${theme.typography.button.fontSize} + 0.25rem)`, // 20px
-              },
             },
             '.MuiButton-endIcon': {
               marginLeft: theme.spacing(2),
-              '& >*:nth-of-type(1)': {
-                fontSize: `calc(${theme.typography.button.fontSize} + 0.25rem )`, // 20px
-              },
             },
           },
           '&.MuiButton-sizeSmall': {
@@ -386,22 +356,12 @@ const defaultOptions: ThemeOptions = {
                 ? theme.spacing(0.5, 2) /*4 16 */
                 : `calc(${theme.spacing(0.5)} - 1px) calc(${theme.spacing(2)} - 1px)`, // 3 15
             fontSize: `calc(${theme.typography.button.fontSize} - 0.25rem)`, //12px
-            '.MuiLoadingButton-loadingIndicator': {
-              '& >*:nth-of-type(1)': {
-                fontSize: theme.typography.button.fontSize, // 16px
-              },
-            },
+            '.MuiLoadingButton-loadingIndicator': {},
             '.MuiButton-startIcon': {
               marginRight: theme.spacing(2),
-              '& >*:nth-of-type(1)': {
-                fontSize: theme.typography.button.fontSize, // 16px
-              },
             },
             '.MuiButton-endIcon': {
               marginLeft: theme.spacing(2),
-              '& >*:nth-of-type(1)': {
-                fontSize: theme.typography.button.fontSize, // 16px
-              },
             },
           },
         }),

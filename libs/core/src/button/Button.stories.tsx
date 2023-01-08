@@ -1,10 +1,9 @@
-import { Box, IconButton } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { Box, Button, Fab, IconButton } from '@mui/material';
 import { Meta } from '@storybook/react';
 import React from 'react';
+import { DotLoader } from '../DotLoader';
 import { PlusSquare } from '../icons';
-import { Button } from './Button';
-import { Fab } from './Fab';
-import { LoadingButton } from './LoadingButton';
 
 export default {
   title: 'Core/Button',
@@ -118,7 +117,7 @@ export const Size = () => {
       <hr />
       <Box mt={2} sx={{ '& > button': { m: 1 } }}>
         {sizes.map((size) => (
-          <Button variant="contained" size={size} startIcon={<PlusSquare fontSize={'small'} />}>
+          <Button variant="contained" size={size} startIcon={<PlusSquare fontSize={size} />}>
             دکمه
           </Button>
         ))}
@@ -146,6 +145,7 @@ export const Size = () => {
             size={size}
             loading
             loadingPosition="start"
+            loadingIndicator={<DotLoader fontSize={size} />}
             startIcon={<PlusSquare fontSize={size} />}
             variant="outlined"
           >
@@ -169,7 +169,7 @@ export const Outlined = () => {
           دکمه
         </Button>
         <Fab size="large" variant="outlined">
-          <PlusSquare />
+          <PlusSquare fontSize="large" />
         </Fab>
       </Box>
     </>
@@ -187,7 +187,7 @@ export const Fill = () => {
           دکمه
         </Button>
         <Fab size="large" variant="circular">
-          <PlusSquare />
+          <PlusSquare fontSize="large" />
         </Fab>
       </Box>
     </>
@@ -205,7 +205,7 @@ export const Text = () => {
           دکمه
         </Button>
         <IconButton size="large" color="primary">
-          <PlusSquare />
+          <PlusSquare fontSize="large" />
         </IconButton>
       </Box>
     </>
@@ -225,11 +225,14 @@ export const Disabled = () => {
         غیر فعال
       </Button>
       <Fab variant="outlined" disabled>
-        <PlusSquare />
+        <PlusSquare fontSize="large" />
       </Fab>
       <Fab variant="circular" disabled>
-        <PlusSquare />
+        <PlusSquare fontSize="large" />
       </Fab>
+      <IconButton size="large" color="primary" disabled>
+        <PlusSquare fontSize="large" />
+      </IconButton>
     </Box>
   );
 };
@@ -267,14 +270,14 @@ export const Loading = () => {
 export const Icon = () => {
   return (
     <Box sx={{ '& > button': { m: 1 } }}>
-      <Fab size="large" variant="outlined">
-        <PlusSquare />
-      </Fab>
       <Fab size="large" variant="circular">
-        <PlusSquare />
+        <PlusSquare fontSize="large" />
+      </Fab>
+      <Fab size="large" variant="outlined">
+        <PlusSquare fontSize="large" />
       </Fab>
       <IconButton size="large" color="primary">
-        <PlusSquare />
+        <PlusSquare fontSize="large" />
       </IconButton>
     </Box>
   );

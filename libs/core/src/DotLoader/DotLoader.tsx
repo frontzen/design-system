@@ -23,6 +23,8 @@ const CircleThree = styled.circle`
   animation: ${loadKeyFrames} 1s 0.4s infinite;
 `;
 export const DotLoader = (props: SvgIconProps) => {
+  // console.log(props.sizw);
+
   return (
     <SvgIcon {...props} viewBox="0 0 132 58" version="1.1">
       <defs></defs>
