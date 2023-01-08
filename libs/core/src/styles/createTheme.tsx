@@ -157,9 +157,10 @@ const defaultOptions: ThemeOptions = {
         color: defaultPalette.text.link,
       },
     },
+    //TODO: use classnames map for styles
     MuiButtonBase: {
       styleOverrides: {
-        root: ({ theme }) => ({
+        root: ({ theme, ownerState }) => ({
           '&': {
             boxShadow: 'none',
             borderRadius: 100000,
@@ -167,18 +168,19 @@ const defaultOptions: ThemeOptions = {
           '&:hover:not(:active)': {
             boxShadow: 'none',
           },
-          '&& [class*="fontSizeLarge"]': {
+          '&[class*="sizeLarge"] .MuiSvgIcon-root': {
             fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
           },
-          '&& [class*=fontSizeSmall]': {
-            fontSize: theme.typography.button.fontSize, // 16px
-          },
-          '&& [class*=fontSizeMedium]': {
+          '&[class*="sizeMedium"] .MuiSvgIcon-root': {
             fontSize: `calc(${theme.typography.button.fontSize} + 0.25rem)`, // 20px
+          },
+          '&[class*="sizeSmall"] .MuiSvgIcon-root': {
+            fontSize: theme.typography.button.fontSize, // 16px
           },
         }),
       },
     },
+    //TODO: use classnames map for styles
     MuiIconButton: {
       styleOverrides: {
         root: ({ theme, ownerState }) => ({
@@ -215,6 +217,7 @@ const defaultOptions: ThemeOptions = {
         }),
       },
     },
+    //TODO: use classnames map for styles
     MuiFab: {
       styleOverrides: {
         root: ({ theme, ownerState }) => ({
@@ -274,6 +277,7 @@ const defaultOptions: ThemeOptions = {
         color: 'primary',
       },
     },
+    //TODO: use classnames map for styles
     MuiButton: {
       styleOverrides: {
         root: ({ theme, ownerState }) => ({
@@ -309,6 +313,7 @@ const defaultOptions: ThemeOptions = {
               color: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
             },
           },
+
           '&.MuiButton-contained': {
             '&.Mui-disabled': {
               backgroundColor: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
@@ -363,6 +368,23 @@ const defaultOptions: ThemeOptions = {
             '.MuiButton-endIcon': {
               marginLeft: theme.spacing(2),
             },
+          },
+        }),
+        outlined: ({ theme, ownerState }) => ({
+          border:
+            ownerState.size === 'small'
+              ? `1px solid ${getColorFromThemeWithColorProps(theme, ownerState)}`
+              : `2px solid ${getColorFromThemeWithColorProps(theme, ownerState)}`,
+          '&:hover': {
+            border:
+              ownerState.size === 'small'
+                ? `1px solid ${getColorFromThemeWithColorProps(theme, ownerState, 'dark')}`
+                : `2px solid ${getColorFromThemeWithColorProps(theme, ownerState, 'dark')}`,
+            color: getColorFromThemeWithColorProps(theme, ownerState, 'dark'),
+          },
+          '&.Mui-disabled': {
+            borderColor: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
+            color: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
           },
         }),
       },

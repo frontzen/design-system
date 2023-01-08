@@ -8,6 +8,7 @@ import { PlusSquare } from '../icons';
 export default {
   title: 'Core/Button',
 } as Meta;
+const variants = ['contained', 'outlined', 'text'] as const;
 export const Basic = () => {
   return (
     <>
@@ -16,7 +17,7 @@ export const Basic = () => {
         <span>غیر فعال</span>
         <span>لودینگ</span>
       </Box>
-      {(['contained', 'outlined', 'text'] as const).map((variant) => (
+      {variants.map((variant) => (
         <>
           <Box sx={{ '& > button': { m: 1 } }}>
             <Button variant={variant}>دکمه</Button>
@@ -45,33 +46,21 @@ export const Color = () => {
         <>
           <Box sx={{ '& > button': { m: 1 } }}>
             <span style={{ width: 70, display: 'inline-block' }}>{dictionary[color]}</span>
-            <Button variant="contained" color={color}>
-              دکمه
-            </Button>
-            <Button variant="outlined" color={color}>
-              دکمه
-            </Button>
-            <Button variant="text" color={color}>
-              دکمه
-            </Button>
-            <Button variant="contained" color={color} disabled>
-              دکمه
-            </Button>
-            <Button variant="outlined" color={color} disabled>
-              دکمه
-            </Button>
-            <Button variant="text" color={color} disabled>
-              دکمه
-            </Button>
-            <LoadingButton variant="contained" loading loadingPosition="center" color={color}>
-              دکمه
-            </LoadingButton>
-            <LoadingButton variant="outlined" loading loadingPosition="center" color={color}>
-              دکمه
-            </LoadingButton>
-            <LoadingButton variant="text" loading loadingPosition="center" color={color}>
-              دکمه
-            </LoadingButton>
+            {variants.map((variant) => (
+              <Button variant={variant} color={color}>
+                دکمه
+              </Button>
+            ))}
+            {variants.map((variant) => (
+              <Button variant={variant} color={color} disabled>
+                دکمه
+              </Button>
+            ))}
+            {variants.map((variant) => (
+              <LoadingButton variant={variant} loading loadingPosition="center" color={color}>
+                دکمه
+              </LoadingButton>
+            ))}
           </Box>
         </>
       ))}
@@ -86,67 +75,43 @@ export const Size = () => {
       <Box mt={2} sx={{ '& > button': { m: 1 } }}>
         {sizes.map((size) => (
           <Fab size={size} variant="circular">
-            <PlusSquare fontSize={size} />
+            <PlusSquare />
           </Fab>
         ))}
       </Box>
       <hr />
-      <Box sx={{ '& > button': { m: 1 } }}>
-        {sizes.map((size) => (
-          <Button variant="contained" size={size}>
-            دکمه
-          </Button>
-        ))}
-      </Box>
-      <hr />
-      <Box sx={{ '& > button': { m: 1 } }}>
-        {sizes.map((size) => (
-          <Button variant="outlined" size={size}>
-            دکمه
-          </Button>
-        ))}
-      </Box>
-      <hr />
-      <Box sx={{ '& > button': { m: 1 } }}>
-        {sizes.map((size) => (
-          <Button variant="text" size={size}>
-            دکمه
-          </Button>
-        ))}
-      </Box>
-      <hr />
-      <Box mt={2} sx={{ '& > button': { m: 1 } }}>
-        {sizes.map((size) => (
-          <Button variant="contained" size={size} startIcon={<PlusSquare fontSize={size} />}>
-            دکمه
-          </Button>
-        ))}
-      </Box>
-      <hr />
-      <Box mt={2} sx={{ '& > button': { m: 1 } }}>
-        {sizes.map((size) => (
-          <Button variant="outlined" size={size} startIcon={<PlusSquare fontSize={size} />}>
-            دکمه
-          </Button>
-        ))}
-      </Box>
-      <hr />
-      <Box mt={2} sx={{ '& > button': { m: 1 } }}>
-        {sizes.map((size) => (
-          <Button variant="text" size={size} startIcon={<PlusSquare fontSize={size} />}>
-            دکمه
-          </Button>
-        ))}
-      </Box>
-      <hr />
+      {variants.map((variant) => (
+        <>
+          <Box sx={{ '& > button': { m: 1 } }}>
+            {sizes.map((size) => (
+              <Button variant={variant} size={size}>
+                دکمه
+              </Button>
+            ))}
+          </Box>
+          <hr />
+        </>
+      ))}
+      {variants.map((variant) => (
+        <>
+          <Box sx={{ '& > button': { m: 1 } }}>
+            {sizes.map((size) => (
+              <Button variant={variant} size={size} startIcon={<PlusSquare />}>
+                دکمه
+              </Button>
+            ))}
+          </Box>
+          <hr />
+        </>
+      ))}
       <Box mt={2} sx={{ '& > button': { m: 1 } }}>
         {sizes.map((size) => (
           <LoadingButton
             size={size}
             loading
             loadingPosition="start"
-            loadingIndicator={<DotLoader fontSize={size} />}
-            startIcon={<PlusSquare fontSize={size} />}
+            loadingIndicator={<DotLoader />}
+            startIcon={<PlusSquare />}
             variant="outlined"
           >
             صبر کنید
@@ -169,7 +134,7 @@ export const Outlined = () => {
           دکمه
         </Button>
         <Fab size="large" variant="outlined">
-          <PlusSquare fontSize="large" />
+          <PlusSquare />
         </Fab>
       </Box>
     </>
@@ -187,7 +152,7 @@ export const Fill = () => {
           دکمه
         </Button>
         <Fab size="large" variant="circular">
-          <PlusSquare fontSize="large" />
+          <PlusSquare />
         </Fab>
       </Box>
     </>
@@ -205,7 +170,7 @@ export const Text = () => {
           دکمه
         </Button>
         <IconButton size="large" color="primary">
-          <PlusSquare fontSize="large" />
+          <PlusSquare />
         </IconButton>
       </Box>
     </>
@@ -215,23 +180,26 @@ export const Text = () => {
 export const Disabled = () => {
   return (
     <Box sx={{ '& > button': { m: 1 } }}>
-      <Button disabled variant="contained">
-        غیر فعال
-      </Button>
-      <Button disabled variant="outlined">
-        غیر فعال
-      </Button>
-      <Button disabled variant="outlined" endIcon={<PlusSquare />}>
-        غیر فعال
-      </Button>
-      <Fab variant="outlined" disabled>
-        <PlusSquare fontSize="large" />
-      </Fab>
+      {variants.map((variant) => (
+        <Button disabled variant={variant}>
+          غیر فعال
+        </Button>
+      ))}
+      <hr />
+      {variants.map((variant) => (
+        <Button disabled variant={variant} endIcon={<PlusSquare />}>
+          غیر فعال
+        </Button>
+      ))}
+      <hr />
       <Fab variant="circular" disabled>
-        <PlusSquare fontSize="large" />
+        <PlusSquare />
+      </Fab>
+      <Fab variant="outlined" disabled>
+        <PlusSquare />
       </Fab>
       <IconButton size="large" color="primary" disabled>
-        <PlusSquare fontSize="large" />
+        <PlusSquare />
       </IconButton>
     </Box>
   );
@@ -271,13 +239,13 @@ export const Icon = () => {
   return (
     <Box sx={{ '& > button': { m: 1 } }}>
       <Fab size="large" variant="circular">
-        <PlusSquare fontSize="large" />
+        <PlusSquare />
       </Fab>
       <Fab size="large" variant="outlined">
-        <PlusSquare fontSize="large" />
+        <PlusSquare />
       </Fab>
       <IconButton size="large" color="primary">
-        <PlusSquare fontSize="large" />
+        <PlusSquare />
       </IconButton>
     </Box>
   );
