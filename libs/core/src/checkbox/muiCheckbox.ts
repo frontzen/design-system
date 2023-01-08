@@ -14,7 +14,7 @@ declare module '@mui/material/Checkbox' {
   }
 }
 
-export const checkbox: Components<Omit<Theme, 'components'>>['MuiCheckbox'] = {
+export const muiCheckbox: Components<Omit<Theme, 'components'>>['MuiCheckbox'] = {
   defaultProps: {
     disableRipple: true,
   },

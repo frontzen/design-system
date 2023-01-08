@@ -2,9 +2,10 @@ import { loadingButtonClasses } from '@mui/lab';
 import '@mui/lab/themeAugmentation';
 import { alpha, createTheme as createMuiTheme, Theme, ThemeOptions } from '@mui/material';
 import { buttonBoxShadowAlpha, buttonDisableAlpha } from '../button/constants';
-import { checkbox } from '../checkbox';
+import { muiCheckbox } from '../checkbox';
 import { background, common, defaultPalette } from '../colors';
 import { DotLoader } from '../DotLoader';
+import { muiRadio } from '../radio';
 import { getColorFromThemeWithColorProps } from '../utils';
 
 /**
@@ -369,7 +370,8 @@ const defaultOptions: ThemeOptions = {
         },
       },
     },
-    MuiCheckbox: checkbox,
+    MuiCheckbox: muiCheckbox,
+    MuiRadio: muiRadio,
   },
 };
 
