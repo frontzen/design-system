@@ -6,5 +6,7 @@ export const getColorFromThemeWithColorProps = (
   theme: Theme,
   props: { color?: ColorType },
   paletteKey: keyof PaletteColor = 'main',
-): string =>
-  theme.palette?.[props.color === 'inherit' ? 'primary' : !props.color ? 'primary' : props.color][paletteKey];
+): string => {
+  const { color = 'primary' } = props;
+  return theme.palette?.[color === 'inherit' ? 'primary' : color][paletteKey];
+};
