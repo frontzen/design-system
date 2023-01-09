@@ -6,6 +6,7 @@ import { muiCheckbox } from '../checkbox';
 import { background, common, defaultPalette } from '../colors';
 import { DotLoader } from '../DotLoader';
 import { muiRadio } from '../radio';
+import { muiSwitch } from '../switch';
 import { getColorFromThemeWithColorProps } from '../utils';
 
 /**
@@ -372,6 +373,7 @@ const defaultOptions: ThemeOptions = {
     },
     MuiCheckbox: muiCheckbox,
     MuiRadio: muiRadio,
+    MuiSwitch: muiSwitch,
   },
 };
 
