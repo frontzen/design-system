@@ -41,7 +41,6 @@ declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     h6: false;
     subtitle2: false;
-    caption: false;
     overline: false;
   }
 }
@@ -73,64 +72,78 @@ const defaultOptions: ThemeOptions = {
   },
 
   typography: {
-    fontFamily: 'iranyekan',
+    fontFamily: 'IRANYekanX, roboto',
     fontSize: 16,
-    fontWeightLight: 100,
-    fontWeightRegular: 200,
-    fontWeightMedium: 400,
-    fontWeightBold: 600,
+    fontWeightLight: 300,
+    fontWeightRegular: 400,
+    fontWeightMedium: 500,
+    fontWeightBold: 700,
+    allVariants: {
+      fontFeatureSettings: '"ss02"',
+    },
     h1: {
-      fontWeight: 600,
+      fontWeight: 800,
       fontSize: '2.25rem', // 32px
       lineHeight: 1.5,
     },
     h2: {
-      fontWeight: 600,
+      fontWeight: 800,
       fontSize: '1.5rem', // 24px
       lineHeight: 1.5,
     },
     h3: {
-      fontWeight: 200,
+      fontWeight: 400,
       fontSize: '1.5rem', // 24px
       lineHeight: 1.5,
     },
     h4: {
-      fontWeight: 600,
+      fontWeight: 700,
       fontSize: '1.125rem', // 18px
       lineHeight: 1.5,
     },
     h5: {
-      fontWeight: 600,
+      fontWeight: 700,
       fontSize: '1rem', // 16px
       lineHeight: 1.5,
     },
     button: {
-      fontWeight: 400,
+      fontWeight: 500,
       fontSize: '1rem', // 16px
-      lineHeight: '1.25rem',
+      lineHeight: 1.25,
     },
     body1: {
-      fontWeight: 200,
+      fontWeight: 400,
       fontSize: '1rem', // 16px
       lineHeight: 1.75,
     },
     body2: {
-      fontWeight: 200,
+      fontWeight: 400,
       fontSize: '0.875rem', // 14px
       lineHeight: 1.75,
     },
     subtitle1: {
-      fontWeight: 400,
+      fontWeight: 500,
       fontSize: '0.625rem', // 10px
+      lineHeight: 1.5,
+    },
+    caption: {
+      fontWeight: 400,
+      fontSize: '0.75rem', // 12px
       lineHeight: 1.5,
     },
     // Disable h6, subtitle2, caption and overline variant
     h6: undefined,
     subtitle2: undefined,
-    caption: undefined,
     overline: undefined,
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          fontFamily: 'IRANYekanX, roboto',
+        },
+      },
+    },
     MuiLink: {
       defaultProps: {
         variant: 'body2',

@@ -85,7 +85,7 @@ export const Color = () => {
           </Box>
         </React.Fragment>
       ))}
-      <Typography marginTop={2} variant="subtitle1">
+      <Typography marginTop={2} variant="caption">
         برای مشاهده رنگ هاور، موس را بر روی آیتم‌ها ببرید *
       </Typography>
     </React.Fragment>
