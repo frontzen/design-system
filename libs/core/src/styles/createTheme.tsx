@@ -157,7 +157,7 @@ const defaultOptions: ThemeOptions = {
         color: defaultPalette.text.link,
       },
     },
-    //TODO: use classnames map for styles
+    //TODO: separate and move proper styles of any state/variant to it's own className
     MuiButtonBase: {
       styleOverrides: {
         root: ({ theme, ownerState }) => ({
@@ -180,7 +180,7 @@ const defaultOptions: ThemeOptions = {
         }),
       },
     },
-    //TODO: use classnames map for styles
+    //TODO: separate and move proper styles of any state/variant to it's own className
     MuiIconButton: {
       styleOverrides: {
         root: ({ theme, ownerState }) => ({
@@ -217,7 +217,7 @@ const defaultOptions: ThemeOptions = {
         }),
       },
     },
-    //TODO: use classnames map for styles
+    //TODO: separate and move proper styles of any state/variant to it's own className
     MuiFab: {
       styleOverrides: {
         root: ({ theme, ownerState }) => ({
@@ -277,7 +277,7 @@ const defaultOptions: ThemeOptions = {
         color: 'primary',
       },
     },
-    //TODO: use classnames map for styles
+    //TODO: separate and move proper styles of any state/variant to it's own className
     MuiButton: {
       styleOverrides: {
         root: ({ theme, ownerState }) => ({
@@ -368,23 +368,6 @@ const defaultOptions: ThemeOptions = {
             '.MuiButton-endIcon': {
               marginLeft: theme.spacing(2),
             },
-          },
-        }),
-        outlined: ({ theme, ownerState }) => ({
-          border:
-            ownerState.size === 'small'
-              ? `1px solid ${getColorFromThemeWithColorProps(theme, ownerState)}`
-              : `2px solid ${getColorFromThemeWithColorProps(theme, ownerState)}`,
-          '&:hover': {
-            border:
-              ownerState.size === 'small'
-                ? `1px solid ${getColorFromThemeWithColorProps(theme, ownerState, 'dark')}`
-                : `2px solid ${getColorFromThemeWithColorProps(theme, ownerState, 'dark')}`,
-            color: getColorFromThemeWithColorProps(theme, ownerState, 'dark'),
-          },
-          '&.Mui-disabled': {
-            borderColor: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
-            color: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
           },
         }),
       },
