@@ -1,0 +1,23 @@
+import { useState } from 'react';
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs';
+import { DatePicker } from '.';
+import { LocalizationProvider } from '../LocalizationProvider';
+import DateFnsAdapter from '@date-io/date-fns';
+import { TextField } from '@mui/material';
+
+<Meta title="Pickers/DatePicker" component={DatePicker} />
+
+# DatePicker
+
+<Canvas>
+  <Story name="simple">
+    {args => {
+      const [date, setDate] = useState(null);
+      return (
+        <LocalizationProvider calendarOptions={[{ calendar: 'gregorian', adapter: new DateFnsAdapter() }]}>
+          <DatePicker value={date} onChange={setDate} renderInput={(params) => <TextField {...params} />} />
+        </LocalizationProvider>
+      );
+    }}
+  </Story>
+</Canvas>
