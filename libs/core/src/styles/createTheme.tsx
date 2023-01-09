@@ -126,10 +126,14 @@ const defaultOptions: ThemeOptions = {
       fontSize: '0.625rem', // 10px
       lineHeight: 1.5,
     },
+    caption: {
+      fontWeight: 400,
+      fontSize: '0.75rem', // 12px
+      lineHeight: 1.5,
+    },
     // Disable h6, subtitle2, caption and overline variant
     h6: undefined,
     subtitle2: undefined,
-    caption: undefined,
     overline: undefined,
   },
   components: {

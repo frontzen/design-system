@@ -8,7 +8,7 @@ export default {
 
 export const TypographyStory = () => {
   return (
-    <Table sx={{ fontFeatureSettings: 'none !important' }}>
+    <Table>
       <TableHead>
         <TableRow>
           <TableCell />
@@ -22,7 +22,10 @@ export const TypographyStory = () => {
       </TableHead>
       <TableBody>
         {rows.map((row, rowIndex) => (
-          <TableRow key={rowIndex}>
+          <TableRow
+            sx={{ backgroundColor: (theme) => (rowIndex === 6 ? theme.palette.grey[300] : undefined) }}
+            key={rowIndex}
+          >
             {row.map((cell, cellIndex) => (
               <TableCell key={cellIndex}>
                 <Typography sx={{ fontFeatureSettings: 'normal' }} {...cell} />
@@ -78,7 +81,7 @@ const rows: TypographyProps[][] = [
     { children: '14px (0.875 rem)' },
     { children: 'Regular' },
     { children: '1.75' },
-    {},
+    { children: 'لینکها' },
   ],
   [
     { children: 'Caption', variant: 'caption' },
