@@ -29,7 +29,7 @@ export const Basic = () => {
               <Checkbox radiusVariant={variant[0]} indeterminate />
             </Wrapper>
             <Wrapper>
-              <Checkbox radiusVariant={variant[0]} checked />
+              <Checkbox radiusVariant={variant[0]} defaultChecked />
             </Wrapper>
           </Box>
           <p>{variant[1]}</p>
@@ -62,7 +62,7 @@ export const Size = () => {
           <Box sx={{ display: 'flex', width: 400, my: 2 }}>
             {sizes.map((size) => (
               <Wrapper key={size}>
-                <Checkbox radiusVariant={variant} size={size} checked />
+                <Checkbox radiusVariant={variant} size={size} defaultChecked />
               </Wrapper>
             ))}
           </Box>
@@ -94,7 +94,7 @@ export const Color = () => {
             <Box sx={{ display: 'inline-flex', width: 200, justifyContent: 'space-between' }}>
               <Checkbox size="large" color={color} />
               <Checkbox size="large" color={color} indeterminate />
-              <Checkbox size="large" color={color} checked />
+              <Checkbox size="large" color={color} defaultChecked />
             </Box>
           </Box>
         </React.Fragment>
