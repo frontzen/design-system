@@ -41,7 +41,6 @@ declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     h6: false;
     subtitle2: false;
-    caption: false;
     overline: false;
   }
 }
@@ -200,17 +199,17 @@ const defaultOptions: ThemeOptions = {
             color: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
           },
           '&.MuiIconButton-sizeSmall': {
-            padding: theme.spacing(0.5), //4
+            padding: 4,
             height: 28,
             width: 28,
           },
           '&.MuiIconButton-sizeMedium': {
-            padding: theme.spacing(1), //8
+            padding: 8,
             height: 36,
             width: 36,
           },
           '&.MuiIconButton-sizeLarge': {
-            padding: theme.spacing(2), //16
+            padding: 16,
             height: 52,
             width: 52,
           },
@@ -257,17 +256,17 @@ const defaultOptions: ThemeOptions = {
             color: getColorFromThemeWithColorProps(theme, ownerState, 'contrastText'),
           },
           '&.MuiFab-sizeSmall': {
-            padding: theme.spacing(0.5), //4
+            padding: 4,
             height: 28,
             width: 28,
           },
           '&.MuiFab-sizeMedium': {
-            padding: theme.spacing(1), //8
+            padding: 8,
             height: 36,
             width: 36,
           },
           '&.MuiFab-sizeLarge': {
-            padding: theme.spacing(2), //16
+            padding: 16,
             height: 52,
             width: 52,
           },
@@ -325,15 +324,14 @@ const defaultOptions: ThemeOptions = {
             padding:
               ownerState.endIcon || ownerState.startIcon
                 ? ownerState.variant !== 'outlined'
-                  ? `calc(${theme.spacing(2)} - 2px) ${theme.spacing(3.5)}` /*14 28*/
-                  : `calc(${theme.spacing(2)} - 4px) calc(${theme.spacing(3.5)} - 2px)` //12 26
+                  ? '14px 28px'
+                  : '12px 26px'
                 : ownerState.variant !== 'outlined'
-                ? theme.spacing(2, 3.5) /*16 28*/
-                : `calc(${theme.spacing(2)} - 2px) calc(${theme.spacing(3.5)} - 2px)`, //14 26
+                ? '16px 28px'
+                : '14px 26px',
 
             fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
             fontWeight: theme.typography.fontWeightBold,
-            '.MuiLoadingButton-loadingIndicator': {},
             '.MuiButton-startIcon': {
               marginRight: theme.spacing(3),
             },
@@ -342,11 +340,7 @@ const defaultOptions: ThemeOptions = {
             },
           },
           '&.MuiButton-sizeMedium': {
-            padding:
-              ownerState.variant !== 'outlined'
-                ? theme.spacing(1, 3) /*8 24 */
-                : `calc(${theme.spacing(1)} - 2px) calc(${theme.spacing(3)} - 2px)`, //6 22
-            '.MuiLoadingButton-loadingIndicator': {},
+            padding: ownerState.variant !== 'outlined' ? '8px 24px' : '6px 22px',
             fontSize: theme.typography.button.fontSize, //16
             '.MuiButton-startIcon': {
               marginRight: theme.spacing(2),
@@ -356,10 +350,7 @@ const defaultOptions: ThemeOptions = {
             },
           },
           '&.MuiButton-sizeSmall': {
-            padding:
-              ownerState.variant !== 'outlined'
-                ? theme.spacing(0.5, 2) /*4 16 */
-                : `calc(${theme.spacing(0.5)} - 1px) calc(${theme.spacing(2)} - 1px)`, // 3 15
+            padding: ownerState.variant !== 'outlined' ? '4px 16px' : '3px 15px',
             fontSize: `calc(${theme.typography.button.fontSize} - 0.25rem)`, //12px
             '.MuiLoadingButton-loadingIndicator': {},
             '.MuiButton-startIcon': {
