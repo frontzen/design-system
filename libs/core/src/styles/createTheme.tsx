@@ -3,7 +3,7 @@ import '@mui/lab/themeAugmentation';
 import { alpha, createTheme as createMuiTheme, Theme, ThemeOptions } from '@mui/material';
 import { buttonBoxShadowAlpha, buttonDisableAlpha } from '../button/constants';
 import { muiCheckbox } from '../checkbox';
-import { background, common, defaultPalette } from '../colors';
+import { background, common, coolGrey, defaultPalette } from '../colors';
 import { DotLoader } from '../DotLoader';
 import { muiRadio } from '../radio';
 import { muiSwitch } from '../switch';
@@ -50,6 +50,12 @@ declare module '@mui/material/Fab' {
   }
   interface FabPropsVariantOverrides {
     outlined: true;
+    text: true;
+  }
+}
+declare module '@mui/material/IconButton' {
+  interface IconButtonPropsColorOverrides {
+    default: false;
   }
 }
 
@@ -150,22 +156,73 @@ const defaultOptions: ThemeOptions = {
         color: defaultPalette.text.link,
       },
     },
+    //TODO: separate and move proper styles of any state/variant to it's own className
     MuiButtonBase: {
       styleOverrides: {
-        root: {
+        root: ({ theme, ownerState }) => ({
           '&': {
             boxShadow: 'none',
             borderRadius: 100000,
           },
-          '&&:hover:not(:active)': {
+          '&:hover:not(:active)': {
             boxShadow: 'none',
           },
-        },
+          '&[class*="sizeLarge"] .MuiSvgIcon-root': {
+            fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
+          },
+          '&[class*="sizeMedium"] .MuiSvgIcon-root': {
+            fontSize: `calc(${theme.typography.button.fontSize} + 0.25rem)`, // 20px
+          },
+          '&[class*="sizeSmall"] .MuiSvgIcon-root': {
+            fontSize: theme.typography.button.fontSize, // 16px
+          },
+        }),
       },
     },
+    //TODO: separate and move proper styles of any state/variant to it's own className
+    MuiIconButton: {
+      styleOverrides: {
+        root: ({ theme, ownerState }) => ({
+          '&:active': {
+            boxShadow: `0px 0px 10px ${alpha(
+              getColorFromThemeWithColorProps(theme, ownerState),
+              buttonBoxShadowAlpha,
+            )}`,
+            transition: theme.transitions.create(['background-color', 'box-shadow', 'border-color', 'color'], {
+              duration: theme.transitions.duration.short,
+            }),
+          },
+          '&:hover': {
+            background: coolGrey[50],
+          },
+          '&.Mui-disabled': {
+            color: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
+          },
+          '&.MuiIconButton-sizeSmall': {
+            padding: 4,
+            height: 28,
+            width: 28,
+          },
+          '&.MuiIconButton-sizeMedium': {
+            padding: 8,
+            height: 36,
+            width: 36,
+          },
+          '&.MuiIconButton-sizeLarge': {
+            padding: 16,
+            height: 52,
+            width: 52,
+          },
+        }),
+      },
+    },
+    //TODO: separate and move proper styles of any state/variant to it's own className
     MuiFab: {
       styleOverrides: {
         root: ({ theme, ownerState }) => ({
+          transition: theme.transitions.create(['background-color', 'box-shadow', 'border-color', 'color'], {
+            duration: theme.transitions.duration.short,
+          }),
           '&:active': {
             boxShadow: `0px 0px 10px ${alpha(
               getColorFromThemeWithColorProps(theme, ownerState),
@@ -199,28 +256,19 @@ const defaultOptions: ThemeOptions = {
             color: getColorFromThemeWithColorProps(theme, ownerState, 'contrastText'),
           },
           '&.MuiFab-sizeSmall': {
-            padding: theme.spacing(0.5), //4
+            padding: 4,
             height: 28,
             width: 28,
-            '&& >*:nth-of-type(1)': {
-              fontSize: theme.typography.button.fontSize, //16px
-            },
           },
           '&.MuiFab-sizeMedium': {
-            padding: theme.spacing(1), //8
+            padding: 8,
             height: 36,
             width: 36,
-            '&& >*:nth-of-type(1)': {
-              fontSize: `calc(${theme.typography.button.fontSize} + 0.25rem)`, //20px
-            },
           },
           '&.MuiFab-sizeLarge': {
-            padding: theme.spacing(2), //16
+            padding: 16,
             height: 52,
             width: 52,
-            '&& >*:nth-of-type(1)': {
-              fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
-            },
           },
         }),
       },
@@ -228,6 +276,7 @@ const defaultOptions: ThemeOptions = {
         color: 'primary',
       },
     },
+    //TODO: separate and move proper styles of any state/variant to it's own className
     MuiButton: {
       styleOverrides: {
         root: ({ theme, ownerState }) => ({
@@ -236,6 +285,14 @@ const defaultOptions: ThemeOptions = {
               getColorFromThemeWithColorProps(theme, ownerState),
               buttonBoxShadowAlpha,
             )}`,
+          },
+          '&.MuiButton-text': {
+            '&:hover': {
+              background: coolGrey[50],
+            },
+            '&.Mui-disabled': {
+              color: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
+            },
           },
 
           '&.MuiButton-outlined': {
@@ -255,6 +312,7 @@ const defaultOptions: ThemeOptions = {
               color: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
             },
           },
+
           '&.MuiButton-contained': {
             '&.Mui-disabled': {
               backgroundColor: alpha(getColorFromThemeWithColorProps(theme, ownerState), buttonDisableAlpha),
@@ -265,79 +323,41 @@ const defaultOptions: ThemeOptions = {
           '&.MuiButton-sizeLarge': {
             padding:
               ownerState.endIcon || ownerState.startIcon
-                ? ownerState.variant === 'contained'
-                  ? `calc(${theme.spacing(2)} - 2px) ${theme.spacing(3.5)}` /*14 28*/
-                  : `calc(${theme.spacing(2)} - 4px) calc(${theme.spacing(3.5)} - 2px)` //12 26
-                : ownerState.variant === 'contained'
-                ? theme.spacing(2, 3.5) /*16 28*/
-                : `calc(${theme.spacing(2)} - 2px) calc(${theme.spacing(3.5)} - 2px)`, //14 26
+                ? ownerState.variant !== 'outlined'
+                  ? '14px 28px'
+                  : '12px 26px'
+                : ownerState.variant !== 'outlined'
+                ? '16px 28px'
+                : '14px 26px',
 
             fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
             fontWeight: theme.typography.fontWeightBold,
-            '.MuiLoadingButton-loadingIndicator': {
-              '& >*:nth-of-type(1)': {
-                fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
-              },
-            },
             '.MuiButton-startIcon': {
               marginRight: theme.spacing(3),
-              '& >*:nth-of-type(1)': {
-                fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
-              },
             },
             '.MuiButton-endIcon': {
               marginLeft: theme.spacing(3),
-              '& >*:nth-of-type(1)': {
-                fontSize: `calc(${theme.typography.button.fontSize} + 0.5rem)`, // 24px
-              },
             },
           },
           '&.MuiButton-sizeMedium': {
-            padding:
-              ownerState.variant === 'contained'
-                ? theme.spacing(1, 3) /*8 24 */
-                : `calc(${theme.spacing(1)} - 2px) calc(${theme.spacing(3)} - 2px)`, //6 22
-            '.MuiLoadingButton-loadingIndicator': {
-              '& >*:nth-of-type(1)': {
-                fontSize: `calc(${theme.typography.button.fontSize} + 0.25rem)`, // 20px
-              },
-            },
+            padding: ownerState.variant !== 'outlined' ? '8px 24px' : '6px 22px',
             fontSize: theme.typography.button.fontSize, //16
             '.MuiButton-startIcon': {
               marginRight: theme.spacing(2),
-              '& >*:nth-of-type(1)': {
-                fontSize: `calc(${theme.typography.button.fontSize} + 0.25rem)`, // 20px
-              },
             },
             '.MuiButton-endIcon': {
               marginLeft: theme.spacing(2),
-              '& >*:nth-of-type(1)': {
-                fontSize: `calc(${theme.typography.button.fontSize} + 0.25rem )`, // 20px
-              },
             },
           },
           '&.MuiButton-sizeSmall': {
-            padding:
-              ownerState.variant === 'contained'
-                ? theme.spacing(0.5, 2) /*4 16 */
-                : `calc(${theme.spacing(0.5)} - 1px) calc(${theme.spacing(2)} - 1px)`, // 3 15
+            padding: ownerState.variant !== 'outlined' ? '4px 16px' : '3px 15px',
             fontSize: `calc(${theme.typography.button.fontSize} - 0.25rem)`, //12px
-            '.MuiLoadingButton-loadingIndicator': {
-              '& >*:nth-of-type(1)': {
-                fontSize: theme.typography.button.fontSize, // 16px
-              },
-            },
+            '.MuiLoadingButton-loadingIndicator': {},
             '.MuiButton-startIcon': {
               marginRight: theme.spacing(2),
-              '& >*:nth-of-type(1)': {
-                fontSize: theme.typography.button.fontSize, // 16px
-              },
             },
             '.MuiButton-endIcon': {
               marginLeft: theme.spacing(2),
-              '& >*:nth-of-type(1)': {
-                fontSize: theme.typography.button.fontSize, // 16px
-              },
             },
           },
         }),
@@ -358,9 +378,9 @@ const defaultOptions: ThemeOptions = {
                 getColorFromThemeWithColorProps(
                   theme,
                   ownerState,
-                  ownerState.variant === 'outlined' ? 'main' : 'contrastText',
+                  ownerState.variant !== 'contained' ? 'main' : 'contrastText',
                 ),
-                ownerState.variant === 'outlined' ? buttonDisableAlpha : 1,
+                ownerState.variant !== 'contained' ? buttonDisableAlpha : 1,
               ),
             },
           }),
