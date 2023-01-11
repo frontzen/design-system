@@ -8,6 +8,7 @@ import { DotLoader } from '../DotLoader';
 import { muiRadio } from '../radio';
 import { muiSwitch } from '../switch';
 import { getColorFromThemeWithColorProps } from '../utils';
+import { createShadows } from './shadows';
 
 /**
  * Add more colors to text palette which are defined by Frontzen Design System
@@ -23,13 +24,6 @@ declare module '@mui/material/styles' {
   }
   interface Palette {
     disabled?: string;
-  }
-  interface BreakpointOverrides {
-    xs: false; // removes the `xs` breakpoint
-    sm: false;
-    md: false;
-    lg: false;
-    xl: false;
   }
 }
 
@@ -60,7 +54,7 @@ const defaultOptions: ThemeOptions = {
     error: defaultPalette.error,
     success: defaultPalette.success,
     warning: defaultPalette.warning,
-    // The Frontzen Design System dose not have the info color and it should be set on each project separately.
+    // The Frontzen Design System does not have the info color, and it should be set on each project separately.
     // info: { main: '' },
     disabled: defaultPalette.disable,
     common: { ...common }, // prevent mutable object.
@@ -70,7 +64,6 @@ const defaultOptions: ThemeOptions = {
     },
     text: { ...defaultPalette.text }, // prevent mutable object.
   },
-
   typography: {
     fontFamily: 'IRANYekanX, roboto',
     fontSize: 16,
@@ -391,5 +384,7 @@ const defaultOptions: ThemeOptions = {
 };
 
 export function createTheme(options: ThemeOptions = {}, ...args: object[]): Theme {
-  return createMuiTheme(defaultOptions, options, ...args);
+  const theme = createMuiTheme(defaultOptions, options, ...args);
+  theme.shadows = createShadows(theme.shadows);
+  return theme;
 }
