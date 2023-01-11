@@ -1,20 +1,16 @@
 import { Meta, ColorPalette, ColorItem } from '@storybook/addon-docs';
-import {
-  blue,
-  background,
-  border,
-  coolGrey,
-  grey,
-  warmGrey,
-  purple,
-  turquoise,
-  teal,
-  green,
-  magenta,
-  red,
-  orange,
-  yellow,
-} from '.';
+import { blueShades } from './colors/cool/blue';
+import { greenShades } from './colors/cool/green';
+import { purple } from './colors/cool/purple';
+import { teal } from './colors/cool/teal';
+import { turquoise } from './colors/cool/turquoise';
+import { coolGrey } from './colors/grey/coolGrey';
+import { grey } from './colors/grey/grey';
+import { warmGrey } from './colors/grey/warmGrey';
+import { magenta } from './colors/warm/magenta';
+import { orange } from './colors/warm/orange';
+import { redShades } from './colors/warm/red';
+import { yellowShades } from './colors/warm/yellow';
 
 <Meta title="Core/Colors" />
 
@@ -27,7 +23,7 @@ import { red } from '@front.zen/design-system';
 const color = red[40];
 ```
 
-## Gray
+## Gray Colors
 
 <ColorPalette>
   <ColorItem title="Warm Gray" colors={warmGrey} />
@@ -39,29 +35,17 @@ const color = red[40];
 
 <ColorPalette>
   <ColorItem title="Purple" colors={purple} />
-  <ColorItem title="Blue" colors={blue} />
+  <ColorItem title="Blue" colors={blueShades} />
   <ColorItem title="Turquoise" colors={turquoise} />
   <ColorItem title="Teal" colors={teal} />
-  <ColorItem title="Green" colors={green} />
+  <ColorItem title="Green" colors={greenShades} />
 </ColorPalette>
 
 ## Warm Colors
 
 <ColorPalette>
   <ColorItem title="Magenta" colors={magenta} />
-  <ColorItem title="Red" colors={red} />
+  <ColorItem title="Red" colors={redShades} />
   <ColorItem title="Orange" colors={orange} />
-  <ColorItem title="Yellow" colors={yellow} />
-</ColorPalette>
-
-## Background Colors
-
-<ColorPalette>
-  <ColorItem title="Background" colors={background} />
-</ColorPalette>
-
-## Border Colors
-
-<ColorPalette>
-  <ColorItem title="Border" colors={border} />
+  <ColorItem title="Yellow" colors={yellowShades} />
 </ColorPalette>

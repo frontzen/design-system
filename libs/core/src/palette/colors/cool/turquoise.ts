@@ -1,4 +1,6 @@
-export const turquoise = {
+import { DesignSystemColor } from '../../types';
+
+export const turquoise: DesignSystemColor = {
   50: '#E5F6FF',
   100: '#BAE6FF',
   200: '#82CFFF',
@@ -9,4 +11,4 @@ export const turquoise = {
   700: '#003A6D',
   800: '#012749',
   900: '#061727',
-} as const;
+};

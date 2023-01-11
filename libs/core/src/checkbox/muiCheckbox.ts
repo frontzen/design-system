@@ -1,5 +1,4 @@
 import { Components, Theme } from '@mui/material';
-import { coolGrey } from '../colors';
 import { getColorFromThemeWithColorProps } from '../utils';
 
 declare module '@mui/material/Checkbox' {
@@ -29,24 +28,24 @@ export const muiCheckbox: Components<Omit<Theme, 'components'>>['MuiCheckbox'] =
           fill: theme.palette.common.white,
         },
         '& path:nth-of-type(2)': {
-          fill: coolGrey[300],
+          fill: theme.palette.coolGrey[300],
         },
         '&.Mui-disabled .MuiSvgIcon-root': {
           '& path:nth-of-type(1)': {
-            fill: coolGrey[50],
+            fill: theme.palette.coolGrey[50],
           },
           '& path:nth-of-type(2)': {
-            fill: coolGrey[100],
+            fill: theme.palette.coolGrey[100],
           },
         },
       },
       '&.Mui-disabled': {
         '& .MuiSvgIcon-root': {
           '& path:nth-of-type(1)': {
-            fill: coolGrey[100],
+            fill: theme.palette.coolGrey[100],
           },
           '& path:nth-of-type(2)': {
-            fill: coolGrey[300],
+            fill: theme.palette.coolGrey[300],
           },
         },
       },

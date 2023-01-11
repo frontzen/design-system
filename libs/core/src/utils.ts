@@ -10,3 +10,10 @@ export const getColorFromThemeWithColorProps = (
   const { color = 'primary' } = props;
   return theme.palette?.[color === 'inherit' ? 'primary' : color][paletteKey];
 };
+
+export const expectProps = (notAllowed: string | string[]) => {
+  return (prop: string) => {
+    const _notAllowed = Array.isArray(notAllowed) ? notAllowed : [notAllowed];
+    return !_notAllowed.includes(prop);
+  };
+};

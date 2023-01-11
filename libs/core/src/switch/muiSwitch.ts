@@ -1,5 +1,4 @@
 import { Components, SwitchProps, Theme } from '@mui/material';
-import { coolGrey, grey } from '../colors';
 import { getColorFromThemeWithColorProps } from '../utils';
 
 declare module '@mui/material/Switch' {
@@ -26,12 +25,12 @@ export const muiSwitch: Components<Omit<Theme, 'components'>>['MuiSwitch'] = {
         padding: 0,
         '&.Mui-disabled': {
           '.MuiSwitch-thumb': {
-            backgroundColor: coolGrey[100],
+            backgroundColor: theme.palette.coolGrey[100],
             boxShadow: 'none',
           },
           '+.MuiSwitch-track': {
-            borderColor: coolGrey[100],
-            backgroundColor: coolGrey[50],
+            borderColor: theme.palette.coolGrey[100],
+            backgroundColor: theme.palette.coolGrey[50],
           },
         },
       },
@@ -57,10 +56,10 @@ export const muiSwitch: Components<Omit<Theme, 'components'>>['MuiSwitch'] = {
           '.MuiButtonBase-root.MuiSwitch-switchBase': {
             ':not(.Mui-checked) ': {
               '+.MuiSwitch-track': {
-                borderColor: grey[700],
+                borderColor: theme.palette.grey[700],
               },
               '.MuiSwitch-thumb': {
-                backgroundColor: grey[700],
+                backgroundColor: theme.palette.grey[700],
               },
             },
             '&.Mui-checked': {
@@ -98,7 +97,7 @@ export const muiSwitch: Components<Omit<Theme, 'components'>>['MuiSwitch'] = {
       top: '-50%',
     },
     thumb: ({ theme, ownerState }) => ({
-      backgroundColor: grey[500],
+      backgroundColor: theme.palette.grey[500],
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
       boxShadow: 'none',
@@ -109,7 +108,7 @@ export const muiSwitch: Components<Omit<Theme, 'components'>>['MuiSwitch'] = {
     track: ({ theme, ownerState }) => ({
       '.MuiButtonBase-root.MuiSwitch-switchBase+&': {
         backgroundColor: theme.palette.common.white,
-        border: `1.5px solid ${grey[500]}`,
+        border: `1.5px solid ${theme.palette.grey[500]}`,
         opacity: 1,
         borderRadius: 100000,
       },
